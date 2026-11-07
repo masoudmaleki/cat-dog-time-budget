@@ -1,0 +1,38 @@
+gorev,hipotez_olcut,tanim,once_mi_sonra_mi,sonuc,makaledeki_yeri_oneri
+R02,H1 S1-tasmada ACC/PACC/EMQ CC'den kucuk AE mi,Smit L2 32 oznitelik 68 torba,onceden (gorev metni),HAYIR: CC-ACC -0.0173 [-0.0266;-0.0081] (CC daha iyi); PACC/EMQ de CC'den kotu,ana metin
+R02,H2 S2'de ACC ustunlugu S1'e gore kuculuyor mu,ayni,onceden,S2-S1 ACC farki +0.0004 [-0.0163;0.0157]: fark gosterilemedi,ek
+R02,H3 makro-F1 ve AE siralamasi uyumu (Spearman),kedi duzeyi,onceden,bkz r02_h3_spearman.csv,ek
+R03,A kod dogrulugu (S0 kendi C'si ile ACC),sanity,R02 sonucu goruldukten sonra,ACC havuz AE 1.4e-12 (hata yok); tek-kedi torbalarinda S0'da bile CC<ACC,ek
+R03,B oracle-C (hedef etiketli C) CC'yi geciyor mu,ayirt edicilik teshisi,R02 sonucu goruldukten sonra,HAYIR: S1-tasma CC-oracle +0.0059 [-0.0172;0.0281],ek
+R03,C kalibrasyon (isotonic/sicaklik) duzeltiyor mu,ECE/Brier,R02 sonucu goruldukten sonra,HAYIR: hicbir kalibre tahminci CC'yi gecmedi,ek
+R03,D/H4 hedefte etiket butcesi (T-ACC; yeniden egitim),m=60..1800,R02 sonucu goruldukten sonra,yalniz yeniden egitim S1-tasma'da kazandirdi (m=1800 +0.0333 [0.0170;0.0535]); T-ACC gecmedi,ana metin
+R03,E S2 eksen eslemesi / degismez oznitelik,S2-esl; S2-deg,R02 sonucu goruldukten sonra,esleme AE'yi iyilestirmedi (ham-esl -0.0191 [-0.0392;0.0027]),ek
+R04,ACC-xfit CC'yi geciyor mu,yanlilik-varyans,R03 sonucu goruldukten sonra,S1'de HAYIR; yalniz S2-esleneminde +0.0571 [0.0145;0.1059],ek
+R04,kirilma kriteri (yanlilik^2_CC > varyans_ACC),analitik kriter,R03 sonucu goruldukten sonra,isabet 0.485 (taban 0.663): zayif,cikarildi (oneri)
+R05,A kapisi (oznitelik tasimasi),VM_Mean medyani,onceden,GECTI (Smit 0.978; Dunford 0.964; kopek 1.012 g),ek
+R05,H5 kaynak C kollari CC'yi geciyor mu (oncegoru HAYIR),S3 S4,onceden (oncegoru yazili),yalniz S3-ACC +0.0292 gecti; R06'da F kuraliyla BELIRSIZ,ana metin (F kategorisiyle)
+R05,H6 calisma duzeyi en iyi duzeltme kolu en kucuk anlamli m,S3 S4,R04 sonucu goruldukten sonra,hicbir m'de yok,ek
+R05,H7 birey > calisma kalibrasyonu (oncegoru EVET),S4-Smit,R04 sonucu goruldukten sonra,HAYIR (oncegoru tutmadi),ek
+R05,H8 yeniden egitim - en iyi kol,S1 S2 S3 S4,R04 sonucu goruldukten sonra,S1 S2 S4-Smit'te EVET; S3 ve Dunford'da HAYIR/BELIRSIZ,ana metin
+R05,H9 APP duzeltmeyi kayiriyor mu,Smit S1 kopru,R04 sonucu goruldukten sonra,EVET: APP +0.0601 [0.0413;0.0765]; dogal 2 dk -0.0176 [-0.0447;0.0002],ana metin
+R06,A1 kapi (0.0260 vs 0.0290 aciklamasi),sayim,R05 sonucu goruldukten sonra,GECTI (R05 analiz hatasi bulundu),ek
+R06,A2 D17 bedeli (S2 D17 - esl32),68 torba,R05 sonucu goruldukten sonra,PACC +0.0864 KAZANIR; CC/ACC BELIRSIZ,ek
+R06,B Dunford yinelenen bloklar (v1 -> v2),veri kalitesi,R05 sonucu goruldukten sonra,413 saniyenin tumu yinelenen satir icerir; v2 kullanildi,ana metin (veri bolumu)
+R06,C naif taban (N-hedef) CC'yi geciyor mu,CC vs N-hedef,R05 sonucu goruldukten sonra,S1 S2 S4-Smit-kapali R-D'de CC KAZANIR; S3 ve Dunford BELIRSIZ,ana metin
+R06,D kazanc-kayma (delta; kappa; tau kurali),Spearman + dondurulmus tau,R05 sonucu goruldukten sonra,kural dis veride CC'yi gecmedi,cikarildi (oneri)
+R06,E1 agirlikli yeniden egitim,m=300 1800,R05 sonucu goruldukten sonra,S4-Smit-acik birey m=1800 +0.0142 KAZANIR; digerleri BELIRSIZ/ESDEGER,ek
+R06,E2 yalniz hedef (eslesmis) - CC,m=300 1800,R05 sonucu goruldukten sonra,S4-Smit-acik birey m=1800 +0.0547 KAZANIR; S4-Smit-kapali KAYBEDER,ana metin
+R06,E3 sinif kapsami (>=20 s),m=1800 S1,R05 sonucu goruldukten sonra,cekilislerin %2.1'i her siniftan >=20 s icerir,ana metin
+R06,E4 S1-kapali - S4-Smit-kapali (tur kaymasi maliyeti),68 torba,R05 sonucu goruldukten sonra,CC EDEGER (-0.0024 [-0.0073;0.0041]),ek
+R06,F R05 H5/H8'in F kuraliyla yeniden siniflandirilmasi,F karar kurali,R05 sonucu goruldukten sonra,S3-ACC kazanci KALMADI (BELIRSIZ),ana metin
+R07,S1 yalniz hedef - CC ve - agirlikli yeniden egitim (S3 S4),m=300 1800,R06 sonucu goruldukten sonra,bkz R07 cevap 1,ana metin
+R07,S3 Dunford bolme birimi ve yinelenenler,rastgele 60/40 vs LOCO,R06 sonucu goruldukten sonra,bkz R07 cevap 3,ek
+R07,S4 HGB ve LR ile saglamlik,kaynak C kollari,R06 sonucu goruldukten sonra (on tanimli yorum),bkz R07 cevap 4,ana metin
+R07,S5 kopekte H5 ve H9 tekrari (n=44),K-L2 K-L1 S2-kopek,R06 sonucu goruldukten sonra (on tanimli yorum),bkz R07 cevap 5,ana metin
+R07,S6 tabakali hedef etiketleme,T-ACC-tab PACC-hedef-tab Yalniz-hedef-tab,R06 sonucu goruldukten sonra (on tanimli yorum),bkz R07 cevap 6,ana metin
+R08,"DM - CC (dagilim esleme, 10 kutulu cok sinifli HDy)",12 birincil aile; F karari; birey bootstrap + Holm 3 test,onceden (gorev 08 metni; sonuc gorulmeden yazildi),"KAZANIR 1/12: S1 APP120 +0.0477; KAYBEDER 3/12: S1 30dk -0.0325, S2 -0.0984, K-L2 kayit -0.0289; ESDEGER 2/12: S4-Smit-kapali -0.0066, K-L1 kayit -0.0047; BELIRSIZ 6/12: S1 2dk -0.0276, S1-L2 30dk -0.0130, K-L1 2dk +0.0089, K-L2 2dk +0.0069, S3 [kesifsel] +0.0123, S4-Dunford-kapali [kesifsel] -0.0232",ana metin (Iddia 1; APP120 Iddia 4)
+R08,DR-APP - CC (DR-q: 9 ondalik dilim; APP egitim torbalari),12 birincil aile; F karari,onceden (gorev 08 metni),"KAZANIR 1/12: S1 APP120 +0.0341; KAYBEDER 8/12: S1 2dk -0.2321, S1 30dk -0.1269, S2 -0.1862, S4-Smit-kapali -0.0792, K-L1 2dk -0.1133, K-L1 kayit -0.0664, K-L2 2dk -0.1070, K-L2 kayit -0.0452; BELIRSIZ 3/12: S1-L2 30dk -0.0287, S3 [kesifsel] -0.1420, S4-Dunford-kapali [kesifsel] -0.1121",ana metin (Iddia 1)
+R08,DR-dogal - CC (DR-q; dogal egitim torbalari),12 birincil aile; F karari,onceden (gorev 08 metni),"KAYBEDER 9/12: S1 2dk -0.0207, S1 30dk -0.0507, S1 APP120 -0.1067, S2 -0.0409, S4-Smit-kapali -0.0243, K-L1 2dk -0.0721, K-L1 kayit -0.1225, K-L2 2dk -0.0542, K-L2 kayit -0.0583; BELIRSIZ 3/12: S1-L2 30dk -0.0020, S3 [kesifsel] -0.0938, S4-Dunford-kapali [kesifsel] -0.1396",ana metin (Iddia 1)
+R08,"DR-h (ikincil tanimlayici: sinif basina sonsal histogrami), APP ve dogal","ikincil aile, 2 test/hucre",onceden (gorev 08 metni),"DR-APP-h: KAZANIR 1/12: S1 APP120 +0.0478; KAYBEDER 7/12: S1 2dk -0.0498, S1 30dk -0.0442, S2 -0.1070, S4-Smit-kapali -0.0228, K-L1 2dk -0.0385, K-L1 kayit -0.0321, K-L2 kayit -0.0217; BELIRSIZ 4/12: S1-L2 30dk -0.0338, K-L2 2dk -0.0219, S3 [kesifsel] -0.0077, S4-Dunford-kapali [kesifsel] -0.0515; DR-dogal-h: KAYBEDER 6/12: S1 2dk -0.0200, S1 30dk -0.0435, S4-Smit-kapali -0.0159, K-L1 2dk -0.0171, K-L1 kayit -0.0699, K-L2 kayit -0.0320; BELIRSIZ 6/12: S1 APP120 -0.0140, S1-L2 30dk -0.0087, S2 -0.0540, K-L2 2dk -0.0044, S3 [kesifsel] +0.0270, S4-Dunford-kapali [kesifsel] -0.0510",ek
+R08,"Q1 olcutu (Q1-a Smit S1 30dk, Q1-b kopek K-L1/K-L2 kayit, Q1-c hicbir birincil ailede KAYBEDER yok; ayni varyant icin birlikte)",islemsel tanim 7.2,onceden (gorev 08 metni; sonuc gorulmeden sabitlendi),"DR-APP-q: Q1-a HAYIR, Q1-b HAYIR, Q1-c HAYIR; DR-dogal-q: Q1-a HAYIR, Q1-b HAYIR, Q1-c HAYIR; olcut HAYIR",ana metin
+R08,7.3 ara durum kurali (dogal ailede KAZANIR / yalniz APP / ikincil),durum secimi,onceden (gorev 08 metni 7.3),gecerli durum: 7.3-yalniz-APP; dogal KAZANIR hucre: 0; yalniz APP KAZANIR: 2; ikincil dogal KAZANIR: 0,ana metin (Iddia 1 cumlesi)

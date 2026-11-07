@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "Do quantification corrections reduce time-budget error when accelerometer behaviour classifiers are reused?"
+type: software
+authors:
+  - family-names: Melek
+    given-names: Mesut
+    affiliation: "Gümüşhane University"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"  # to be filled in by the author
+license: MIT

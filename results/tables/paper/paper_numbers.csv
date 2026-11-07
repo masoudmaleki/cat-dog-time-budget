@@ -1,0 +1,18 @@
+kimlik,tanim,beklenen,hesaplanan,kaynak_dosya,eslesme
+N01,"S1 L1 birincil, AE_CC / AE_N-hedef","0,0260 / 0,1091",0.026 / 0.1091,r07_master.csv,EVET
+N02,"S1 L2, AE_CC / AE_N-hedef","0,084 / 0,122",0.084 / 0.122,r06_C_naive.csv,EVET
+N03,S1 L1 d: PCC / ACC / PACC / EMQ,"−0,0152 / −0,0063 / −0,0240 / −0,0440",-0.0152 / -0.0063 / -0.024 / -0.044,r07_master.csv,EVET
+N04,S2 L1 d: ACC / PACC,"−0,0121 / −0,0693",-0.0121 / -0.0693,r07_master.csv,EVET
+N05,K-L2-32 köpek × kayıt d: ACC / PACC / EMQ,"−0,0312 / −0,0307 / −0,0212",-0.0312 / -0.0307 / -0.0212,r07_5_tests.csv,EVET
+N06,"S1 birey m = 1.800: her sınıftan ≥ 20 s içeren çekiliş (%), rastgele / tabakalı","%2,1 / %91,7",2.1 / 91.7,r07_6_counts.csv,EVET
+N07,"S1 birey m = 1.800: eksik C sütunu (%), rastgele / tabakalı","%65,0 / %8,3",65.0 / 8.3,r07_6_counts.csv,EVET
+N08,"S1 PACC-hedef-tabakalı d (CC-tab'a karşı), m = 60 / 300 / 900","−0,0257 / −0,0130 / −0,0123",-0.0257 / -0.013 / -0.0123,r07_6_tests.csv,EVET
+N09,"S4-Smit-açık, birincil küme (68 torba): Bakım işaretli yanlılığı CC, birey ortalaması (pp); Bakım saniyelerinin Inaktif'e giden payı (%)","−12,9 / %78,3",-12.9 / 78.3,r05_sources_bags.parquet (R10 B1 i); r05/sources.pkl,EVET
+N10,"Yalnız hedef − CC, birey, m = 1.800: S4-Smit-açık / S4-Smit-kapalı","+0,0547 / −0,0288",0.0547 / -0.0288,r07_master.csv,EVET
+N11,S1 APP 120 s PACC − CC: RF / HGB / LR,"+0,0601 / +0,0638 / +0,1526",0.0601 / 0.0638 / 0.1526,r07_4_tests.csv,EVET
+N12,S1 doğal 2 dk PACC − CC: RF / HGB / LR,"−0,0185 / −0,0123 / +0,0082",-0.0185 / -0.0123 / 0.0082,r07_4_tests.csv,EVET
+N13,R08 S1 30 dk d: DM / DR-APP / DR-doğal,"−0,0325 / −0,1269 / −0,0507",-0.0325 / -0.1269 / -0.0507,r08_tests.csv,EVET
+N14,R08 S1 APP 120 s d: DM / DR-APP,"+0,0477 / +0,0341",0.0477 / 0.0341,r08_tests.csv,EVET
+N15,AE_CC: S4-Smit-kapalı / S1-kapalı,"0,0089 / 0,0132",0.0089 / 0.0132,r07_master.csv,EVET
+N16,Dunford rastgele − LOCO makro-F1: v1 / v2,"+0,226 / +0,184",0.226 / 0.184,r07_3_c_summary.csv,EVET
+N17,Dunford > 42 satırlı saniyelerden blok tekrarı olan / toplam,394 / 413,394 / 413,r07_3.json,EVET

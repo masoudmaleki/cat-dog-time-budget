@@ -1,0 +1,18 @@
+{
+ "a": {
+  "saniye_gt42": 413,
+  "blok_tekrari": 394,
+  "blok_tekrari_zaman_damgasi_ayni": 394,
+  "blok_tekrari_sinyal_birebir": 394,
+  "blok_olmayan": 19,
+  "kaldirilan_satir": 16494
+ },
+ "v1_yinelenen_pencere_grubu": 30,
+ "v1_yinelenen_pencere_sayisi": 60,
+ "v1_ayri_dusen_grup_orani_ort": 0.4833333333333334,
+ "v1_ayri_dusen_cift_orani_ort": 0.4833333333333334,
+ "v1_ayri_dusen_cift_orani_aralik": [
+  0.3333333333333333,
+  0.6333333333333333
+ ]
+}
