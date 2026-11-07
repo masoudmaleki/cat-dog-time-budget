@@ -1,0 +1,4 @@
+measure,bias_pp,ci_low,ci_high,n_individuals,n_windows
+cat level (all seconds of each cat),-15.125829748479951,,,12,
+"(i) individual mean (mean over each cat's 30-min windows, then over cats)",-12.88106736942092,-17.389775154203928,-8.123623086178172,12,68.0
+(ii) window mean (68 windows),-14.696630273727466,-18.467039939673622,-10.079290435276524,12,68.0

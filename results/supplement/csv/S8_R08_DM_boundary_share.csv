@@ -1,0 +1,13 @@
+scenario,sample_type,n_samples,share_boundary_solution
+K-L1,natural 2-min,130,0.7538461538461538
+K-L1,recording,61,0.0
+K-L2,natural 2-min,130,1.0
+K-L2,recording,61,0.9836065573770492
+S1,2-min,1083,0.8873499538319483
+S1,30-min,68,0.6764705882352942
+S1,APP 120-s,600,0.2683333333333333
+S1-L2 (collar),30-min,68,1.0
+S2,30-min,68,0.4852941176470588
+S3 [exploratory],cat sample,8,0.625
+S4-Dunford-closed [exploratory],cat sample,7,0.2857142857142857
+S4-Smit-closed,30-min,68,0.5
