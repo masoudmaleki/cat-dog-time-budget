@@ -1,0 +1,24 @@
+v4_table,v5_table,rows_v4,rows_carried,how
+S1,S1,3,3,unchanged
+S2,S2,37,37,table references renumbered
+S3,S3,133,133,group A; AE basis label corrected in 12 within-dog DM/DR rows
+S4,S3,75,75,"30 rows already in group A, 45 added as group B"
+S5,S3,15,15,all rows contained in v4 S4 (group A or B)
+S6a,S3,72,72,group C
+S6b,S4,21,21,unchanged
+S7,S5,34,34,merged into S5 (identical counts verified)
+S8,S5,12,12,merged into S5 as share_boundary_solution
+S9,S5,34,34,S5
+S10,S6a,34,34,S6a
+S11,S6b,80,80,S6b
+S12,S3,24,24,group D (PACC comparison columns dropped; PACC rows are in group A)
+S13,S6c,32,32,S6c
+S14,S7,117,117,S7 (internal check columns d_AE_recomputed and AE_check verified and dropped); 16 R15 rows added
+S15,S3,46,46,group E
+S16,S8,3,3,unchanged
+S17a,S9a,13,13,S9a
+S17b,S9b,21,21,S9b
+S18a,S10a,8,8,S10a; note on the version used corrected
+S18b,S10b,4,4,S10b; version label corrected
+S19,S11,105,105,unchanged
+S20,S7,73,73,"42 rows joined to S7 rows as rare-class columns, 31 added as rows"

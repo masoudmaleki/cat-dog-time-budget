@@ -1,0 +1,81 @@
+scenario,sample_type,variant,class,n_outside_training_range,n_evaluated,share_outside_training_range
+K-L1,natural 2-min,DR-APP,inactive,0,130,0.0
+K-L1,natural 2-min,DR-APP,locomotion,0,130,0.0
+K-L1,natural 2-min,DR-natural,inactive,0,130,0.0
+K-L1,natural 2-min,DR-natural,locomotion,0,130,0.0
+K-L1,recording,DR-APP,inactive,0,61,0.0
+K-L1,recording,DR-APP,locomotion,0,61,0.0
+K-L1,recording,DR-natural,inactive,0,61,0.0
+K-L1,recording,DR-natural,locomotion,0,61,0.0
+K-L2,natural 2-min,DR-APP,Lying on chest,19,130,0.1461538461538461
+K-L2,natural 2-min,DR-APP,Sitting,10,130,0.0769230769230769
+K-L2,natural 2-min,DR-APP,Standing,10,130,0.0769230769230769
+K-L2,natural 2-min,DR-APP,Trotting,32,130,0.2461538461538461
+K-L2,natural 2-min,DR-APP,Walking,32,130,0.2461538461538461
+K-L2,natural 2-min,DR-natural,Lying on chest,0,130,0.0
+K-L2,natural 2-min,DR-natural,Sitting,0,130,0.0
+K-L2,natural 2-min,DR-natural,Standing,0,130,0.0
+K-L2,natural 2-min,DR-natural,Trotting,0,130,0.0
+K-L2,natural 2-min,DR-natural,Walking,0,130,0.0
+K-L2,recording,DR-APP,Lying on chest,0,61,0.0
+K-L2,recording,DR-APP,Sitting,0,61,0.0
+K-L2,recording,DR-APP,Standing,0,61,0.0
+K-L2,recording,DR-APP,Trotting,0,61,0.0
+K-L2,recording,DR-APP,Walking,0,61,0.0
+K-L2,recording,DR-natural,Lying on chest,0,61,0.0
+K-L2,recording,DR-natural,Sitting,0,61,0.0
+K-L2,recording,DR-natural,Standing,0,61,0.0
+K-L2,recording,DR-natural,Trotting,0,61,0.0
+K-L2,recording,DR-natural,Walking,0,61,0.0
+S1,2-min,DR-APP,maintenance,39,1083,0.0360110803324099
+S1,2-min,DR-APP,inactive,642,1083,0.592797783933518
+S1,2-min,DR-APP,locomotion,0,1083,0.0
+S1,2-min,DR-natural,maintenance,0,1083,0.0
+S1,2-min,DR-natural,inactive,0,1083,0.0
+S1,2-min,DR-natural,locomotion,1,1083,0.0009233610341643
+S1,30-min,DR-APP,maintenance,0,68,0.0
+S1,30-min,DR-APP,inactive,20,68,0.2941176470588235
+S1,30-min,DR-APP,locomotion,0,68,0.0
+S1,30-min,DR-natural,maintenance,0,68,0.0
+S1,30-min,DR-natural,inactive,0,68,0.0
+S1,30-min,DR-natural,locomotion,0,68,0.0
+S1,APP 120-s,DR-APP,maintenance,1,600,0.0016666666666666
+S1,APP 120-s,DR-APP,inactive,0,600,0.0
+S1,APP 120-s,DR-APP,locomotion,0,600,0.0
+S1,APP 120-s,DR-natural,maintenance,0,600,0.0
+S1,APP 120-s,DR-natural,inactive,0,600,0.0
+S1,APP 120-s,DR-natural,locomotion,58,600,0.0966666666666666
+S1-L2 (collar),30-min,DR-APP,Eating,0,68,0.0
+S1-L2 (collar),30-min,DR-APP,Grooming,0,68,0.0
+S1-L2 (collar),30-min,DR-APP,Lying,19,68,0.2794117647058823
+S1-L2 (collar),30-min,DR-APP,Sitting,6,68,0.088235294117647
+S1-L2 (collar),30-min,DR-APP,Standing,0,68,0.0
+S1-L2 (collar),30-min,DR-APP,Trotting,0,68,0.0
+S1-L2 (collar),30-min,DR-APP,Walking,0,68,0.0
+S1-L2 (collar),30-min,DR-natural,Eating,0,68,0.0
+S1-L2 (collar),30-min,DR-natural,Grooming,0,68,0.0
+S1-L2 (collar),30-min,DR-natural,Lying,0,68,0.0
+S1-L2 (collar),30-min,DR-natural,Sitting,0,68,0.0
+S1-L2 (collar),30-min,DR-natural,Standing,0,68,0.0
+S1-L2 (collar),30-min,DR-natural,Trotting,0,68,0.0
+S1-L2 (collar),30-min,DR-natural,Walking,0,68,0.0
+S2,30-min,DR-APP,maintenance,0,68,0.0
+S2,30-min,DR-APP,inactive,20,68,0.2941176470588235
+S2,30-min,DR-APP,locomotion,0,68,0.0
+S2,30-min,DR-natural,maintenance,0,68,0.0
+S2,30-min,DR-natural,inactive,0,68,0.0
+S2,30-min,DR-natural,locomotion,0,68,0.0
+S3 [exploratory],cat sample,DR-APP,maintenance,0,8,0.0
+S3 [exploratory],cat sample,DR-APP,inactive,2,8,0.25
+S3 [exploratory],cat sample,DR-APP,locomotion,0,8,0.0
+S3 [exploratory],cat sample,DR-natural,maintenance,0,8,0.0
+S3 [exploratory],cat sample,DR-natural,inactive,0,8,0.0
+S3 [exploratory],cat sample,DR-natural,locomotion,1,8,0.125
+S4-Dunford-closed [exploratory],cat sample,DR-APP,inactive,0,7,0.0
+S4-Dunford-closed [exploratory],cat sample,DR-APP,locomotion,0,7,0.0
+S4-Dunford-closed [exploratory],cat sample,DR-natural,inactive,0,7,0.0
+S4-Dunford-closed [exploratory],cat sample,DR-natural,locomotion,0,7,0.0
+S4-Smit-closed,30-min,DR-APP,inactive,0,68,0.0
+S4-Smit-closed,30-min,DR-APP,locomotion,0,68,0.0
+S4-Smit-closed,30-min,DR-natural,inactive,0,68,0.0
+S4-Smit-closed,30-min,DR-natural,locomotion,0,68,0.0

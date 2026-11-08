@@ -97,4 +97,4 @@ L1: `Inaktif` (lying + sitting + standing / rest), `Lokomosyon` (walk + trot [+ 
 
 See `CITATION.cff`. Code: MIT licence (`LICENSE`). The datasets keep their own licences; cite the original publications when using them.
 
-The supplementary workbook (results/supplement/Supplementary_Material.xlsx) is built by scripts/supplement/build_supp.py from the tables in results/tables.
+The supplementary tables (results/supplement/Supplementary_Material.xlsx and .tex, Tables S1–S11) are built by scripts/supplement/consolidate_supp.py from the tables S1–S20 of the previous version (results/supplement/v4/, built by scripts/supplement/build_supp.py from results/tables). Figure 2 is drawn by scripts/fig2_forest_v5.py.

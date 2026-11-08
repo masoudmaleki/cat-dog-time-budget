@@ -1,0 +1,9 @@
+behaviour,TableA2_s,all_rows_div40_s,block_repeats_removed_s (used here),every_duplicate_row_removed_s (comparison only)
+Groom,13.08,13.075,13.075,12.825
+Feed,66.98,66.975,66.975,64.6
+Rest,2491.78,2491.775,2110.25,1864.775
+Walk,533.65,533.65,508.8,502.175
+Trot,86.85,86.85,82.875,81.75
+Run,50.8,50.8,49.8,48.3
+Shake,7.15,7.15,6.15,5.475
+Total,3250.28,3250.275,2837.925,2579.9

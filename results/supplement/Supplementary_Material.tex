@@ -1,0 +1,1167 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[landscape,margin=1.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\LTpre}{2pt}
+\setlength{\LTpost}{8pt}
+\setlength{\LTleft}{0pt}
+\pagestyle{plain}
+\begin{document}
+\begin{center}
+{\Large\bfseries Supplementary Material}\\[6pt]
+{\large Quantification corrections did not meaningfully reduce time-budget error of reused accelerometer classifiers in cats and dogs}\\[8pt]
+Mesut Melek$^{1}$ \quad Negin Melek$^{2}$\\[4pt]
+{\small $^{1}$Department of Software Engineering, Faculty of Engineering, Gümüşhane University, Gümüşhane, Türkiye\\ $^{2}$Department of Electrical and Electronics Engineering, Faculty of Engineering, Gümüşhane University, Gümüşhane, Türkiye\\[2pt]
+Corresponding author: Negin Melek (negin.melek@gumushane.edu.tr)}
+\end{center}
+\medskip
+{\small
+Conventions unless stated otherwise: AE = mean absolute error of class proportions; d = AE\_reference $-$ AE\_arm (positive: the arm is better).\par\smallskip
+Decisions: better / worse = Holm-adjusted p < 0.05 and |d| $\geq$ 0.01 in that direction; equivalent = 95\% interval within [$-$0.01, 0.01]; otherwise inconclusive.\par\smallskip
+Scenarios: S0 random seconds (leaky); S1 new individual; S2 harness $\rightarrow$ collar; S3 Smit $\rightarrow$ Dunford; S4 dog $\rightarrow$ cat (open: target maintenance kept; closed: removed); R-D within Dunford; S1-closed: S1 without maintenance; L2: seven Smit classes; K-L1, K-L2: two and five dog classes. [exploratory] marks results based on the Dunford data.\par\smallskip
+Sample types: natural 30-min and 2-min windows, cat samples (Dunford), dog recordings, and artificial-prevalence (APP) samples of 120 s.\par\smallskip
+Values are rounded for print. The same tables at full numerical precision are in Supplementary\_Material.xlsx and in the code repository (\url{https://github.com/masoudmaleki/cat-dog-time-budget}).\par}
+\medskip{\small\begin{tabular}{@{}l p{22cm}@{}}\toprule \textbf{Table} & \textbf{Content} \\ \midrule
+S1 & D17 versus the axis-mapped 32 features in harness-to-collar transfer (S2, Smit, three classes, 68 natural 30-min windows). \\
+S2 & Analysis history: every hypothesis and criterion tested, when it was specified, its result and where it is reported. \\
+S3 & All statistical comparisons of an estimator with a reference arm: effects, 95\% intervals, Holm-adjusted p-values and decisions. \\
+S4 & Macro-F1, accuracy and pooled top-label expected calibration error (ECE, 10 bins) of the three classifiers. \\
+S5 & Distribution matching (DM): solutions on the boundary of the simplex and classes set to zero. \\
+S6 & Direct compositional regression (DR): diagnostics. \\
+S7 & Relative absolute error (RAE) of classify-and-count and each estimator, and signed bias of the rarest class. \\
+S8 & Dog-to-cat transfer with maintenance absent from the source (S4-Smit-open): signed bias of the maintenance share under classify-and-count, by averaging level. \\
+S9 & Prevalence shift and shift-dependent decision rules. \\
+S10 & Dunford et al. (2024) data: repeated blocks and validation unit. \\
+S11 & Seven-class Smit data: bias--variance decomposition of time-budget error by window length and estimator. \\
+\bottomrule\end{tabular}}
+\clearpage
+\subsection*{Table S1. D17 versus the axis-mapped 32 features in harness-to-collar transfer (S2, Smit, three classes, 68 natural 30-min windows).}
+{\footnotesize d = AE\_mapped32 $-$ AE\_D17 (mean over individuals; positive: D17 better). Holm adjustment over the three estimators.\par}\smallskip
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.34cm}>{\raggedright\arraybackslash}p{1.81cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.65cm}>{\raggedright\arraybackslash}p{0.88cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.96cm}@{}}
+\toprule
+\textbf{estimator} & \textbf{n windows} & \textbf{AE D17} & \textbf{AE mapped32} & \textbf{n individuals} & \textbf{d} & \textbf{ci low} & \textbf{ci high} & \textbf{p} & \textbf{p min attainable} & \textbf{p holm} & \textbf{family size} & \textbf{category} \\
+\midrule
+\endhead
+\midrule \multicolumn{13}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+CC & 68 & 0.0405 & 0.0683 & 12 & $+0.025$ & $-0.002$ & $+0.067$ & 0.214 & $4.9\times10^{-4}$ & 0.393 & 3 & inconclusive \\
+ACC & 68 & 0.0528 & 0.0904 & 12 & $+0.032$ & $-0.002$ & $+0.088$ & 0.196 & $4.9\times10^{-4}$ & 0.393 & 3 & inconclusive \\
+PACC & 68 & 0.1155 & 0.2016 & 12 & $+0.086$ & $+0.057$ & $+0.118$ & $4.9\times10^{-4}$ & $4.9\times10^{-4}$ & 0.001 & 3 & better \\
+\end{longtable}}
+\clearpage
+\subsection*{Table S2. Analysis history: every hypothesis and criterion tested, when it was specified, its result and where it is reported.}
+{\footnotesize R02--R08 are successive analysis rounds. 'after Rxx results were seen' marks analyses defined after earlier results were available. 'this table only': the result is reported nowhere else. Effects are differences in AE with 95\% individual-bootstrap intervals.\par}\smallskip
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.8cm}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{4.3cm}>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{8.0cm}>{\raggedright\arraybackslash}p{3.6cm}@{}}
+\toprule
+\textbf{round} & \textbf{hypothesis or criterion} & \textbf{definition} & \textbf{when specified} & \textbf{result} & \textbf{location in paper} \\
+\midrule
+\endhead
+\midrule \multicolumn{6}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+R02 & H1: in S1-collar (seven classes), do ACC, PACC or EMQ have lower AE than CC? & Smit L2, 32 features, 68 windows & pre-specified (task text) & No: CC $-$ ACC $-$0.0173 [$-$0.0266; $-$0.0081] (CC better); PACC and EMQ also worse than CC & main text \\
+R02 & H2: is the advantage of ACC smaller in S2 than in S1? & same & pre-specified & S2 $-$ S1 ACC difference +0.0004 [$-$0.0163; 0.0157]: no difference shown & this table only \\
+R02 & H3: agreement between macro-F1 and AE rankings (Spearman) & cat level & pre-specified & see r02\_h3\_spearman.csv in the code repository & code repository \\
+R03 & A: code check (ACC with the confusion matrix of S0 itself) & sanity check & after R02 results were seen & pooled ACC AE 1.4e-12 (no error); in single-cat windows CC < ACC even in S0 & this table only \\
+R03 & B: does an oracle confusion matrix (from target labels) beat CC? & diagnostic of separability & after R02 results were seen & No: S1-collar CC $-$ oracle +0.0059 [$-$0.0172; 0.0281]. Superseded: this oracle leaked test data and was replaced by the cross-fitted oracle in R04 & not reported (superseded) \\
+R03 & C: does calibration (isotonic, temperature) remove the problem? & ECE, Brier score & after R02 results were seen & No: no calibrated estimator beat CC & this table only \\
+R03 & D/H4: target label budget (T-ACC; retraining) & m = 60--1800 s & after R02 results were seen & only retraining gained, in S1-collar (m = 1800: +0.0333 [0.0170; 0.0535]); T-ACC did not & main text (superseded by R05--R07 designs) \\
+R03 & E: S2 axis mapping and invariant features & S2 mapped; S2 invariant & after R02 results were seen & mapping did not improve AE (raw $-$ mapped $-$0.0191 [$-$0.0392; 0.0027]) & this table only \\
+R04 & Does ACC with a cross-fitted oracle matrix (ACC-xfit) beat CC? & bias--variance decomposition & after R03 results were seen & No in S1; only in S2-mapped +0.0571 [0.0145; 0.1059] & supplement (Table S11) \\
+R04 & Breakdown criterion (bias$^{2}$ of CC > variance of ACC) & analytic criterion & after R03 results were seen & hit rate 0.485 (baseline 0.663): weak & not reported \\
+R05 & Gate A (feature port) & median VM\_Mean in inactive seconds & pre-specified & passed (Smit 0.978; Dunford 0.964; dog 1.012 g) & Methods \\
+R05 & H5: do source-calibrated arms beat CC? (prediction: no) & S3, S4 & pre-specified (prediction written) & only S3-ACC +0.0292 passed; inconclusive under the decision rule adopted in R06 & main text (decision-rule categories) \\
+R05 & H6: smallest m at which the best study-level correction is significant & S3, S4 & after R04 results were seen & none at any m & this table only \\
+R05 & H7: individual-level calibration better than study-level calibration (prediction: yes) & S4-Smit & after R04 results were seen & No (prediction not met). Later judged an invalid test design & not reported (invalid design) \\
+R05 & H8: retraining is the best arm & S1, S2, S3, S4 & after R04 results were seen & yes in S1, S2 and S4-Smit; no or inconclusive in S3 and Dunford (reclassified in R06 F) & main text \\
+R05 & H9: does the artificial-prevalence protocol favour corrections? & Smit S1 bridge & after R04 results were seen & Yes: APP +0.0601 [0.0413; 0.0765]; natural 2-min $-$0.0176 [$-$0.0447; 0.0002] & main text \\
+R06 & A1 gate (explaining 0.0260 vs 0.0290) & count check & after R05 results were seen & passed (an analysis error in R05 was found and corrected) & this table only \\
+R06 & A2: cost of D17 (S2, D17 vs axis-mapped 32 features) & 68 windows & after R05 results were seen & PACC +0.0864 better with D17; CC and ACC inconclusive & supplement (Table S1) \\
+R06 & B: duplicated blocks in the Dunford file (v1 $\rightarrow$ v2) & data quality & after R05 results were seen & all 413 over-full seconds contain duplicated rows; v2 used & main text (Methods, Results) \\
+R06 & C: does the naive baseline (N-target) beat CC? (each scenario tested alone) & CC vs N-target & after R05 results were seen & CC better in S1, S2, S4-Smit-closed and R-D; S3 and Dunford transfer inconclusive. In Table 3, N-target is tested in the family of the source-calibrated arms (except the seven-class collar row) & main text \\
+R06 & D: gain versus shift ($\delta$, $\kappa$, $\tau$ rule) & Spearman correlation; frozen $\tau$ & after R05 results were seen & the rule did not beat CC in the held-out scenarios & supplement (Table S9) \\
+R06 & E1: weighted retraining & m = 300, 1800 s & after R05 results were seen & S4-Smit-open, individual level, m = 1800: +0.0142 better; others inconclusive or equivalent & supplement (Table S3) \\
+R06 & E2: target-only model (paired) $-$ CC & m = 300, 1800 s & after R05 results were seen & S4-Smit-open, individual level, m = 1800: +0.0547 better; S4-Smit-closed worse & main text \\
+R06 & E3: class coverage ($\geq$ 20 s of every class) & m = 1800 s, S1 & after R05 results were seen & 2.1\% of label sets contain $\geq$ 20 s of every class & main text \\
+R06 & E4: S1-closed $-$ S4-Smit-closed (cost of the species shift) & 68 windows & after R05 results were seen & CC equivalent ($-$0.0024 [$-$0.0073; 0.0041]) & main text (Results, dog- vs cat-trained models) \\
+R06 & F: reclassification of R05 H5 and H8 under the decision rule & decision rule & after R05 results were seen & the S3-ACC gain no longer held (inconclusive) & main text \\
+R07 & \S{}1 target-only $-$ CC and $-$ weighted retraining (S3, S4) & m = 300, 1800 s & after R06 results were seen & see Table 5 and Results & main text \\
+R07 & \S{}3 Dunford split unit and duplicated blocks & random 60/40 split vs leave-one-cat-out & after R06 results were seen & see Table S10 & Discussion; Table S10 \\
+R07 & \S{}4 robustness with gradient boosting and logistic regression & source-calibrated arms & after R06 results were seen (interpretation pre-specified) & see Tables S3 and S4 & main text; Tables S3 and S4 \\
+R07 & \S{}5 replication of H5 and H9 in dogs (n = 44) & K-L2, K-L1, S2-dog & after R06 results were seen (interpretation pre-specified) & see Tables 3 and 6 and Table S3 & main text; Table S3 \\
+R07 & \S{}6 stratified target labelling & T-ACC, PACC-target and target-only, stratified & after R06 results were seen (interpretation pre-specified) & see Table 5 & main text \\
+R08 & DM $-$ CC (distribution matching, multiclass HDy with 10 bins) & 12 primary families; decision rule; individual bootstrap and Holm over 3 tests & pre-specified (task text written before results) & better 1/12: S1 APP 120-s +0.0477; worse 3/12: S1 30-min $-$0.0325, S2 $-$0.0984, K-L2 recording $-$0.0289; equivalent 2/12: S4-Smit-closed $-$0.0066, K-L1 recording $-$0.0047; inconclusive 6/12: S1 2-min $-$0.0276, S1-L2 30-min $-$0.0130, K-L1 2-min +0.0089, K-L2 2-min +0.0069, S3 [exploratory] +0.0123, S4-Dunford-closed [exploratory] $-$0.0232 & main text; Tables S3 and S5 \\
+R08 & DR-APP $-$ CC (descriptor: 9 deciles per feature; APP training samples) & 12 primary families; decision rule & pre-specified (task text) & better 1/12: S1 APP 120-s +0.0341; worse 8/12: S1 2-min $-$0.2321, S1 30-min $-$0.1269, S2 $-$0.1862, S4-Smit-closed $-$0.0792, K-L1 2-min $-$0.1133, K-L1 recording $-$0.0664, K-L2 2-min $-$0.1070, K-L2 recording $-$0.0452; inconclusive 3/12: S1-L2 30-min $-$0.0287, S3 [exploratory] $-$0.1420, S4-Dunford-closed [exploratory] $-$0.1121 & main text; Tables S3 and S6 \\
+R08 & DR-natural $-$ CC (descriptor: 9 deciles per feature; natural training windows) & 12 primary families; decision rule & pre-specified (task text) & worse 9/12: S1 2-min $-$0.0207, S1 30-min $-$0.0507, S1 APP 120-s $-$0.1067, S2 $-$0.0409, S4-Smit-closed $-$0.0243, K-L1 2-min $-$0.0721, K-L1 recording $-$0.1225, K-L2 2-min $-$0.0542, K-L2 recording $-$0.0583; inconclusive 3/12: S1-L2 30-min $-$0.0020, S3 [exploratory] $-$0.0938, S4-Dunford-closed [exploratory] $-$0.1396 & main text; Tables S3 and S6 \\
+R08 & DR-h (secondary descriptor: per-class posterior histograms), APP and natural training samples & secondary family, 2 tests per cell & pre-specified (task text) & DR-APP-h: better 1/12: S1 APP 120-s +0.0478; worse 7/12: S1 2-min $-$0.0498, S1 30-min $-$0.0442, S2 $-$0.1070, S4-Smit-closed $-$0.0228, K-L1 2-min $-$0.0385, K-L1 recording $-$0.0321, K-L2 recording $-$0.0217; inconclusive 4/12: S1-L2 30-min $-$0.0338, K-L2 2-min $-$0.0219, S3 [exploratory] $-$0.0077, S4-Dunford-closed [exploratory] $-$0.0515. DR-natural-h: worse 6/12: S1 2-min $-$0.0200, S1 30-min $-$0.0435, S4-Smit-closed $-$0.0159, K-L1 2-min $-$0.0171, K-L1 recording $-$0.0699, K-L2 recording $-$0.0320; inconclusive 6/12: S1 APP 120-s $-$0.0140, S1-L2 30-min $-$0.0087, S2 $-$0.0540, K-L2 2-min $-$0.0044, S3 [exploratory] +0.0270, S4-Dunford-closed [exploratory] $-$0.0510 & supplement (Table S3) \\
+R08 & Positive-contribution criterion for DR (a: better in Smit S1 30-min; b: better in dog K-L1 or K-L2 recordings; c: no 'worse' in any primary family; all for the same variant) & operational definition fixed in the task text & pre-specified (fixed before results were seen) & DR-APP: a no, b no, c no; DR-natural: a no, b no, c no; criterion not met & main text (Methods) \\
+R08 & Rule for intermediate outcomes (better in natural families / only under APP / only with the secondary descriptor) & choice of interpretation & pre-specified (task text) & applicable case: only under APP; natural cells better: 0; APP-only cells better: 2; secondary natural cells better: 0 & main text \\
+\end{longtable}}
+\clearpage
+\subsection*{Table S3. All statistical comparisons of an estimator with a reference arm: effects, 95\% intervals, Holm-adjusted p-values and decisions.}
+{\footnotesize d = AE\_reference $-$ AE\_arm, mean over individuals of per-individual differences (positive: the arm is better than the reference); 95\% individual-bootstrap interval; exact sign-flip test, or 200,000 random sign assignments where stated; Holm adjustment within the family whose size is given. AE\_CC\_samples is the error of CC as a mean over samples, as in Tables 3 and 6 of the paper; AE\_reference and AE\_arm are on the basis given in AE\_basis. Groups: A, Cells of Tables 3 and 6 (random forest); B, Dogs: other label and feature sets, and back harness to collar (S2-dog); C, Gradient boosting (HGB) and logistic regression (LR); D, Direct regression with the secondary descriptor (posterior histograms, DR-h); E, Retraining with labelled target seconds, unweighted and weighted; F, Labelling strategy: stratified minus random, each relative to its own CC on the same seconds. In group F, d = [AE\_CC $-$ AE\_arm]stratified $-$ [AE\_CC $-$ AE\_arm]random, each term computed on the seconds that remained after that strategy's labelled seconds were removed (positive: stratified labelling gains more over its own CC). In the print version, * after the family size marks Monte Carlo $p$-values.\par}\smallskip
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.5cm}>{\raggedright\arraybackslash}p{0.6cm}>{\raggedright\arraybackslash}p{2.85cm}>{\raggedright\arraybackslash}p{1.3cm}>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{3.45cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{0.45cm}>{\raggedright\arraybackslash}p{0.95cm}>{\raggedright\arraybackslash}p{0.95cm}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}p{1.75cm}>{\raggedright\arraybackslash}p{1.45cm}@{}}
+\toprule
+\textbf{Grp} & \textbf{Clf} & \textbf{Scenario} & \textbf{Labels, features} & \textbf{Samples} & \textbf{Level, $m$} & \textbf{Arm} & \textbf{Reference} & \textbf{$n$} & \textbf{AE ref.} & \textbf{AE arm} & \textbf{$d$ [95\% CI]} & \textbf{$p_{\mathrm{Holm}}$ (family)} & \textbf{Decision} \\
+\midrule
+\endhead
+\midrule \multicolumn{14}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+A & RF & S0 (leaky) &  & Smit 30-min (68) &  & PCC & CC & 12 & 0.0211 & 0.0308 & $-0.010$ [$-0.014$, $-0.005$] & 0.008 (4) & inconclusive \\
+A & RF & S0 (leaky) &  & Smit 30-min (68) &  & ACC & CC & 12 & 0.0211 & 0.0256 & $-0.003$ [$-0.009$, $+0.002$] & 0.349 (4) & equivalent \\
+A & RF & S0 (leaky) &  & Smit 30-min (68) &  & PACC & CC & 12 & 0.0211 & 0.0329 & $-0.012$ [$-0.018$, $-0.004$] & 0.034 (4) & worse \\
+A & RF & S0 (leaky) &  & Smit 30-min (68) &  & EMQ & CC & 12 & 0.0211 & 0.0415 & $-0.021$ [$-0.036$, $-0.006$] & 0.034 (4) & worse \\
+A & RF & S1 &  & Smit 30-min (68) &  & PCC & CC & 12 & 0.0260 & 0.0425 & $-0.015$ [$-0.025$, $-0.007$] & 0.004 (5) & worse \\
+A & RF & S1 &  & Smit 30-min (68) &  & ACC & CC & 12 & 0.0260 & 0.0324 & $-0.006$ [$-0.012$, $-0.000$] & 0.064 (5) & inconclusive \\
+A & RF & S1 &  & Smit 30-min (68) &  & PACC & CC & 12 & 0.0260 & 0.0527 & $-0.024$ [$-0.049$, $-0.007$] & 0.021 (5) & worse \\
+A & RF & S1 &  & Smit 30-min (68) &  & EMQ & CC & 12 & 0.0260 & 0.0770 & $-0.044$ [$-0.110$, $-0.005$] & 0.044 (5) & worse \\
+A & RF & S1 &  & Smit 30-min (68) &  & N-target & CC & 12 & 0.0260 & 0.1091 & $-0.083$ [$-0.101$, $-0.066$] & 0.002 (5) & worse \\
+A & RF & S1 &  & Smit 30-min (68) &  & DM & CC & 12 & 0.0260 & 0.0649 & $-0.033$ [$-0.085$, $-0.003$] & 0.027 (3) & worse \\
+A & RF & S1 &  & Smit 30-min (68) &  & DR-APP & CC & 12 & 0.0260 & 0.1505 & $-0.127$ [$-0.162$, $-0.098$] & 0.001 (3) & worse \\
+A & RF & S1 &  & Smit 30-min (68) &  & DR-natural & CC & 12 & 0.0260 & 0.0807 & $-0.051$ [$-0.070$, $-0.031$] & 0.002 (3) & worse \\
+A & RF & S2 &  & Smit 30-min (68) &  & PCC & CC & 12 & 0.0405 & 0.0745 & $-0.031$ [$-0.051$, $-0.014$] & 0.002 (5) & worse \\
+A & RF & S2 &  & Smit 30-min (68) &  & ACC & CC & 12 & 0.0405 & 0.0528 & $-0.012$ [$-0.019$, $-0.004$] & 0.017 (5) & worse \\
+A & RF & S2 &  & Smit 30-min (68) &  & PACC & CC & 12 & 0.0405 & 0.1155 & $-0.069$ [$-0.124$, $-0.025$] & 0.009 (5) & worse \\
+A & RF & S2 &  & Smit 30-min (68) &  & EMQ & CC & 12 & 0.0405 & 0.1868 & $-0.134$ [$-0.232$, $-0.047$] & 0.009 (5) & worse \\
+A & RF & S2 &  & Smit 30-min (68) &  & N-target & CC & 12 & 0.0405 & 0.1091 & $-0.067$ [$-0.084$, $-0.051$] & 0.002 (5) & worse \\
+A & RF & S2 &  & Smit 30-min (68) &  & DM & CC & 12 & 0.0405 & 0.1480 & $-0.098$ [$-0.186$, $-0.030$] & 0.007 (3) & worse \\
+A & RF & S2 &  & Smit 30-min (68) &  & DR-APP & CC & 12 & 0.0405 & 0.2313 & $-0.186$ [$-0.221$, $-0.157$] & 0.001 (3) & worse \\
+A & RF & S2 &  & Smit 30-min (68) &  & DR-natural & CC & 12 & 0.0405 & 0.0808 & $-0.041$ [$-0.061$, $-0.021$] & 0.007 (3) & worse \\
+A & RF & S3 [exploratory] &  & Dunford cat sample &  & PCC & CC & 8 & 0.1442 & 0.1758 & $-0.032$ [$-0.073$, $+0.003$] & 0.719 (5) & inconclusive \\
+A & RF & S3 [exploratory] &  & Dunford cat sample &  & ACC & CC & 8 & 0.1442 & 0.1056 & $+0.039$ [$+0.003$, $+0.081$] & 0.352 (5) & inconclusive \\
+A & RF & S3 [exploratory] &  & Dunford cat sample &  & PACC & CC & 8 & 0.1442 & 0.1306 & $+0.014$ [$-0.025$, $+0.062$] & 0.734 (5) & inconclusive \\
+A & RF & S3 [exploratory] &  & Dunford cat sample &  & EMQ & CC & 8 & 0.1442 & 0.1924 & $-0.048$ [$-0.141$, $+0.049$] & 0.734 (5) & inconclusive \\
+A & RF & S3 [exploratory] &  & Dunford cat sample &  & N-target & CC & 8 & 0.1442 & 0.2274 & $-0.083$ [$-0.201$, $+0.033$] & 0.719 (5) & inconclusive \\
+A & RF & S3 [exploratory] &  & Dunford cat sample &  & DM & CC & 8 & 0.1442 & 0.1319 & $+0.012$ [$-0.030$, $+0.059$] & 0.680 (3) & inconclusive \\
+A & RF & S3 [exploratory] &  & Dunford cat sample &  & DR-APP & CC & 8 & 0.1442 & 0.2862 & $-0.142$ [$-0.282$, $+0.008$] & 0.375 (3) & inconclusive \\
+A & RF & S3 [exploratory] &  & Dunford cat sample &  & DR-natural & CC & 8 & 0.1442 & 0.2379 & $-0.094$ [$-0.220$, $-0.001$] & 0.375 (3) & inconclusive \\
+A & RF & S4-Smit-open &  & Smit 30-min (68) &  & PCC & CC & 12 & 0.0989 & 0.0991 & $-0.000$ [$-0.000$, $-0.000$] & 0.336 (5) & equivalent \\
+A & RF & S4-Smit-open &  & Smit 30-min (68) &  & ACC & CC & 12 & 0.0989 & 0.1001 & $-0.001$ [$-0.002$, $+0.000$] & 0.409 (5) & equivalent \\
+A & RF & S4-Smit-open &  & Smit 30-min (68) &  & PACC & CC & 12 & 0.0989 & 0.1002 & $-0.001$ [$-0.003$, $+0.000$] & 0.409 (5) & equivalent \\
+A & RF & S4-Smit-open &  & Smit 30-min (68) &  & EMQ & CC & 12 & 0.0989 & 0.1058 & $-0.006$ [$-0.008$, $-0.002$] & 0.039 (5) & equivalent \\
+A & RF & S4-Smit-open &  & Smit 30-min (68) &  & N-target & CC & 12 & 0.0989 & 0.1091 & $-0.021$ [$-0.052$, $+0.004$] & 0.409 (5) & inconclusive \\
+A & RF & S4-Smit-closed &  & Smit 30-min (68) &  & PCC & CC & 12 & 0.0089 & 0.0100 & $-0.001$ [$-0.002$, $+0.000$] & 0.844 (5) & equivalent \\
+A & RF & S4-Smit-closed &  & Smit 30-min (68) &  & ACC & CC & 12 & 0.0089 & 0.0105 & $-0.001$ [$-0.004$, $+0.002$] & 0.844 (5) & equivalent \\
+A & RF & S4-Smit-closed &  & Smit 30-min (68) &  & PACC & CC & 12 & 0.0089 & 0.0111 & $-0.002$ [$-0.005$, $+0.002$] & 0.844 (5) & equivalent \\
+A & RF & S4-Smit-closed &  & Smit 30-min (68) &  & EMQ & CC & 12 & 0.0089 & 0.0208 & $-0.010$ [$-0.014$, $-0.005$] & 0.023 (5) & worse \\
+A & RF & S4-Smit-closed &  & Smit 30-min (68) &  & N-target & CC & 12 & 0.0089 & 0.0410 & $-0.033$ [$-0.040$, $-0.027$] & 0.002 (5) & worse \\
+A & RF & S4-Smit-closed &  & Smit 30-min (68) &  & DM & CC & 12 & 0.0089 & 0.0166 & $-0.007$ [$-0.010$, $-0.003$] & 0.022 (3) & equivalent \\
+A & RF & S4-Smit-closed &  & Smit 30-min (68) &  & DR-APP & CC & 12 & 0.0089 & 0.0849 & $-0.079$ [$-0.110$, $-0.060$] & 0.001 (3) & worse \\
+A & RF & S4-Smit-closed &  & Smit 30-min (68) &  & DR-natural & CC & 12 & 0.0089 & 0.0376 & $-0.024$ [$-0.042$, $-0.007$] & 0.022 (3) & worse \\
+A & RF & S4-Dunford-open [exploratory] &  & Dunford cat sample &  & PCC & CC & 8 & 0.1039 & 0.1078 & $-0.004$ [$-0.009$, $+0.000$] & 0.305 (5) & equivalent \\
+A & RF & S4-Dunford-open [exploratory] &  & Dunford cat sample &  & ACC & CC & 8 & 0.1039 & 0.1110 & $-0.007$ [$-0.011$, $-0.004$] & 0.078 (5) & inconclusive \\
+A & RF & S4-Dunford-open [exploratory] &  & Dunford cat sample &  & PACC & CC & 8 & 0.1039 & 0.1142 & $-0.010$ [$-0.014$, $-0.006$] & 0.078 (5) & inconclusive \\
+A & RF & S4-Dunford-open [exploratory] &  & Dunford cat sample &  & EMQ & CC & 8 & 0.1039 & 0.1295 & $-0.026$ [$-0.050$, $+0.000$] & 0.305 (5) & inconclusive \\
+A & RF & S4-Dunford-open [exploratory] &  & Dunford cat sample &  & N-target & CC & 8 & 0.1039 & 0.2274 & $-0.123$ [$-0.231$, $-0.018$] & 0.305 (5) & inconclusive \\
+A & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample &  & PCC & CC & 7 & 0.0869 & 0.0942 & $-0.007$ [$-0.016$, $+0.000$] & 0.344 (5) & inconclusive \\
+A & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample &  & ACC & CC & 7 & 0.0869 & 0.0965 & $-0.010$ [$-0.015$, $-0.003$] & 0.156 (5) & inconclusive \\
+A & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample &  & PACC & CC & 7 & 0.0869 & 0.1023 & $-0.015$ [$-0.023$, $-0.008$] & 0.156 (5) & inconclusive \\
+A & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample &  & EMQ & CC & 7 & 0.0869 & 0.1233 & $-0.036$ [$-0.079$, $+0.008$] & 0.344 (5) & inconclusive \\
+A & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample &  & N-target & CC & 7 & 0.0869 & 0.2936 & $-0.207$ [$-0.371$, $-0.060$] & 0.188 (5) & inconclusive \\
+A & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample &  & DM & CC & 7 & 0.0869 & 0.1101 & $-0.023$ [$-0.060$, $+0.021$] & 0.688 (3) & inconclusive \\
+A & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample &  & DR-APP & CC & 7 & 0.0869 & 0.1990 & $-0.112$ [$-0.318$, $+0.067$] & 0.688 (3) & inconclusive \\
+A & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample &  & DR-natural & CC & 7 & 0.0869 & 0.2265 & $-0.140$ [$-0.325$, $+0.032$] & 0.609 (3) & inconclusive \\
+A & RF & R-D [exploratory] &  & Dunford cat sample &  & PCC & CC & 8 & 0.0689 & 0.0756 & $-0.007$ [$-0.028$, $+0.023$] & 0.891 (5) & inconclusive \\
+A & RF & R-D [exploratory] &  & Dunford cat sample &  & ACC & CC & 8 & 0.0689 & 0.1807 & $-0.112$ [$-0.265$, $-0.001$] & 0.562 (5) & inconclusive \\
+A & RF & R-D [exploratory] &  & Dunford cat sample &  & PACC & CC & 8 & 0.0689 & 0.1397 & $-0.071$ [$-0.186$, $+0.014$] & 0.891 (5) & inconclusive \\
+A & RF & R-D [exploratory] &  & Dunford cat sample &  & EMQ & CC & 8 & 0.0689 & 0.1229 & $-0.054$ [$-0.108$, $-0.004$] & 0.562 (5) & inconclusive \\
+A & RF & R-D [exploratory] &  & Dunford cat sample &  & N-target & CC & 8 & 0.0689 & 0.2274 & $-0.158$ [$-0.267$, $-0.055$] & 0.156 (5) & inconclusive \\
+A & RF & S1-closed &  & Smit 30-min (68) &  & PCC & CC & 12 & 0.0132 & 0.0235 & $-0.008$ [$-0.029$, $+0.005$] & 0.947 (4) & inconclusive \\
+A & RF & S1-closed &  & Smit 30-min (68) &  & ACC & CC & 12 & 0.0132 & 0.0189 & $-0.011$ [$-0.034$, $+0.002$] & 0.701 (4) & inconclusive \\
+A & RF & S1-closed &  & Smit 30-min (68) &  & PACC & CC & 12 & 0.0132 & 0.0564 & $-0.041$ [$-0.101$, $-0.003$] & 0.092 (4) & inconclusive \\
+A & RF & S1-closed &  & Smit 30-min (68) &  & EMQ & CC & 12 & 0.0132 & 0.1047 & $-0.080$ [$-0.207$, $-0.008$] & 0.012 (4) & worse \\
+A & RF & S1-L2 (collar) &  & Smit 30-min (68) &  & PCC & CC & 12 & 0.0837 & 0.0870 & $-0.001$ [$-0.010$, $+0.009$] & 0.807 (4) & equivalent \\
+A & RF & S1-L2 (collar) &  & Smit 30-min (68) &  & ACC & CC & 12 & 0.0837 & 0.1010 & $-0.020$ [$-0.029$, $-0.010$] & 0.014 (4) & worse \\
+A & RF & S1-L2 (collar) &  & Smit 30-min (68) &  & PACC & CC & 12 & 0.0837 & 0.1044 & $-0.024$ [$-0.034$, $-0.013$] & 0.014 (4) & worse \\
+A & RF & S1-L2 (collar) &  & Smit 30-min (68) &  & EMQ & CC & 12 & 0.0837 & 0.1041 & $-0.020$ [$-0.032$, $-0.008$] & 0.015 (4) & worse \\
+A & RF & S1-L2 (collar) &  & Smit 30-min (68) &  & N-target & CC & 12 & 0.0837 & 0.1222 & $-0.036$ [$-0.058$, $-0.015$] & 0.017 (1) & worse \\
+A & RF & S1-L2 (collar) &  & Smit 30-min (68) &  & DM & CC & 12 & 0.0837 & 0.0966 & $-0.013$ [$-0.026$, $-0.002$] & 0.192 (3) & inconclusive \\
+A & RF & S1-L2 (collar) &  & Smit 30-min (68) &  & DR-APP & CC & 12 & 0.0837 & 0.1208 & $-0.029$ [$-0.063$, $+0.012$] & 0.339 (3) & inconclusive \\
+A & RF & S1-L2 (collar) &  & Smit 30-min (68) &  & DR-natural & CC & 12 & 0.0837 & 0.0899 & $-0.002$ [$-0.025$, $+0.028$] & 0.912 (3) & inconclusive \\
+A & RF & S1-L2 (harness) &  & Smit 30-min (68) &  & PCC & CC & 12 & 0.0262 & 0.0391 & $-0.014$ [$-0.018$, $-0.008$] & 0.004 (4) & worse \\
+A & RF & S1-L2 (harness) &  & Smit 30-min (68) &  & ACC & CC & 12 & 0.0262 & 0.0430 & $-0.015$ [$-0.025$, $-0.008$] & 0.004 (4) & worse \\
+A & RF & S1-L2 (harness) &  & Smit 30-min (68) &  & PACC & CC & 12 & 0.0262 & 0.0495 & $-0.022$ [$-0.031$, $-0.014$] & 0.002 (4) & worse \\
+A & RF & S1-L2 (harness) &  & Smit 30-min (68) &  & EMQ & CC & 12 & 0.0262 & 0.0485 & $-0.022$ [$-0.038$, $-0.008$] & 0.009 (4) & worse \\
+A & RF & S2-L2 (mapped) &  & Smit 30-min (68) &  & PCC & CC & 12 & 0.1573 & 0.1572 & $-0.003$ [$-0.016$, $+0.009$] & 0.653 (4) & inconclusive \\
+A & RF & S2-L2 (mapped) &  & Smit 30-min (68) &  & ACC & CC & 12 & 0.1573 & 0.1706 & $-0.013$ [$-0.015$, $-0.009$] & 0.002 (4) & worse \\
+A & RF & S2-L2 (mapped) &  & Smit 30-min (68) &  & PACC & CC & 12 & 0.1573 & 0.1804 & $-0.025$ [$-0.037$, $-0.014$] & 0.003 (4) & worse \\
+A & RF & S2-L2 (mapped) &  & Smit 30-min (68) &  & EMQ & CC & 12 & 0.1573 & 0.2141 & $-0.058$ [$-0.086$, $-0.035$] & 0.003 (4) & worse \\
+A & RF & S1 natural 2-min &  & Smit 2-min &  & ACC & CC & 12 & 0.0398 & 0.0392 & $-0.001$ [$-0.004$, $+0.003$] & 0.768 (3) & equivalent \\
+A & RF & S1 natural 2-min &  & Smit 2-min &  & PACC & CC & 12 & 0.0398 & 0.0574 & $-0.018$ [$-0.043$, $-0.001$] & 0.133 (3) & inconclusive \\
+A & RF & S1 natural 2-min &  & Smit 2-min &  & EMQ & CC & 12 & 0.0398 & 0.0891 & $-0.050$ [$-0.113$, $-0.011$] & 0.009 (3) & worse \\
+A & RF & S1 natural 2-min &  & Smit 2-min &  & DM & CC & 12 & 0.0398 & 0.0678 & $-0.028$ [$-0.073$, $-0.000$] & 0.126 (3) & inconclusive \\
+A & RF & S1 natural 2-min &  & Smit 2-min &  & DR-APP & CC & 12 & 0.0398 & 0.2685 & $-0.232$ [$-0.265$, $-0.207$] & 0.001 (3) & worse \\
+A & RF & S1 natural 2-min &  & Smit 2-min &  & DR-natural & CC & 12 & 0.0398 & 0.0586 & $-0.021$ [$-0.031$, $-0.012$] & 0.004 (3) & worse \\
+A & RF & S1 APP 120-s (bridge) &  & APP 120-s &  & ACC & CC & 12 & 0.1522 & 0.0916 & $+0.061$ [$+0.040$, $+0.078$] & 0.003 (3) & better \\
+A & RF & S1 APP 120-s (bridge) &  & APP 120-s &  & PACC & CC & 12 & 0.1522 & 0.0921 & $+0.060$ [$+0.041$, $+0.077$] & 0.003 (3) & better \\
+A & RF & S1 APP 120-s (bridge) &  & APP 120-s &  & EMQ & CC & 12 & 0.1522 & 0.1019 & $+0.050$ [$+0.024$, $+0.075$] & 0.010 (3) & better \\
+A & RF & S1 APP 120-s (bridge) &  & APP 120-s &  & DM & CC & 12 & 0.1522 & 0.1044 & $+0.048$ [$+0.029$, $+0.066$] & 0.006 (3) & better \\
+A & RF & S1 APP 120-s (bridge) &  & APP 120-s &  & DR-APP & CC & 12 & 0.1522 & 0.1181 & $+0.034$ [$+0.011$, $+0.054$] & 0.019 (3) & better \\
+A & RF & S1 APP 120-s (bridge) &  & APP 120-s &  & DR-natural & CC & 12 & 0.1522 & 0.2589 & $-0.107$ [$-0.128$, $-0.084$] & 0.001 (3) & worse \\
+A & RF & K-L1 within-dog &  & APP 120-s &  & PCC & CC & 40 & 0.0133 & 0.0204 & $-0.007$ [$-0.012$, $-0.003$] & 0.002 (5)* & inconclusive \\
+A & RF & K-L1 within-dog &  & APP 120-s &  & ACC & CC & 40 & 0.0133 & 0.0166 & $-0.003$ [$-0.005$, $-0.002$] & 0.001 (5)* & equivalent \\
+A & RF & K-L1 within-dog &  & APP 120-s &  & PACC & CC & 40 & 0.0133 & 0.0231 & $-0.010$ [$-0.013$, $-0.007$] & $2.5\times10^{-5}$ (5)* & inconclusive \\
+A & RF & K-L1 within-dog &  & APP 120-s &  & EMQ & CC & 40 & 0.0133 & 0.0159 & $-0.003$ [$-0.007$, $+0.001$] & 0.232 (5)* & equivalent \\
+A & RF & K-L1 within-dog &  & APP 120-s &  & N-target & CC & 40 & 0.0133 & 0.2506 & $-0.237$ [$-0.262$, $-0.214$] & $2.5\times10^{-5}$ (5)* & worse \\
+A & RF & K-L1 within-dog &  & dog recordings &  & PCC & CC & 44 & 0.0114 & 0.0190 & $-0.008$ [$-0.015$, $-0.002$] & 0.022 (5)* & inconclusive \\
+A & RF & K-L1 within-dog &  & dog recordings &  & ACC & CC & 44 & 0.0114 & 0.0146 & $-0.003$ [$-0.005$, $-0.002$] & 0.002 (5)* & equivalent \\
+A & RF & K-L1 within-dog &  & dog recordings &  & PACC & CC & 44 & 0.0114 & 0.0224 & $-0.011$ [$-0.017$, $-0.006$] & $2.0\times10^{-4}$ (5)* & worse \\
+A & RF & K-L1 within-dog &  & dog recordings &  & EMQ & CC & 44 & 0.0114 & 0.0172 & $-0.006$ [$-0.010$, $-0.002$] & 0.014 (5)* & equivalent \\
+A & RF & K-L1 within-dog &  & dog recordings &  & N-target & CC & 44 & 0.0114 & 0.2112 & $-0.200$ [$-0.231$, $-0.171$] & $2.5\times10^{-5}$ (5)* & worse \\
+A & RF & K-L1 within-dog &  & dog recordings &  & DM & CC & 44 & 0.0107 & 0.0152 & $-0.005$ [$-0.009$, $-0.000$] & 0.039 (3)* & equivalent \\
+A & RF & K-L1 within-dog &  & dog recordings &  & DR-APP & CC & 44 & 0.0107 & 0.0767 & $-0.066$ [$-0.084$, $-0.050$] & $1.5\times10^{-5}$ (3)* & worse \\
+A & RF & K-L1 within-dog &  & dog recordings &  & DR-natural & CC & 44 & 0.0107 & 0.1320 & $-0.122$ [$-0.154$, $-0.092$] & $1.5\times10^{-5}$ (3)* & worse \\
+A & RF & K-L1 within-dog &  & dog 2-min &  & PCC & CC & 35 & 0.0118 & 0.0265 & $-0.015$ [$-0.024$, $-0.008$] & $2.5\times10^{-5}$ (5)* & worse \\
+A & RF & K-L1 within-dog &  & dog 2-min &  & ACC & CC & 35 & 0.0118 & 0.0126 & $-0.001$ [$-0.002$, $+0.001$] & 0.296 (5)* & equivalent \\
+A & RF & K-L1 within-dog &  & dog 2-min &  & PACC & CC & 35 & 0.0118 & 0.0217 & $-0.010$ [$-0.018$, $-0.004$] & $4.8\times10^{-4}$ (5)* & inconclusive \\
+A & RF & K-L1 within-dog &  & dog 2-min &  & EMQ & CC & 35 & 0.0118 & 0.0024 & $+0.009$ [$+0.002$, $+0.019$] & 0.044 (5)* & inconclusive \\
+A & RF & K-L1 within-dog &  & dog 2-min &  & N-target & CC & 35 & 0.0118 & 0.4189 & $-0.407$ [$-0.450$, $-0.366$] & $2.5\times10^{-5}$ (5)* & worse \\
+A & RF & K-L1 within-dog &  & dog 2-min &  & DM & CC & 35 & 0.0078 & 0.0033 & $+0.009$ [$+0.002$, $+0.018$] & 0.048 (3)* & inconclusive \\
+A & RF & K-L1 within-dog &  & dog 2-min &  & DR-APP & CC & 35 & 0.0078 & 0.1198 & $-0.113$ [$-0.137$, $-0.093$] & $1.5\times10^{-5}$ (3)* & worse \\
+A & RF & K-L1 within-dog &  & dog 2-min &  & DR-natural & CC & 35 & 0.0078 & 0.0684 & $-0.072$ [$-0.100$, $-0.047$] & $1.5\times10^{-5}$ (3)* & worse \\
+A & RF & K-L2 within-dog &  & APP 120-s &  & PCC & CC & 38 & 0.0677 & 0.0693 & $-0.002$ [$-0.006$, $+0.003$] & 0.548 (5)* & equivalent \\
+A & RF & K-L2 within-dog &  & APP 120-s &  & ACC & CC & 38 & 0.0677 & 0.1040 & $-0.036$ [$-0.050$, $-0.023$] & $4.0\times10^{-5}$ (5)* & worse \\
+A & RF & K-L2 within-dog &  & APP 120-s &  & PACC & CC & 38 & 0.0677 & 0.1032 & $-0.036$ [$-0.048$, $-0.023$] & $4.0\times10^{-5}$ (5)* & worse \\
+A & RF & K-L2 within-dog &  & APP 120-s &  & EMQ & CC & 38 & 0.0677 & 0.0903 & $-0.023$ [$-0.032$, $-0.013$] & $8.0\times10^{-5}$ (5)* & worse \\
+A & RF & K-L2 within-dog &  & APP 120-s &  & N-target & CC & 38 & 0.0677 & 0.1470 & $-0.079$ [$-0.094$, $-0.064$] & $2.5\times10^{-5}$ (5)* & worse \\
+A & RF & K-L2 within-dog &  & dog recordings &  & PCC & CC & 44 & 0.0533 & 0.0556 & $-0.002$ [$-0.008$, $+0.003$] & 0.449 (5)* & equivalent \\
+A & RF & K-L2 within-dog &  & dog recordings &  & ACC & CC & 44 & 0.0533 & 0.0845 & $-0.031$ [$-0.043$, $-0.019$] & $3.0\times10^{-5}$ (5)* & worse \\
+A & RF & K-L2 within-dog &  & dog recordings &  & PACC & CC & 44 & 0.0533 & 0.0840 & $-0.031$ [$-0.041$, $-0.021$] & $2.5\times10^{-5}$ (5)* & worse \\
+A & RF & K-L2 within-dog &  & dog recordings &  & EMQ & CC & 44 & 0.0533 & 0.0746 & $-0.021$ [$-0.030$, $-0.012$] & $4.0\times10^{-5}$ (5)* & worse \\
+A & RF & K-L2 within-dog &  & dog recordings &  & N-target & CC & 44 & 0.0533 & 0.1166 & $-0.063$ [$-0.079$, $-0.049$] & $2.5\times10^{-5}$ (5)* & worse \\
+A & RF & K-L2 within-dog &  & dog recordings &  & DM & CC & 44 & 0.0524 & 0.0797 & $-0.029$ [$-0.041$, $-0.018$] & $1.5\times10^{-5}$ (3)* & worse \\
+A & RF & K-L2 within-dog &  & dog recordings &  & DR-APP & CC & 44 & 0.0524 & 0.0941 & $-0.045$ [$-0.061$, $-0.031$] & $1.5\times10^{-5}$ (3)* & worse \\
+A & RF & K-L2 within-dog &  & dog recordings &  & DR-natural & CC & 44 & 0.0524 & 0.1112 & $-0.058$ [$-0.074$, $-0.042$] & $1.5\times10^{-5}$ (3)* & worse \\
+A & RF & K-L2 within-dog &  & dog 2-min &  & PCC & CC & 35 & 0.0880 & 0.0987 & $-0.011$ [$-0.020$, $-0.001$] & 0.168 (5)* & inconclusive \\
+A & RF & K-L2 within-dog &  & dog 2-min &  & ACC & CC & 35 & 0.0880 & 0.0969 & $-0.009$ [$-0.023$, $+0.005$] & 0.426 (5)* & inconclusive \\
+A & RF & K-L2 within-dog &  & dog 2-min &  & PACC & CC & 35 & 0.0880 & 0.0984 & $-0.010$ [$-0.023$, $+0.002$] & 0.369 (5)* & inconclusive \\
+A & RF & K-L2 within-dog &  & dog 2-min &  & EMQ & CC & 35 & 0.0880 & 0.0885 & $-0.001$ [$-0.008$, $+0.007$] & 0.897 (5)* & equivalent \\
+A & RF & K-L2 within-dog &  & dog 2-min &  & N-target & CC & 35 & 0.0880 & 0.2834 & $-0.195$ [$-0.222$, $-0.163$] & $2.5\times10^{-5}$ (5)* & worse \\
+A & RF & K-L2 within-dog &  & dog 2-min &  & DM & CC & 35 & 0.0850 & 0.0772 & $+0.007$ [$-0.008$, $+0.022$] & 0.412 (3)* & inconclusive \\
+A & RF & K-L2 within-dog &  & dog 2-min &  & DR-APP & CC & 35 & 0.0850 & 0.1927 & $-0.107$ [$-0.137$, $-0.077$] & $1.5\times10^{-5}$ (3)* & worse \\
+A & RF & K-L2 within-dog &  & dog 2-min &  & DR-natural & CC & 35 & 0.0850 & 0.1358 & $-0.054$ [$-0.078$, $-0.029$] & $4.7\times10^{-4}$ (3)* & worse \\
+B & RF & within-dog & K-L1, D17 & APP 120-s &  & PCC & CC & 40 & 0.0126 & 0.0182 & $-0.006$ [$-0.009$, $-0.002$] & 0.002 (5)* & equivalent \\
+B & RF & within-dog & K-L1, D17 & APP 120-s &  & ACC & CC & 40 & 0.0126 & 0.0146 & $-0.002$ [$-0.004$, $-0.000$] & 0.057 (5)* & equivalent \\
+B & RF & within-dog & K-L1, D17 & APP 120-s &  & PACC & CC & 40 & 0.0126 & 0.0189 & $-0.006$ [$-0.009$, $-0.004$] & $8.0\times10^{-5}$ (5)* & equivalent \\
+B & RF & within-dog & K-L1, D17 & APP 120-s &  & EMQ & CC & 40 & 0.0126 & 0.0144 & $-0.002$ [$-0.005$, $+0.001$] & 0.260 (5)* & equivalent \\
+B & RF & within-dog & K-L1, D17 & APP 120-s &  & N-target & CC & 40 & 0.0126 & 0.2498 & $-0.237$ [$-0.261$, $-0.214$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & within-dog & K-L1, D17 & dog 2-min &  & PCC & CC & 35 & 0.0090 & 0.0212 & $-0.012$ [$-0.018$, $-0.007$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & within-dog & K-L1, D17 & dog 2-min &  & ACC & CC & 35 & 0.0090 & 0.0099 & $-0.001$ [$-0.002$, $+0.000$] & 0.253 (5)* & equivalent \\
+B & RF & within-dog & K-L1, D17 & dog 2-min &  & PACC & CC & 35 & 0.0090 & 0.0173 & $-0.008$ [$-0.014$, $-0.004$] & $4.5\times10^{-5}$ (5)* & inconclusive \\
+B & RF & within-dog & K-L1, D17 & dog 2-min &  & EMQ & CC & 35 & 0.0090 & 0.0044 & $+0.005$ [$+0.001$, $+0.009$] & 0.071 (5)* & equivalent \\
+B & RF & within-dog & K-L1, D17 & dog 2-min &  & N-target & CC & 35 & 0.0090 & 0.4189 & $-0.410$ [$-0.451$, $-0.370$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & within-dog & K-L1, D17 & dog recordings &  & PCC & CC & 44 & 0.0118 & 0.0146 & $-0.003$ [$-0.006$, $+0.001$] & 0.114 (5)* & equivalent \\
+B & RF & within-dog & K-L1, D17 & dog recordings &  & ACC & CC & 44 & 0.0118 & 0.0135 & $-0.002$ [$-0.003$, $-0.000$] & 0.104 (5)* & equivalent \\
+B & RF & within-dog & K-L1, D17 & dog recordings &  & PACC & CC & 44 & 0.0118 & 0.0176 & $-0.006$ [$-0.009$, $-0.003$] & $2.0\times10^{-4}$ (5)* & equivalent \\
+B & RF & within-dog & K-L1, D17 & dog recordings &  & EMQ & CC & 44 & 0.0118 & 0.0154 & $-0.004$ [$-0.007$, $-0.000$] & 0.104 (5)* & equivalent \\
+B & RF & within-dog & K-L1, D17 & dog recordings &  & N-target & CC & 44 & 0.0118 & 0.2112 & $-0.199$ [$-0.231$, $-0.171$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & within-dog & K-L2, D17 & APP 120-s &  & PCC & CC & 38 & 0.0676 & 0.0669 & $+0.001$ [$-0.006$, $+0.007$] & 0.843 (5)* & equivalent \\
+B & RF & within-dog & K-L2, D17 & APP 120-s &  & ACC & CC & 38 & 0.0676 & 0.0922 & $-0.025$ [$-0.034$, $-0.015$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & within-dog & K-L2, D17 & APP 120-s &  & PACC & CC & 38 & 0.0676 & 0.1002 & $-0.033$ [$-0.047$, $-0.021$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & within-dog & K-L2, D17 & APP 120-s &  & EMQ & CC & 38 & 0.0676 & 0.0862 & $-0.019$ [$-0.026$, $-0.012$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & within-dog & K-L2, D17 & APP 120-s &  & N-target & CC & 38 & 0.0676 & 0.1462 & $-0.079$ [$-0.093$, $-0.066$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & within-dog & K-L2, D17 & dog 2-min &  & PCC & CC & 35 & 0.0778 & 0.0956 & $-0.018$ [$-0.025$, $-0.011$] & $1.0\times10^{-4}$ (5)* & worse \\
+B & RF & within-dog & K-L2, D17 & dog 2-min &  & ACC & CC & 35 & 0.0778 & 0.0720 & $+0.006$ [$-0.004$, $+0.018$] & 0.657 (5)* & inconclusive \\
+B & RF & within-dog & K-L2, D17 & dog 2-min &  & PACC & CC & 35 & 0.0778 & 0.0992 & $-0.021$ [$-0.043$, $-0.003$] & 0.128 (5)* & inconclusive \\
+B & RF & within-dog & K-L2, D17 & dog 2-min &  & EMQ & CC & 35 & 0.0778 & 0.0764 & $+0.001$ [$-0.011$, $+0.014$] & 0.822 (5)* & inconclusive \\
+B & RF & within-dog & K-L2, D17 & dog 2-min &  & N-target & CC & 35 & 0.0778 & 0.2834 & $-0.206$ [$-0.229$, $-0.180$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & within-dog & K-L2, D17 & dog recordings &  & PCC & CC & 44 & 0.0500 & 0.0493 & $+0.001$ [$-0.005$, $+0.007$] & 0.814 (5)* & equivalent \\
+B & RF & within-dog & K-L2, D17 & dog recordings &  & ACC & CC & 44 & 0.0500 & 0.0755 & $-0.026$ [$-0.037$, $-0.014$] & $7.0\times10^{-5}$ (5)* & worse \\
+B & RF & within-dog & K-L2, D17 & dog recordings &  & PACC & CC & 44 & 0.0500 & 0.0848 & $-0.035$ [$-0.047$, $-0.024$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & within-dog & K-L2, D17 & dog recordings &  & EMQ & CC & 44 & 0.0500 & 0.0693 & $-0.019$ [$-0.027$, $-0.012$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & within-dog & K-L2, D17 & dog recordings &  & N-target & CC & 44 & 0.0500 & 0.1166 & $-0.067$ [$-0.083$, $-0.050$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & S2-dog & K-L1, D17 & APP 120-s &  & PCC & CC & 40 & 0.0169 & 0.0190 & $-0.002$ [$-0.004$, $-0.000$] & 0.218 (5)* & equivalent \\
+B & RF & S2-dog & K-L1, D17 & APP 120-s &  & ACC & CC & 40 & 0.0169 & 0.0171 & $-0.000$ [$-0.001$, $+0.000$] & 0.732 (5)* & equivalent \\
+B & RF & S2-dog & K-L1, D17 & APP 120-s &  & PACC & CC & 40 & 0.0169 & 0.0181 & $-0.001$ [$-0.003$, $+0.001$] & 0.706 (5)* & equivalent \\
+B & RF & S2-dog & K-L1, D17 & APP 120-s &  & EMQ & CC & 40 & 0.0169 & 0.0179 & $-0.001$ [$-0.004$, $+0.003$] & 0.732 (5)* & equivalent \\
+B & RF & S2-dog & K-L1, D17 & APP 120-s &  & N-target & CC & 40 & 0.0169 & 0.2514 & $-0.234$ [$-0.260$, $-0.211$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & S2-dog & K-L1, D17 & dog 2-min &  & PCC & CC & 35 & 0.0103 & 0.0195 & $-0.009$ [$-0.013$, $-0.006$] & $2.5\times10^{-5}$ (5)* & inconclusive \\
+B & RF & S2-dog & K-L1, D17 & dog 2-min &  & ACC & CC & 35 & 0.0103 & 0.0103 & $-0.000$ [$-0.000$, $+0.000$] & 0.811 (5)* & equivalent \\
+B & RF & S2-dog & K-L1, D17 & dog 2-min &  & PACC & CC & 35 & 0.0103 & 0.0161 & $-0.006$ [$-0.009$, $-0.003$] & $3.0\times10^{-5}$ (5)* & equivalent \\
+B & RF & S2-dog & K-L1, D17 & dog 2-min &  & EMQ & CC & 35 & 0.0103 & 0.0039 & $+0.006$ [$+0.002$, $+0.012$] & 0.025 (5)* & inconclusive \\
+B & RF & S2-dog & K-L1, D17 & dog 2-min &  & N-target & CC & 35 & 0.0103 & 0.4189 & $-0.409$ [$-0.451$, $-0.370$] & $2.5\times10^{-5}$ (5)* & worse \\
+B & RF & S2-dog & K-L1, D17 & dog recordings &  & PCC & CC & 44 & 0.0157 & 0.0155 & $+0.000$ [$-0.002$, $+0.003$] & 1.000 (5)* & equivalent \\
+B & RF & S2-dog & K-L1, D17 & dog recordings &  & ACC & CC & 44 & 0.0157 & 0.0159 & $-0.000$ [$-0.001$, $+0.000$] & 1.000 (5)* & equivalent \\
+B & RF & S2-dog & K-L1, D17 & dog recordings &  & PACC & CC & 44 & 0.0157 & 0.0160 & $-0.000$ [$-0.003$, $+0.002$] & 1.000 (5)* & equivalent \\
+B & RF & S2-dog & K-L1, D17 & dog recordings &  & EMQ & CC & 44 & 0.0157 & 0.0195 & $-0.004$ [$-0.007$, $-0.000$] & 0.176 (5)* & equivalent \\
+B & RF & S2-dog & K-L1, D17 & dog recordings &  & N-target & CC & 44 & 0.0157 & 0.2112 & $-0.195$ [$-0.227$, $-0.166$] & $2.5\times10^{-5}$ (5)* & worse \\
+C & HGB & S1 &  & Smit 30-min &  & PCC & CC & 12 & 0.0242 & 0.0354 & $-0.011$ [$-0.016$, $-0.005$] & 0.010 (4) & worse \\
+C & HGB & S1 &  & Smit 30-min &  & ACC & CC & 12 & 0.0242 & 0.0302 & $-0.006$ [$-0.013$, $-0.000$] & 0.078 (4) & inconclusive \\
+C & HGB & S1 &  & Smit 30-min &  & PACC & CC & 12 & 0.0242 & 0.0406 & $-0.016$ [$-0.029$, $-0.005$] & 0.037 (4) & worse \\
+C & HGB & S1 &  & Smit 30-min &  & EMQ & CC & 12 & 0.0242 & 0.0521 & $-0.025$ [$-0.057$, $-0.003$] & 0.051 (4) & inconclusive \\
+C & HGB & S2 &  & Smit 30-min &  & PCC & CC & 12 & 0.0365 & 0.0535 & $-0.015$ [$-0.023$, $-0.008$] & 0.008 (4) & worse \\
+C & HGB & S2 &  & Smit 30-min &  & ACC & CC & 12 & 0.0365 & 0.0452 & $-0.009$ [$-0.017$, $-0.000$] & 0.062 (4) & inconclusive \\
+C & HGB & S2 &  & Smit 30-min &  & PACC & CC & 12 & 0.0365 & 0.0719 & $-0.033$ [$-0.052$, $-0.014$] & 0.013 (4) & worse \\
+C & HGB & S2 &  & Smit 30-min &  & EMQ & CC & 12 & 0.0365 & 0.1316 & $-0.088$ [$-0.160$, $-0.030$] & 0.013 (4) & worse \\
+C & HGB & S3 [exploratory] &  & cat sample &  & PCC & CC & 8 & 0.1468 & 0.1698 & $-0.023$ [$-0.054$, $+0.003$] & 0.562 (4) & inconclusive \\
+C & HGB & S3 [exploratory] &  & cat sample &  & ACC & CC & 8 & 0.1468 & 0.1116 & $+0.035$ [$+0.002$, $+0.082$] & 0.469 (4) & inconclusive \\
+C & HGB & S3 [exploratory] &  & cat sample &  & PACC & CC & 8 & 0.1468 & 0.1284 & $+0.018$ [$-0.019$, $+0.070$] & 1.000 (4) & inconclusive \\
+C & HGB & S3 [exploratory] &  & cat sample &  & EMQ & CC & 8 & 0.1468 & 0.1748 & $-0.028$ [$-0.118$, $+0.070$] & 1.000 (4) & inconclusive \\
+C & HGB & S4-Smit &  & 30-min, open &  & PCC & CC & 12 & 0.0989 & 0.0990 & $-0.000$ [$-0.000$, $+0.000$] & 0.359 (4) & equivalent \\
+C & HGB & S4-Smit &  & 30-min, open &  & ACC & CC & 12 & 0.0989 & 0.1002 & $-0.001$ [$-0.002$, $+0.000$] & 0.359 (4) & equivalent \\
+C & HGB & S4-Smit &  & 30-min, open &  & PACC & CC & 12 & 0.0989 & 0.1001 & $-0.001$ [$-0.002$, $+0.000$] & 0.359 (4) & equivalent \\
+C & HGB & S4-Smit &  & 30-min, open &  & EMQ & CC & 12 & 0.0989 & 0.1010 & $-0.002$ [$-0.003$, $-0.000$] & 0.139 (4) & equivalent \\
+C & HGB & S4-Smit &  & 30-min, closed &  & PCC & CC & 12 & 0.0091 & 0.0095 & $-0.000$ [$-0.001$, $-0.000$] & 0.109 (4) & equivalent \\
+C & HGB & S4-Smit &  & 30-min, closed &  & ACC & CC & 12 & 0.0091 & 0.0101 & $-0.001$ [$-0.004$, $+0.002$] & 1.000 (4) & equivalent \\
+C & HGB & S4-Smit &  & 30-min, closed &  & PACC & CC & 12 & 0.0091 & 0.0103 & $-0.001$ [$-0.004$, $+0.002$] & 1.000 (4) & equivalent \\
+C & HGB & S4-Smit &  & 30-min, closed &  & EMQ & CC & 12 & 0.0091 & 0.0114 & $-0.002$ [$-0.005$, $+0.002$] & 1.000 (4) & equivalent \\
+C & HGB & S4-Dunford [exploratory] &  & open &  & PCC & CC & 8 & 0.0982 & 0.0983 & $-0.000$ [$-0.002$, $+0.002$] & 0.820 (4) & equivalent \\
+C & HGB & S4-Dunford [exploratory] &  & open &  & ACC & CC & 8 & 0.0982 & 0.1049 & $-0.007$ [$-0.010$, $-0.003$] & 0.062 (4) & inconclusive \\
+C & HGB & S4-Dunford [exploratory] &  & open &  & PACC & CC & 8 & 0.0982 & 0.1048 & $-0.007$ [$-0.011$, $-0.001$] & 0.141 (4) & inconclusive \\
+C & HGB & S4-Dunford [exploratory] &  & open &  & EMQ & CC & 8 & 0.0982 & 0.1093 & $-0.011$ [$-0.022$, $+0.003$] & 0.328 (4) & inconclusive \\
+C & HGB & S4-Dunford [exploratory] &  & closed &  & PCC & CC & 7 & 0.0798 & 0.0799 & $-0.000$ [$-0.003$, $+0.003$] & 0.953 (4) & equivalent \\
+C & HGB & S4-Dunford [exploratory] &  & closed &  & ACC & CC & 7 & 0.0798 & 0.0888 & $-0.009$ [$-0.015$, $-0.003$] & 0.125 (4) & inconclusive \\
+C & HGB & S4-Dunford [exploratory] &  & closed &  & PACC & CC & 7 & 0.0798 & 0.0884 & $-0.009$ [$-0.016$, $-0.000$] & 0.281 (4) & inconclusive \\
+C & HGB & S4-Dunford [exploratory] &  & closed &  & EMQ & CC & 7 & 0.0798 & 0.0949 & $-0.015$ [$-0.035$, $+0.008$] & 0.531 (4) & inconclusive \\
+C & HGB & S1 bridge (APP vs natural) &  & APP 120-s &  & PCC & CC & 12 & 0.1507 & 0.1710 & $-0.020$ [$-0.028$, $-0.013$] & 0.002 (4) & worse \\
+C & HGB & S1 bridge (APP vs natural) &  & APP 120-s &  & ACC & CC & 12 & 0.1507 & 0.0914 & $+0.059$ [$+0.035$, $+0.079$] & 0.003 (4) & better \\
+C & HGB & S1 bridge (APP vs natural) &  & APP 120-s &  & PACC & CC & 12 & 0.1507 & 0.0869 & $+0.064$ [$+0.041$, $+0.082$] & 0.003 (4) & better \\
+C & HGB & S1 bridge (APP vs natural) &  & APP 120-s &  & EMQ & CC & 12 & 0.1507 & 0.0877 & $+0.063$ [$+0.047$, $+0.078$] & 0.002 (4) & better \\
+C & HGB & S1 bridge (APP vs natural) &  & natural 2-min &  & PCC & CC & 12 & 0.0374 & 0.0575 & $-0.020$ [$-0.025$, $-0.015$] & 0.002 (4) & worse \\
+C & HGB & S1 bridge (APP vs natural) &  & natural 2-min &  & ACC & CC & 12 & 0.0374 & 0.0375 & $-0.001$ [$-0.007$, $+0.003$] & 0.564 (4) & equivalent \\
+C & HGB & S1 bridge (APP vs natural) &  & natural 2-min &  & PACC & CC & 12 & 0.0374 & 0.0480 & $-0.012$ [$-0.025$, $-0.001$] & 0.126 (4) & inconclusive \\
+C & HGB & S1 bridge (APP vs natural) &  & natural 2-min &  & EMQ & CC & 12 & 0.0374 & 0.0676 & $-0.032$ [$-0.061$, $-0.011$] & 0.009 (4) & worse \\
+C & LR & S1 &  & Smit 30-min &  & PCC & CC & 12 & 0.0557 & 0.0604 & $-0.008$ [$-0.016$, $-0.000$] & 0.375 (4) & inconclusive \\
+C & LR & S1 &  & Smit 30-min &  & ACC & CC & 12 & 0.0557 & 0.0514 & $+0.005$ [$-0.014$, $+0.018$] & 1.000 (4) & inconclusive \\
+C & LR & S1 &  & Smit 30-min &  & PACC & CC & 12 & 0.0557 & 0.0465 & $+0.007$ [$-0.007$, $+0.019$] & 1.000 (4) & inconclusive \\
+C & LR & S1 &  & Smit 30-min &  & EMQ & CC & 12 & 0.0557 & 0.0628 & $-0.006$ [$-0.024$, $+0.007$] & 1.000 (4) & inconclusive \\
+C & LR & S2 &  & Smit 30-min &  & PCC & CC & 12 & 0.0533 & 0.0860 & $-0.037$ [$-0.049$, $-0.027$] & 0.002 (4) & worse \\
+C & LR & S2 &  & Smit 30-min &  & ACC & CC & 12 & 0.0533 & 0.1407 & $-0.078$ [$-0.117$, $-0.043$] & 0.002 (4) & worse \\
+C & LR & S2 &  & Smit 30-min &  & PACC & CC & 12 & 0.0533 & 0.1346 & $-0.077$ [$-0.113$, $-0.041$] & 0.002 (4) & worse \\
+C & LR & S2 &  & Smit 30-min &  & EMQ & CC & 12 & 0.0533 & 0.1753 & $-0.117$ [$-0.166$, $-0.069$] & 0.002 (4) & worse \\
+C & LR & S3 [exploratory] &  & cat sample &  & PCC & CC & 8 & 0.1976 & 0.1948 & $+0.003$ [$-0.055$, $+0.059$] & 1.000 (4) & inconclusive \\
+C & LR & S3 [exploratory] &  & cat sample &  & ACC & CC & 8 & 0.1976 & 0.1529 & $+0.045$ [$-0.050$, $+0.193$] & 1.000 (4) & inconclusive \\
+C & LR & S3 [exploratory] &  & cat sample &  & PACC & CC & 8 & 0.1976 & 0.1714 & $+0.026$ [$-0.082$, $+0.185$] & 1.000 (4) & inconclusive \\
+C & LR & S3 [exploratory] &  & cat sample &  & EMQ & CC & 8 & 0.1976 & 0.3010 & $-0.103$ [$-0.297$, $+0.116$] & 1.000 (4) & inconclusive \\
+C & LR & S4-Smit &  & 30-min, open &  & PCC & CC & 12 & 0.0992 & 0.1003 & $-0.001$ [$-0.002$, $-0.001$] & 0.021 (4) & equivalent \\
+C & LR & S4-Smit &  & 30-min, open &  & ACC & CC & 12 & 0.0992 & 0.1002 & $-0.001$ [$-0.002$, $+0.000$] & 0.297 (4) & equivalent \\
+C & LR & S4-Smit &  & 30-min, open &  & PACC & CC & 12 & 0.0992 & 0.1003 & $-0.001$ [$-0.002$, $+0.000$] & 0.297 (4) & equivalent \\
+C & LR & S4-Smit &  & 30-min, open &  & EMQ & CC & 12 & 0.0992 & 0.1014 & $-0.002$ [$-0.004$, $-0.000$] & 0.218 (4) & equivalent \\
+C & LR & S4-Smit &  & 30-min, closed &  & PCC & CC & 12 & 0.0115 & 0.0177 & $-0.006$ [$-0.009$, $-0.004$] & 0.006 (4) & equivalent \\
+C & LR & S4-Smit &  & 30-min, closed &  & ACC & CC & 12 & 0.0115 & 0.0112 & $+0.001$ [$-0.003$, $+0.004$] & 1.000 (4) & equivalent \\
+C & LR & S4-Smit &  & 30-min, closed &  & PACC & CC & 12 & 0.0115 & 0.0123 & $-0.000$ [$-0.004$, $+0.003$] & 1.000 (4) & equivalent \\
+C & LR & S4-Smit &  & 30-min, closed &  & EMQ & CC & 12 & 0.0115 & 0.0118 & $+0.000$ [$-0.005$, $+0.006$] & 1.000 (4) & equivalent \\
+C & LR & S4-Dunford [exploratory] &  & open &  & PCC & CC & 8 & 0.0770 & 0.0816 & $-0.005$ [$-0.025$, $+0.011$] & 1.000 (4) & inconclusive \\
+C & LR & S4-Dunford [exploratory] &  & open &  & ACC & CC & 8 & 0.0770 & 0.0800 & $-0.003$ [$-0.007$, $+0.001$] & 0.938 (4) & equivalent \\
+C & LR & S4-Dunford [exploratory] &  & open &  & PACC & CC & 8 & 0.0770 & 0.0804 & $-0.003$ [$-0.016$, $+0.007$] & 1.000 (4) & inconclusive \\
+C & LR & S4-Dunford [exploratory] &  & open &  & EMQ & CC & 8 & 0.0770 & 0.0891 & $-0.012$ [$-0.033$, $+0.012$] & 1.000 (4) & inconclusive \\
+C & LR & S4-Dunford [exploratory] &  & closed &  & PCC & CC & 7 & 0.0469 & 0.0547 & $-0.008$ [$-0.043$, $+0.019$] & 1.000 (4) & inconclusive \\
+C & LR & S4-Dunford [exploratory] &  & closed &  & ACC & CC & 7 & 0.0469 & 0.0521 & $-0.005$ [$-0.012$, $+0.002$] & 0.875 (4) & inconclusive \\
+C & LR & S4-Dunford [exploratory] &  & closed &  & PACC & CC & 7 & 0.0469 & 0.0525 & $-0.006$ [$-0.028$, $+0.013$] & 1.000 (4) & inconclusive \\
+C & LR & S4-Dunford [exploratory] &  & closed &  & EMQ & CC & 7 & 0.0469 & 0.0630 & $-0.016$ [$-0.051$, $+0.022$] & 1.000 (4) & inconclusive \\
+C & LR & S1 bridge (APP vs natural) &  & APP 120-s &  & PCC & CC & 12 & 0.2477 & 0.2087 & $+0.039$ [$+0.035$, $+0.044$] & 0.002 (4) & better \\
+C & LR & S1 bridge (APP vs natural) &  & APP 120-s &  & ACC & CC & 12 & 0.2477 & 0.1570 & $+0.091$ [$+0.059$, $+0.118$] & 0.002 (4) & better \\
+C & LR & S1 bridge (APP vs natural) &  & APP 120-s &  & PACC & CC & 12 & 0.2477 & 0.0951 & $+0.153$ [$+0.125$, $+0.176$] & 0.002 (4) & better \\
+C & LR & S1 bridge (APP vs natural) &  & APP 120-s &  & EMQ & CC & 12 & 0.2477 & 0.1102 & $+0.138$ [$+0.109$, $+0.162$] & 0.002 (4) & better \\
+C & LR & S1 bridge (APP vs natural) &  & natural 2-min &  & PCC & CC & 12 & 0.0740 & 0.0969 & $-0.023$ [$-0.028$, $-0.018$] & 0.004 (4) & worse \\
+C & LR & S1 bridge (APP vs natural) &  & natural 2-min &  & ACC & CC & 12 & 0.0740 & 0.0802 & $-0.005$ [$-0.023$, $+0.009$] & 1.000 (4) & inconclusive \\
+C & LR & S1 bridge (APP vs natural) &  & natural 2-min &  & PACC & CC & 12 & 0.0740 & 0.0644 & $+0.008$ [$-0.009$, $+0.024$] & 1.000 (4) & inconclusive \\
+C & LR & S1 bridge (APP vs natural) &  & natural 2-min &  & EMQ & CC & 12 & 0.0740 & 0.0732 & $-0.001$ [$-0.021$, $+0.019$] & 1.000 (4) & inconclusive \\
+D & RF & S1 &  & 2-min &  & DR-APP-h & CC & 12 & 0.0398 & 0.0902 & $-0.050$ [$-0.101$, $-0.019$] & $9.8\times10^{-4}$ (2) & worse \\
+D & RF & S1 &  & 2-min &  & DR-natural-h & CC & 12 & 0.0398 & 0.0602 & $-0.020$ [$-0.049$, $-0.002$] & 0.033 (2) & worse \\
+D & RF & S1 &  & 30-min &  & DR-APP-h & CC & 12 & 0.0260 & 0.0784 & $-0.044$ [$-0.096$, $-0.012$] & 0.002 (2) & worse \\
+D & RF & S1 &  & 30-min &  & DR-natural-h & CC & 12 & 0.0260 & 0.0787 & $-0.043$ [$-0.071$, $-0.018$] & 0.003 (2) & worse \\
+D & RF & S1 &  & APP 120-s &  & DR-APP-h & CC & 12 & 0.1522 & 0.1043 & $+0.048$ [$+0.031$, $+0.065$] & 0.003 (2) & better \\
+D & RF & S1 &  & APP 120-s &  & DR-natural-h & CC & 12 & 0.1522 & 0.1662 & $-0.014$ [$-0.030$, $+0.004$] & 0.147 (2) & inconclusive \\
+D & RF & S1-L2 (collar) &  & 30-min &  & DR-APP-h & CC & 12 & 0.0837 & 0.1167 & $-0.034$ [$-0.056$, $-0.009$] & 0.057 (2) & inconclusive \\
+D & RF & S1-L2 (collar) &  & 30-min &  & DR-natural-h & CC & 12 & 0.0837 & 0.0915 & $-0.009$ [$-0.022$, $+0.003$] & 0.226 (2) & inconclusive \\
+D & RF & S2 &  & 30-min &  & DR-APP-h & CC & 12 & 0.0405 & 0.1600 & $-0.107$ [$-0.201$, $-0.032$] & 0.009 (2) & worse \\
+D & RF & S2 &  & 30-min &  & DR-natural-h & CC & 12 & 0.0405 & 0.1051 & $-0.054$ [$-0.117$, $-0.007$] & 0.054 (2) & inconclusive \\
+D & RF & S4-Smit-closed &  & 30-min &  & DR-APP-h & CC & 12 & 0.0089 & 0.0334 & $-0.023$ [$-0.029$, $-0.016$] & 0.002 (2) & worse \\
+D & RF & S4-Smit-closed &  & 30-min &  & DR-natural-h & CC & 12 & 0.0089 & 0.0267 & $-0.016$ [$-0.022$, $-0.010$] & 0.002 (2) & worse \\
+D & RF & K-L1 &  & natural 2-min &  & DR-APP-h & CC & 35 & 0.0078 & 0.0475 & $-0.039$ [$-0.042$, $-0.034$] & $1.0\times10^{-5}$ (2)* & worse \\
+D & RF & K-L1 &  & natural 2-min &  & DR-natural-h & CC & 35 & 0.0078 & 0.0314 & $-0.017$ [$-0.030$, $-0.006$] & 0.009 (2)* & worse \\
+D & RF & K-L1 &  & recording &  & DR-APP-h & CC & 44 & 0.0107 & 0.0446 & $-0.032$ [$-0.043$, $-0.023$] & $1.0\times10^{-5}$ (2)* & worse \\
+D & RF & K-L1 &  & recording &  & DR-natural-h & CC & 44 & 0.0107 & 0.0848 & $-0.070$ [$-0.085$, $-0.057$] & $1.0\times10^{-5}$ (2)* & worse \\
+D & RF & K-L2 &  & natural 2-min &  & DR-APP-h & CC & 35 & 0.0850 & 0.1217 & $-0.022$ [$-0.042$, $-0.002$] & 0.099 (2)* & inconclusive \\
+D & RF & K-L2 &  & natural 2-min &  & DR-natural-h & CC & 35 & 0.0850 & 0.1012 & $-0.004$ [$-0.024$, $+0.015$] & 0.681 (2)* & inconclusive \\
+D & RF & K-L2 &  & recording &  & DR-APP-h & CC & 44 & 0.0524 & 0.0760 & $-0.022$ [$-0.033$, $-0.009$] & 0.001 (2)* & worse \\
+D & RF & K-L2 &  & recording &  & DR-natural-h & CC & 44 & 0.0524 & 0.0860 & $-0.032$ [$-0.044$, $-0.020$] & $3.0\times10^{-5}$ (2)* & worse \\
+D & RF & S3 [exploratory] &  & cat sample &  & DR-APP-h & CC & 8 & 0.1442 & 0.1519 & $-0.008$ [$-0.067$, $+0.051$] & 0.812 (2) & inconclusive \\
+D & RF & S3 [exploratory] &  & cat sample &  & DR-natural-h & CC & 8 & 0.1442 & 0.1171 & $+0.027$ [$-0.014$, $+0.070$] & 0.641 (2) & inconclusive \\
+D & RF & S4-Dunford-closed [exploratory] &  & cat sample &  & DR-APP-h & CC & 7 & 0.0869 & 0.1385 & $-0.052$ [$-0.089$, $-0.014$] & 0.125 (2) & inconclusive \\
+D & RF & S4-Dunford-closed [exploratory] &  & cat sample &  & DR-natural-h & CC & 7 & 0.0869 & 0.1379 & $-0.051$ [$-0.141$, $+0.032$] & 0.391 (2) & inconclusive \\
+E & RF & S3 [exploratory] &  & - & study, m = 300 & Retraining & CC & 8 & 0.1442 & 0.1468 & $-0.003$ [$-0.006$, $+0.000$] & 0.562 (2) & equivalent \\
+E & RF & S3 [exploratory] &  & - & study, m = 1,800 & Retraining & CC & 8 & 0.1442 & 0.1404 & $+0.004$ [$-0.002$, $+0.010$] & 0.562 (2) & inconclusive \\
+E & RF & S3 [exploratory] &  & - & study, m = 300 & Weighted retraining & CC & 8 & 0.1442 & 0.1510 & $-0.007$ [$-0.015$, $+0.000$] & 0.391 (2) & inconclusive \\
+E & RF & S3 [exploratory] &  & - & study, m = 1,800 & Weighted retraining & CC & 8 & 0.1442 & 0.1464 & $-0.002$ [$-0.012$, $+0.006$] & 0.672 (2) & inconclusive \\
+E & RF & S3 [exploratory] &  & - & study, m = 300 & Weighted retraining & Retraining & 8 & 0.1468 & 0.1510 & $-0.004$ [$-0.010$, $+0.001$] & 0.328 (2) & equivalent \\
+E & RF & S3 [exploratory] &  & - & study, m = 1,800 & Weighted retraining & Retraining & 8 & 0.1404 & 0.1464 & $-0.006$ [$-0.013$, $+0.001$] & 0.328 (2) & inconclusive \\
+E & RF & S4-Dunford [exploratory] &  & open & study, m = 300 & Retraining & CC & 8 & 0.1039 & 0.0916 & $+0.012$ [$+0.003$, $+0.023$] & 0.078 (2) & inconclusive \\
+E & RF & S4-Dunford [exploratory] &  & open & study, m = 1,800 & Retraining & CC & 8 & 0.1039 & 0.0831 & $+0.021$ [$+0.007$, $+0.038$] & 0.078 (2) & inconclusive \\
+E & RF & S4-Dunford [exploratory] &  & open & study, m = 300 & Weighted retraining & CC & 8 & 0.1039 & 0.0916 & $+0.012$ [$+0.003$, $+0.023$] & 0.078 (2) & inconclusive \\
+E & RF & S4-Dunford [exploratory] &  & open & study, m = 1,800 & Weighted retraining & CC & 8 & 0.1039 & 0.0826 & $+0.021$ [$+0.007$, $+0.039$] & 0.078 (2) & inconclusive \\
+E & RF & S4-Dunford [exploratory] &  & open & study, m = 300 & Weighted retraining & Retraining & 8 & 0.0916 & 0.0916 & $+0.000$ [$-0.001$, $+0.001$] & 1.000 (2) & equivalent \\
+E & RF & S4-Dunford [exploratory] &  & open & study, m = 1,800 & Weighted retraining & Retraining & 8 & 0.0831 & 0.0826 & $+0.001$ [$-0.001$, $+0.002$] & 1.000 (2) & equivalent \\
+E & RF & S4-Dunford [exploratory] &  & closed & study, m = 300 & Retraining & CC & 7 & 0.0869 & 0.0729 & $+0.014$ [$+0.003$, $+0.028$] & 0.125 (2) & inconclusive \\
+E & RF & S4-Dunford [exploratory] &  & closed & study, m = 1,800 & Retraining & CC & 7 & 0.0869 & 0.0591 & $+0.028$ [$+0.005$, $+0.056$] & 0.125 (2) & inconclusive \\
+E & RF & S4-Dunford [exploratory] &  & closed & study, m = 300 & Weighted retraining & CC & 7 & 0.0869 & 0.0761 & $+0.011$ [$+0.003$, $+0.020$] & 0.156 (2) & inconclusive \\
+E & RF & S4-Dunford [exploratory] &  & closed & study, m = 1,800 & Weighted retraining & CC & 7 & 0.0869 & 0.0573 & $+0.030$ [$+0.006$, $+0.058$] & 0.156 (2) & inconclusive \\
+E & RF & S4-Dunford [exploratory] &  & closed & study, m = 300 & Weighted retraining & Retraining & 7 & 0.0729 & 0.0761 & $-0.003$ [$-0.008$, $+0.000$] & 0.250 (2) & equivalent \\
+E & RF & S4-Dunford [exploratory] &  & closed & study, m = 1,800 & Weighted retraining & Retraining & 7 & 0.0591 & 0.0573 & $+0.002$ [$+0.000$, $+0.003$] & 0.250 (2) & equivalent \\
+E & RF & S4-Smit &  & open & individual, m = 60 & Retraining & CC & 12 & 0.0991 & 0.1050 & $-0.005$ [$-0.014$, $+0.000$] & 0.535 (4) & inconclusive \\
+E & RF & S4-Smit &  & open & individual, m = 300 & Retraining & CC & 12 & 0.0990 & 0.0951 & $+0.003$ [$-0.002$, $+0.009$] & 0.535 (4) & equivalent \\
+E & RF & S4-Smit &  & open & individual, m = 900 & Retraining & CC & 12 & 0.1015 & 0.0917 & $+0.009$ [$+0.003$, $+0.017$] & 0.006 (4) & inconclusive \\
+E & RF & S4-Smit &  & open & individual, m = 1,800 & Retraining & CC & 12 & 0.1021 & 0.0828 & $+0.017$ [$+0.007$, $+0.027$] & 0.006 (4) & better \\
+E & RF & S4-Smit &  & open & individual, m = 300 & Weighted retraining & CC & 12 & 0.0990 & 0.0953 & $+0.003$ [$-0.000$, $+0.007$] & 0.138 (2) & equivalent \\
+E & RF & S4-Smit &  & open & individual, m = 1,800 & Weighted retraining & CC & 12 & 0.1021 & 0.0857 & $+0.014$ [$+0.006$, $+0.024$] & 0.006 (2) & better \\
+E & RF & S4-Smit &  & open & individual, m = 300 & Weighted retraining & Retraining & 12 & 0.0951 & 0.0953 & $-0.000$ [$-0.002$, $+0.002$] & 0.934 (2) & equivalent \\
+E & RF & S4-Smit &  & open & individual, m = 1,800 & Weighted retraining & Retraining & 12 & 0.0828 & 0.0857 & $-0.003$ [$-0.004$, $-0.001$] & 0.025 (2) & equivalent \\
+E & RF & S4-Smit &  & open & study, m = 60 & Retraining & CC & 12 & 0.0991 & 0.0990 & $+0.000$ [$-0.000$, $+0.000$] & 1.000 (4) & equivalent \\
+E & RF & S4-Smit &  & open & study, m = 300 & Retraining & CC & 12 & 0.0990 & 0.0992 & $-0.001$ [$-0.007$, $+0.004$] & 1.000 (4) & equivalent \\
+E & RF & S4-Smit &  & open & study, m = 900 & Retraining & CC & 12 & 0.1015 & 0.0990 & $+0.002$ [$+0.001$, $+0.004$] & 0.019 (4) & equivalent \\
+E & RF & S4-Smit &  & open & study, m = 1,800 & Retraining & CC & 12 & 0.1021 & 0.0944 & $+0.007$ [$+0.003$, $+0.013$] & 0.006 (4) & inconclusive \\
+E & RF & S4-Smit &  & open & study, m = 300 & Weighted retraining & CC & 12 & 0.0990 & 0.0967 & $+0.002$ [$+0.001$, $+0.004$] & 0.020 (2) & equivalent \\
+E & RF & S4-Smit &  & open & study, m = 1,800 & Weighted retraining & CC & 12 & 0.1021 & 0.0959 & $+0.005$ [$+0.002$, $+0.010$] & 0.007 (2) & equivalent \\
+E & RF & S4-Smit &  & open & study, m = 300 & Weighted retraining & Retraining & 12 & 0.0992 & 0.0967 & $+0.003$ [$-0.001$, $+0.009$] & 0.939 (2) & equivalent \\
+E & RF & S4-Smit &  & open & study, m = 1,800 & Weighted retraining & Retraining & 12 & 0.0944 & 0.0959 & $-0.001$ [$-0.003$, $-0.000$] & 0.014 (2) & equivalent \\
+E & RF & S1 &  & Smit 30-min & individual, m = 300 & Retraining & CC & 12 & 0.0264 & 0.0244 & $+0.002$ [$-0.000$, $+0.005$] & 1.000 (2) & equivalent \\
+E & RF & S1 &  & Smit 30-min & individual, m = 1,800 & Retraining & CC & 12 & 0.0293 & 0.0264 & $+0.002$ [$-0.000$, $+0.007$] & 1.000 (2) & equivalent \\
+E & RF & S1 &  & Smit 30-min & individual, m = 300 & Weighted retraining & CC & 12 & 0.0264 & 0.0244 & $+0.002$ [$-0.000$, $+0.005$] & 1.000 (2) & equivalent \\
+E & RF & S1 &  & Smit 30-min & individual, m = 1,800 & Weighted retraining & CC & 12 & 0.0293 & 0.0267 & $+0.002$ [$-0.001$, $+0.007$] & 1.000 (2) & equivalent \\
+E & RF & S1 &  & Smit 30-min & individual, m = 300 & Weighted retraining & Retraining & 12 & 0.0244 & 0.0244 & $-0.000$ [$-0.000$, $+0.000$] & 0.382 (2) & equivalent \\
+E & RF & S1 &  & Smit 30-min & individual, m = 1,800 & Weighted retraining & Retraining & 12 & 0.0264 & 0.0267 & $-0.000$ [$-0.001$, $-0.000$] & 0.100 (2) & equivalent \\
+E & RF & S2 &  & Smit 30-min & individual, m = 300 & Retraining & CC & 12 & 0.0410 & 0.0356 & $+0.005$ [$+0.001$, $+0.010$] & $9.8\times10^{-4}$ (2) & equivalent \\
+E & RF & S2 &  & Smit 30-min & individual, m = 1,800 & Retraining & CC & 12 & 0.0436 & 0.0359 & $+0.007$ [$+0.003$, $+0.012$] & $9.8\times10^{-4}$ (2) & inconclusive \\
+E & RF & S2 &  & Smit 30-min & individual, m = 300 & Weighted retraining & CC & 12 & 0.0410 & 0.0358 & $+0.005$ [$+0.001$, $+0.009$] & 0.006 (2) & equivalent \\
+E & RF & S2 &  & Smit 30-min & individual, m = 1,800 & Weighted retraining & CC & 12 & 0.0436 & 0.0360 & $+0.007$ [$+0.003$, $+0.012$] & 0.002 (2) & inconclusive \\
+E & RF & S2 &  & Smit 30-min & individual, m = 300 & Weighted retraining & Retraining & 12 & 0.0356 & 0.0358 & $-0.000$ [$-0.001$, $+0.000$] & 1.000 (2) & equivalent \\
+E & RF & S2 &  & Smit 30-min & individual, m = 1,800 & Weighted retraining & Retraining & 12 & 0.0359 & 0.0360 & $-0.000$ [$-0.001$, $+0.000$] & 1.000 (2) & equivalent \\
+F & RF & S1 &  & Smit 30-min & individual, m = 1,800 & T-ACC, stratified (gain over own CC) & T-ACC, random blocks (gain over own CC) & 12 & 0.0627 & 0.0242 & $+0.046$ [$+0.020$, $+0.083$] & $9.8\times10^{-4}$ (2) & better \\
+F & RF & S1 &  & Smit 30-min & individual, m = 300 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.0571 & 0.0390 & $+0.018$ [$+0.012$, $+0.025$] & $9.8\times10^{-4}$ (2) & better \\
+F & RF & S1 &  & Smit 30-min & individual, m = 1,800 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.0669 & 0.0390 & $+0.033$ [$+0.020$, $+0.050$] & $9.8\times10^{-4}$ (2) & better \\
+F & RF & S2 &  & Smit 30-min & individual, m = 1,800 & T-ACC, stratified (gain over own CC) & T-ACC, random blocks (gain over own CC) & 12 & 0.0723 & 0.0438 & $+0.038$ [$+0.019$, $+0.060$] & 0.002 (2) & better \\
+F & RF & S2 &  & Smit 30-min & individual, m = 300 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.0893 & 0.0689 & $+0.021$ [$+0.015$, $+0.027$] & $9.8\times10^{-4}$ (2) & better \\
+F & RF & S2 &  & Smit 30-min & individual, m = 1,800 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.0877 & 0.0663 & $+0.027$ [$+0.014$, $+0.040$] & 0.001 (2) & better \\
+F & RF & S3 [exploratory] &  & Dunford cat sample & study, m = 1,800 & T-ACC, stratified (gain over own CC) & T-ACC, random blocks (gain over own CC) & 8 & 0.1414 & 0.1502 & $-0.009$ [$-0.026$, $+0.005$] & 0.797 (4) & inconclusive \\
+F & RF & S3 [exploratory] &  & Dunford cat sample & study, m = 60 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 8 & 0.1150 & 0.1747 & $-0.060$ [$-0.136$, $+0.023$] & 0.875 (4) & inconclusive \\
+F & RF & S3 [exploratory] &  & Dunford cat sample & study, m = 300 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 8 & 0.1119 & 0.1527 & $-0.041$ [$-0.149$, $+0.034$] & 1.000 (4) & inconclusive \\
+F & RF & S3 [exploratory] &  & Dunford cat sample & study, m = 900 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 8 & 0.1226 & 0.1508 & $-0.028$ [$-0.117$, $+0.035$] & 1.000 (4) & inconclusive \\
+F & RF & S3 [exploratory] &  & Dunford cat sample & study, m = 1,800 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 8 & 0.1221 & 0.1511 & $-0.029$ [$-0.087$, $+0.005$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Dunford-open [exploratory] &  & Dunford cat sample & study, m = 1,800 & T-ACC, stratified (gain over own CC) & T-ACC, random blocks (gain over own CC) & 8 & 0.0928 & 0.0972 & $-0.004$ [$-0.023$, $+0.007$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Dunford-open [exploratory] &  & Dunford cat sample & study, m = 60 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 8 & 0.0975 & 0.0967 & $+0.001$ [$-0.026$, $+0.017$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Dunford-open [exploratory] &  & Dunford cat sample & study, m = 300 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 8 & 0.0935 & 0.0947 & $-0.001$ [$-0.024$, $+0.014$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Dunford-open [exploratory] &  & Dunford cat sample & study, m = 900 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 8 & 0.0922 & 0.0936 & $-0.001$ [$-0.017$, $+0.009$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Dunford-open [exploratory] &  & Dunford cat sample & study, m = 1,800 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 8 & 0.0919 & 0.0938 & $-0.002$ [$-0.018$, $+0.009$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample & study, m = 1,800 & T-ACC, stratified (gain over own CC) & T-ACC, random blocks (gain over own CC) & 7 & 0.0815 & 0.0906 & $-0.009$ [$-0.042$, $+0.011$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample & study, m = 60 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 7 & 0.0956 & 0.0843 & $+0.011$ [$-0.033$, $+0.055$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample & study, m = 300 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 7 & 0.0834 & 0.0827 & $+0.001$ [$-0.025$, $+0.020$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample & study, m = 900 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 7 & 0.0818 & 0.0830 & $-0.001$ [$-0.027$, $+0.018$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Dunford-closed [exploratory] &  & Dunford cat sample & study, m = 1,800 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 7 & 0.0790 & 0.0835 & $-0.005$ [$-0.031$, $+0.014$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Smit-open &  & Smit 30-min & individual, m = 1,800 & T-ACC, stratified (gain over own CC) & T-ACC, random blocks (gain over own CC) & 12 & 0.1113 & 0.0760 & $+0.013$ [$-0.003$, $+0.037$] & 0.842 (4) & inconclusive \\
+F & RF & S4-Smit-open &  & Smit 30-min & individual, m = 60 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.1000 & 0.1047 & $-0.006$ [$-0.012$, $-0.001$] & 0.041 (4) & inconclusive \\
+F & RF & S4-Smit-open &  & Smit 30-min & individual, m = 300 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.1016 & 0.1009 & $-0.003$ [$-0.007$, $+0.002$] & 0.861 (4) & equivalent \\
+F & RF & S4-Smit-open &  & Smit 30-min & individual, m = 900 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.1088 & 0.0918 & $+0.003$ [$-0.003$, $+0.008$] & 0.861 (4) & equivalent \\
+F & RF & S4-Smit-open &  & Smit 30-min & individual, m = 1,800 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.1119 & 0.0769 & $+0.013$ [$-0.003$, $+0.037$] & 0.861 (4) & inconclusive \\
+F & RF & S4-Smit-open &  & Smit 30-min & individual, m = 300 & Target-only, stratified (gain over own CC) & Target-only, random blocks (gain over own CC) & 12 & 0.0739 & 0.0508 & $+0.015$ [$-0.003$, $+0.031$] & 0.124 (2) & inconclusive \\
+F & RF & S4-Smit-open &  & Smit 30-min & individual, m = 1,800 & Target-only, stratified (gain over own CC) & Target-only, random blocks (gain over own CC) & 12 & 0.0382 & 0.0536 & $-0.044$ [$-0.058$, $-0.030$] & $9.8\times10^{-4}$ (2) & worse \\
+F & RF & S4-Smit-open &  & Smit 30-min & study, m = 60 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.1025 & 0.1054 & $-0.005$ [$-0.010$, $+0.000$] & 0.417 (4) & equivalent \\
+F & RF & S4-Smit-open &  & Smit 30-min & study, m = 300 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.1036 & 0.1030 & $-0.001$ [$-0.005$, $+0.005$] & 1.000 (4) & equivalent \\
+F & RF & S4-Smit-open &  & Smit 30-min & study, m = 900 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.1060 & 0.1030 & $+0.001$ [$-0.002$, $+0.004$] & 1.000 (4) & equivalent \\
+F & RF & S4-Smit-open &  & Smit 30-min & study, m = 1,800 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.1149 & 0.1028 & $+0.008$ [$+0.001$, $+0.016$] & 0.213 (4) & inconclusive \\
+F & RF & S4-Smit-closed &  & Smit 30-min & individual, m = 1,800 & T-ACC, stratified (gain over own CC) & T-ACC, random blocks (gain over own CC) & 12 & 0.0266 & 0.0249 & $+0.010$ [$-0.009$, $+0.034$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Smit-closed &  & Smit 30-min & individual, m = 60 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.0098 & 0.0277 & $-0.017$ [$-0.028$, $-0.009$] & 0.002 (4) & worse \\
+F & RF & S4-Smit-closed &  & Smit 30-min & individual, m = 300 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.0187 & 0.0240 & $-0.003$ [$-0.016$, $+0.010$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Smit-closed &  & Smit 30-min & individual, m = 900 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.0257 & 0.0257 & $+0.005$ [$-0.008$, $+0.022$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Smit-closed &  & Smit 30-min & individual, m = 1,800 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.0275 & 0.0275 & $+0.008$ [$-0.009$, $+0.031$] & 1.000 (4) & inconclusive \\
+F & RF & S4-Smit-closed &  & Smit 30-min & study, m = 60 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.0101 & 0.0263 & $-0.017$ [$-0.024$, $-0.012$] & 0.002 (4) & worse \\
+F & RF & S4-Smit-closed &  & Smit 30-min & study, m = 300 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.0163 & 0.0233 & $-0.007$ [$-0.012$, $-0.003$] & 0.038 (4) & inconclusive \\
+F & RF & S4-Smit-closed &  & Smit 30-min & study, m = 900 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.0356 & 0.0223 & $+0.008$ [$-0.004$, $+0.022$] & 0.271 (4) & inconclusive \\
+F & RF & S4-Smit-closed &  & Smit 30-min & study, m = 1,800 & PACC-target, stratified (gain over own CC) & PACC-target, random blocks (gain over own CC) & 12 & 0.0270 & 0.0215 & $+0.004$ [$-0.000$, $+0.009$] & 0.227 (4) & equivalent \\
+\end{longtable}}
+\clearpage
+\subsection*{Table S4. Macro-F1, accuracy and pooled top-label expected calibration error (ECE, 10 bins) of the three classifiers.}
+{\footnotesize ECE is pooled over individuals and computed on the highest predicted class probability.\par}\smallskip
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{3.82cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.65cm}>{\raggedright\arraybackslash}p{1.81cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.34cm}>{\raggedright\arraybackslash}p{1.03cm}@{}}
+\toprule
+\textbf{scenario} & \textbf{variant} & \textbf{classifier} & \textbf{n individuals} & \textbf{macroF1} & \textbf{accuracy} & \textbf{ECE pooled} \\
+\midrule
+\endhead
+\midrule \multicolumn{7}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+S1 & - & HGB & 12 & 0.699 & 0.905 & 0.0032 \\
+S1 & - & LR & 12 & 0.534 & 0.863 & 0.0536 \\
+S1 & - & RF & 12 & 0.702 & 0.904 & 0.0181 \\
+S2 & - & HGB & 12 & 0.643 & 0.860 & 0.0075 \\
+S2 & - & LR & 12 & 0.557 & 0.852 & 0.0645 \\
+S2 & - & RF & 12 & 0.638 & 0.856 & 0.0419 \\
+S3 [exploratory] & - & HGB & 9 & 0.596 & 0.689 & 0.0998 \\
+S3 [exploratory] & - & LR & 9 & 0.482 & 0.615 & 0.1203 \\
+S3 [exploratory] & - & RF & 9 & 0.588 & 0.695 & 0.0732 \\
+S4-Dunford [exploratory] & open & HGB & 9 & 0.676 & 0.825 & 0.1021 \\
+S4-Dunford [exploratory] & open & LR & 9 & 0.670 & 0.834 & 0.0421 \\
+S4-Dunford [exploratory] & open & RF & 9 & 0.677 & 0.826 & 0.0834 \\
+S4-Dunford [exploratory] & closed & HGB & 9 & 0.819 & 0.890 & 0.0759 \\
+S4-Dunford [exploratory] & closed & LR & 9 & 0.815 & 0.896 & 0.0268 \\
+S4-Dunford [exploratory] & closed & RF & 9 & 0.816 & 0.889 & 0.0584 \\
+S4-Smit & open & HGB & 12 & 0.436 & 0.818 & 0.1652 \\
+S4-Smit & open & LR & 12 & 0.435 & 0.818 & 0.1497 \\
+S4-Smit & open & RF & 12 & 0.435 & 0.818 & 0.1517 \\
+S4-Smit & closed & HGB & 12 & 0.782 & 0.963 & 0.0259 \\
+S4-Smit & closed & LR & 12 & 0.780 & 0.962 & 0.0184 \\
+S4-Smit & closed & RF & 12 & 0.781 & 0.963 & 0.0200 \\
+\end{longtable}}
+\clearpage
+\subsection*{Table S5. Distribution matching (DM): solutions on the boundary of the simplex and classes set to zero.}
+{\footnotesize share\_boundary\_solution: share of samples in which DM set at least one class to zero. For each class: number and share of samples in which DM set it to zero, how many of those samples truly lacked the class, and the median [quartiles] of its true proportion in those samples.\par}\smallskip
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.9cm}>{\raggedright\arraybackslash}p{2.12cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.34cm}>{\raggedright\arraybackslash}p{2.27cm}>{\raggedright\arraybackslash}p{0.72cm}>{\raggedright\arraybackslash}p{0.88cm}>{\raggedright\arraybackslash}p{0.72cm}>{\raggedright\arraybackslash}p{0.88cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{0.88cm}>{\raggedright\arraybackslash}p{0.88cm}@{}}
+\toprule
+\textbf{scenario} & \textbf{sample type} & \textbf{n samples} & \textbf{share boundary solution} & \textbf{class} & \textbf{n DM zero} & \textbf{share DM zero} & \textbf{n true also zero} & \textbf{share true also zero} & \textbf{true median} & \textbf{true q1} & \textbf{true q3} \\
+\midrule
+\endhead
+\midrule \multicolumn{12}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+K-L1 & natural 2-min & 130 & 0.754 & inactive & 67 & 0.515 & 67 & 1.000 & 0.000 & 0.000 & 0.000 \\
+K-L1 & natural 2-min & 130 & 0.754 & locomotion & 31 & 0.238 & 31 & 1.000 & 0.000 & 0.000 & 0.000 \\
+K-L2 & natural 2-min & 130 & 1.000 & Lying on chest & 95 & 0.731 & 83 & 0.874 & 0.000 & 0.000 & 0.000 \\
+K-L2 & natural 2-min & 130 & 1.000 & Sitting & 107 & 0.823 & 102 & 0.953 & 0.000 & 0.000 & 0.000 \\
+K-L2 & natural 2-min & 130 & 1.000 & Standing & 116 & 0.892 & 102 & 0.879 & 0.000 & 0.000 & 0.000 \\
+K-L2 & natural 2-min & 130 & 1.000 & Trotting & 80 & 0.615 & 80 & 1.000 & 0.000 & 0.000 & 0.000 \\
+K-L2 & natural 2-min & 130 & 1.000 & Walking & 77 & 0.592 & 73 & 0.948 & 0.000 & 0.000 & 0.000 \\
+K-L2 & recording & 61 & 0.984 & Lying on chest & 21 & 0.344 & 0 & 0.000 & 0.067 & 0.014 & 0.187 \\
+K-L2 & recording & 61 & 0.984 & Sitting & 38 & 0.623 & 12 & 0.316 & 0.021 & 0.000 & 0.083 \\
+K-L2 & recording & 61 & 0.984 & Standing & 42 & 0.689 & 11 & 0.262 & 0.021 & 0.001 & 0.065 \\
+S1 & 2-min & 1,083 & 0.887 & inactive & 108 & 0.100 & 28 & 0.259 & 0.076 & 0.000 & 0.707 \\
+S1 & 2-min & 1,083 & 0.887 & locomotion & 811 & 0.749 & 748 & 0.922 & 0.000 & 0.000 & 0.000 \\
+S1 & 2-min & 1,083 & 0.887 & maintenance & 723 & 0.668 & 675 & 0.934 & 0.000 & 0.000 & 0.000 \\
+S1 & 30-min & 68 & 0.676 & inactive & 2 & 0.029 & 0 & 0.000 & 0.567 & 0.477 & 0.656 \\
+S1 & 30-min & 68 & 0.676 & locomotion & 38 & 0.559 & 17 & 0.447 & 0.002 & 0.000 & 0.013 \\
+S1 & 30-min & 68 & 0.676 & maintenance & 23 & 0.338 & 8 & 0.348 & 0.007 & 0.000 & 0.022 \\
+S1 & APP 120-s & 600 & 0.268 & inactive & 40 & 0.067 & 2 & 0.050 & 0.042 & 0.017 & 0.127 \\
+S1 & APP 120-s & 600 & 0.268 & locomotion & 66 & 0.110 & 2 & 0.030 & 0.050 & 0.019 & 0.075 \\
+S1 & APP 120-s & 600 & 0.268 & maintenance & 59 & 0.098 & 5 & 0.085 & 0.100 & 0.033 & 0.204 \\
+S1-L2 (collar) & 30-min & 68 & 1.000 & Eating & 44 & 0.647 & 38 & 0.864 & 0.000 & 0.000 & 0.000 \\
+S1-L2 (collar) & 30-min & 68 & 1.000 & Grooming & 22 & 0.324 & 10 & 0.455 & 0.001 & 0.000 & 0.020 \\
+S1-L2 (collar) & 30-min & 68 & 1.000 & Lying & 15 & 0.221 & 4 & 0.267 & 0.280 & 0.003 & 0.461 \\
+S1-L2 (collar) & 30-min & 68 & 1.000 & Sitting & 38 & 0.559 & 3 & 0.079 & 0.116 & 0.032 & 0.273 \\
+S1-L2 (collar) & 30-min & 68 & 1.000 & Standing & 54 & 0.794 & 13 & 0.241 & 0.016 & 0.001 & 0.072 \\
+S1-L2 (collar) & 30-min & 68 & 1.000 & Trotting & 51 & 0.750 & 41 & 0.804 & 0.000 & 0.000 & 0.000 \\
+S1-L2 (collar) & 30-min & 68 & 1.000 & Walking & 35 & 0.515 & 17 & 0.486 & 0.001 & 0.000 & 0.011 \\
+S2 & 30-min & 68 & 0.485 & inactive & 5 & 0.074 & 0 & 0.000 & 0.605 & 0.404 & 0.764 \\
+S2 & 30-min & 68 & 0.485 & locomotion & 22 & 0.324 & 15 & 0.682 & 0.000 & 0.000 & 0.001 \\
+S2 & 30-min & 68 & 0.485 & maintenance & 21 & 0.309 & 9 & 0.429 & 0.002 & 0.000 & 0.033 \\
+S3 [exploratory] & cat sample & 8 & 0.625 & inactive & 1 & 0.125 & 0 & 0.000 & 0.052 & 0.052 & 0.052 \\
+S3 [exploratory] & cat sample & 8 & 0.625 & locomotion & 3 & 0.375 & 1 & 0.333 & 0.004 & 0.002 & 0.055 \\
+S3 [exploratory] & cat sample & 8 & 0.625 & maintenance & 4 & 0.500 & 3 & 0.750 & 0.000 & 0.000 & 0.126 \\
+S4-Dunford-closed [exploratory] & cat sample & 7 & 0.286 & locomotion & 2 & 0.286 & 1 & 0.500 & 0.002 & 0.001 & 0.003 \\
+S4-Smit-closed & 30-min & 68 & 0.500 & locomotion & 34 & 0.500 & 18 & 0.529 & 0.000 & 0.000 & 0.006 \\
+\end{longtable}}
+\clearpage
+\subsection*{Table S6. Direct compositional regression (DR): diagnostics.}
+\smallskip{\small\textbf{(a)} Training samples of DR-natural: share of samples in which a class was absent, and its mean and median true proportion.\par}
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.44cm}>{\raggedright\arraybackslash}p{0.88cm}>{\raggedright\arraybackslash}p{2.27cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{0.88cm}>{\raggedright\arraybackslash}p{0.88cm}>{\raggedright\arraybackslash}p{1.03cm}@{}}
+\toprule
+\textbf{training sample type} & \textbf{label space} & \textbf{class} & \textbf{n samples} & \textbf{share true zero} & \textbf{true mean} & \textbf{true median} \\
+\midrule
+\endhead
+\midrule \multicolumn{7}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+Smit 30-min (coverage $\geq$ 50\%) & L1 & inactive & 68 & 0.000 & 0.821 & 0.887 \\
+Smit 30-min (coverage $\geq$ 50\%) & L1 & locomotion & 68 & 0.265 & 0.032 & 0.014 \\
+Smit 30-min (coverage $\geq$ 50\%) & L1 & maintenance & 68 & 0.147 & 0.147 & 0.059 \\
+Smit 2-min (coverage $\geq$ 50\%) & L1 & inactive & 1,083 & 0.029 & 0.802 & 1.000 \\
+Smit 2-min (coverage $\geq$ 50\%) & L1 & locomotion & 1,083 & 0.753 & 0.035 & 0.000 \\
+Smit 2-min (coverage $\geq$ 50\%) & L1 & maintenance & 1,083 & 0.685 & 0.164 & 0.000 \\
+Smit 30-min (coverage $\geq$ 50\%) & L2 & Lying & 68 & 0.191 & 0.472 & 0.493 \\
+Smit 30-min (coverage $\geq$ 50\%) & L2 & Sitting & 68 & 0.074 & 0.284 & 0.167 \\
+Smit 30-min (coverage $\geq$ 50\%) & L2 & Standing & 68 & 0.191 & 0.065 & 0.026 \\
+Smit 30-min (coverage $\geq$ 50\%) & L2 & Walking & 68 & 0.265 & 0.029 & 0.014 \\
+Smit 30-min (coverage $\geq$ 50\%) & L2 & Trotting & 68 & 0.750 & 0.003 & 0.000 \\
+Smit 30-min (coverage $\geq$ 50\%) & L2 & Grooming & 68 & 0.162 & 0.103 & 0.052 \\
+Smit 30-min (coverage $\geq$ 50\%) & L2 & Eating & 68 & 0.750 & 0.043 & 0.000 \\
+Smit 2-min (coverage $\geq$ 50\%) & L2 & Lying & 1,083 & 0.492 & 0.441 & 0.029 \\
+Smit 2-min (coverage $\geq$ 50\%) & L2 & Sitting & 1,083 & 0.485 & 0.286 & 0.017 \\
+Smit 2-min (coverage $\geq$ 50\%) & L2 & Standing & 1,083 & 0.734 & 0.075 & 0.000 \\
+Smit 2-min (coverage $\geq$ 50\%) & L2 & Walking & 1,083 & 0.758 & 0.032 & 0.000 \\
+Smit 2-min (coverage $\geq$ 50\%) & L2 & Trotting & 1,083 & 0.957 & 0.003 & 0.000 \\
+Smit 2-min (coverage $\geq$ 50\%) & L2 & Grooming & 1,083 & 0.763 & 0.104 & 0.000 \\
+Smit 2-min (coverage $\geq$ 50\%) & L2 & Eating & 1,083 & 0.909 & 0.060 & 0.000 \\
+dog recordings ($\geq$ 60 s) & K-L1 & inactive & 61 & 0.000 & 0.315 & 0.268 \\
+dog recordings ($\geq$ 60 s) & K-L1 & locomotion & 61 & 0.000 & 0.685 & 0.732 \\
+dog natural 2-min windows & K-L1 & inactive & 130 & 0.515 & 0.388 & 0.000 \\
+dog natural 2-min windows & K-L1 & locomotion & 130 & 0.246 & 0.612 & 1.000 \\
+dog recordings ($\geq$ 60 s) & K-L2 & Lying on chest & 61 & 0.000 & 0.155 & 0.121 \\
+dog recordings ($\geq$ 60 s) & K-L2 & Sitting & 61 & 0.230 & 0.083 & 0.033 \\
+dog recordings ($\geq$ 60 s) & K-L2 & Standing & 61 & 0.246 & 0.077 & 0.016 \\
+dog recordings ($\geq$ 60 s) & K-L2 & Walking & 61 & 0.000 & 0.337 & 0.317 \\
+dog recordings ($\geq$ 60 s) & K-L2 & Trotting & 61 & 0.000 & 0.348 & 0.324 \\
+dog natural 2-min windows & K-L2 & Lying on chest & 130 & 0.762 & 0.196 & 0.000 \\
+dog natural 2-min windows & K-L2 & Sitting & 130 & 0.877 & 0.100 & 0.000 \\
+dog natural 2-min windows & K-L2 & Standing & 130 & 0.854 & 0.092 & 0.000 \\
+dog natural 2-min windows & K-L2 & Walking & 130 & 0.577 & 0.296 & 0.000 \\
+dog natural 2-min windows & K-L2 & Trotting & 130 & 0.631 & 0.316 & 0.000 \\
+\end{longtable}}
+\smallskip{\small\textbf{(b)} Share of evaluation samples whose true class proportion lay outside the range of the training samples.\par}
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.9cm}>{\raggedright\arraybackslash}p{2.12cm}>{\raggedright\arraybackslash}p{1.65cm}>{\raggedright\arraybackslash}p{2.27cm}>{\raggedright\arraybackslash}p{1.34cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{1.34cm}@{}}
+\toprule
+\textbf{scenario} & \textbf{sample type} & \textbf{variant} & \textbf{class} & \textbf{n outside training range} & \textbf{n evaluated} & \textbf{share outside training range} \\
+\midrule
+\endhead
+\midrule \multicolumn{7}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+K-L1 & natural 2-min & DR-APP & inactive & 0 & 130 & 0.000 \\
+K-L1 & natural 2-min & DR-APP & locomotion & 0 & 130 & 0.000 \\
+K-L1 & natural 2-min & DR-natural & inactive & 0 & 130 & 0.000 \\
+K-L1 & natural 2-min & DR-natural & locomotion & 0 & 130 & 0.000 \\
+K-L1 & recording & DR-APP & inactive & 0 & 61 & 0.000 \\
+K-L1 & recording & DR-APP & locomotion & 0 & 61 & 0.000 \\
+K-L1 & recording & DR-natural & inactive & 0 & 61 & 0.000 \\
+K-L1 & recording & DR-natural & locomotion & 0 & 61 & 0.000 \\
+K-L2 & natural 2-min & DR-APP & Lying on chest & 19 & 130 & 0.146 \\
+K-L2 & natural 2-min & DR-APP & Sitting & 10 & 130 & 0.077 \\
+K-L2 & natural 2-min & DR-APP & Standing & 10 & 130 & 0.077 \\
+K-L2 & natural 2-min & DR-APP & Trotting & 32 & 130 & 0.246 \\
+K-L2 & natural 2-min & DR-APP & Walking & 32 & 130 & 0.246 \\
+K-L2 & natural 2-min & DR-natural & Lying on chest & 0 & 130 & 0.000 \\
+K-L2 & natural 2-min & DR-natural & Sitting & 0 & 130 & 0.000 \\
+K-L2 & natural 2-min & DR-natural & Standing & 0 & 130 & 0.000 \\
+K-L2 & natural 2-min & DR-natural & Trotting & 0 & 130 & 0.000 \\
+K-L2 & natural 2-min & DR-natural & Walking & 0 & 130 & 0.000 \\
+K-L2 & recording & DR-APP & Lying on chest & 0 & 61 & 0.000 \\
+K-L2 & recording & DR-APP & Sitting & 0 & 61 & 0.000 \\
+K-L2 & recording & DR-APP & Standing & 0 & 61 & 0.000 \\
+K-L2 & recording & DR-APP & Trotting & 0 & 61 & 0.000 \\
+K-L2 & recording & DR-APP & Walking & 0 & 61 & 0.000 \\
+K-L2 & recording & DR-natural & Lying on chest & 0 & 61 & 0.000 \\
+K-L2 & recording & DR-natural & Sitting & 0 & 61 & 0.000 \\
+K-L2 & recording & DR-natural & Standing & 0 & 61 & 0.000 \\
+K-L2 & recording & DR-natural & Trotting & 0 & 61 & 0.000 \\
+K-L2 & recording & DR-natural & Walking & 0 & 61 & 0.000 \\
+S1 & 2-min & DR-APP & maintenance & 39 & 1,083 & 0.036 \\
+S1 & 2-min & DR-APP & inactive & 642 & 1,083 & 0.593 \\
+S1 & 2-min & DR-APP & locomotion & 0 & 1,083 & 0.000 \\
+S1 & 2-min & DR-natural & maintenance & 0 & 1,083 & 0.000 \\
+S1 & 2-min & DR-natural & inactive & 0 & 1,083 & 0.000 \\
+S1 & 2-min & DR-natural & locomotion & 1 & 1,083 & 0.001 \\
+S1 & 30-min & DR-APP & maintenance & 0 & 68 & 0.000 \\
+S1 & 30-min & DR-APP & inactive & 20 & 68 & 0.294 \\
+S1 & 30-min & DR-APP & locomotion & 0 & 68 & 0.000 \\
+S1 & 30-min & DR-natural & maintenance & 0 & 68 & 0.000 \\
+S1 & 30-min & DR-natural & inactive & 0 & 68 & 0.000 \\
+S1 & 30-min & DR-natural & locomotion & 0 & 68 & 0.000 \\
+S1 & APP 120-s & DR-APP & maintenance & 1 & 600 & 0.002 \\
+S1 & APP 120-s & DR-APP & inactive & 0 & 600 & 0.000 \\
+S1 & APP 120-s & DR-APP & locomotion & 0 & 600 & 0.000 \\
+S1 & APP 120-s & DR-natural & maintenance & 0 & 600 & 0.000 \\
+S1 & APP 120-s & DR-natural & inactive & 0 & 600 & 0.000 \\
+S1 & APP 120-s & DR-natural & locomotion & 58 & 600 & 0.097 \\
+S1-L2 (collar) & 30-min & DR-APP & Eating & 0 & 68 & 0.000 \\
+S1-L2 (collar) & 30-min & DR-APP & Grooming & 0 & 68 & 0.000 \\
+S1-L2 (collar) & 30-min & DR-APP & Lying & 19 & 68 & 0.279 \\
+S1-L2 (collar) & 30-min & DR-APP & Sitting & 6 & 68 & 0.088 \\
+S1-L2 (collar) & 30-min & DR-APP & Standing & 0 & 68 & 0.000 \\
+S1-L2 (collar) & 30-min & DR-APP & Trotting & 0 & 68 & 0.000 \\
+S1-L2 (collar) & 30-min & DR-APP & Walking & 0 & 68 & 0.000 \\
+S1-L2 (collar) & 30-min & DR-natural & Eating & 0 & 68 & 0.000 \\
+S1-L2 (collar) & 30-min & DR-natural & Grooming & 0 & 68 & 0.000 \\
+S1-L2 (collar) & 30-min & DR-natural & Lying & 0 & 68 & 0.000 \\
+S1-L2 (collar) & 30-min & DR-natural & Sitting & 0 & 68 & 0.000 \\
+S1-L2 (collar) & 30-min & DR-natural & Standing & 0 & 68 & 0.000 \\
+S1-L2 (collar) & 30-min & DR-natural & Trotting & 0 & 68 & 0.000 \\
+S1-L2 (collar) & 30-min & DR-natural & Walking & 0 & 68 & 0.000 \\
+S2 & 30-min & DR-APP & maintenance & 0 & 68 & 0.000 \\
+S2 & 30-min & DR-APP & inactive & 20 & 68 & 0.294 \\
+S2 & 30-min & DR-APP & locomotion & 0 & 68 & 0.000 \\
+S2 & 30-min & DR-natural & maintenance & 0 & 68 & 0.000 \\
+S2 & 30-min & DR-natural & inactive & 0 & 68 & 0.000 \\
+S2 & 30-min & DR-natural & locomotion & 0 & 68 & 0.000 \\
+S3 [exploratory] & cat sample & DR-APP & maintenance & 0 & 8 & 0.000 \\
+S3 [exploratory] & cat sample & DR-APP & inactive & 2 & 8 & 0.250 \\
+S3 [exploratory] & cat sample & DR-APP & locomotion & 0 & 8 & 0.000 \\
+S3 [exploratory] & cat sample & DR-natural & maintenance & 0 & 8 & 0.000 \\
+S3 [exploratory] & cat sample & DR-natural & inactive & 0 & 8 & 0.000 \\
+S3 [exploratory] & cat sample & DR-natural & locomotion & 1 & 8 & 0.125 \\
+S4-Dunford-closed [exploratory] & cat sample & DR-APP & inactive & 0 & 7 & 0.000 \\
+S4-Dunford-closed [exploratory] & cat sample & DR-APP & locomotion & 0 & 7 & 0.000 \\
+S4-Dunford-closed [exploratory] & cat sample & DR-natural & inactive & 0 & 7 & 0.000 \\
+S4-Dunford-closed [exploratory] & cat sample & DR-natural & locomotion & 0 & 7 & 0.000 \\
+S4-Smit-closed & 30-min & DR-APP & inactive & 0 & 68 & 0.000 \\
+S4-Smit-closed & 30-min & DR-APP & locomotion & 0 & 68 & 0.000 \\
+S4-Smit-closed & 30-min & DR-natural & inactive & 0 & 68 & 0.000 \\
+S4-Smit-closed & 30-min & DR-natural & locomotion & 0 & 68 & 0.000 \\
+\end{longtable}}
+\smallskip{\small\textbf{(c)} Selected number of PLS components and number of training samples per outer fold.\par}
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.9cm}>{\raggedright\arraybackslash}p{1.65cm}>{\raggedright\arraybackslash}p{3.82cm}>{\raggedright\arraybackslash}p{1.65cm}>{\raggedright\arraybackslash}p{1.65cm}>{\raggedright\arraybackslash}p{1.65cm}>{\raggedright\arraybackslash}p{1.34cm}>{\raggedright\arraybackslash}p{1.34cm}>{\raggedright\arraybackslash}p{1.34cm}>{\raggedright\arraybackslash}p{0.88cm}@{}}
+\toprule
+\textbf{scenario} & \textbf{variant} & \textbf{descriptor} & \textbf{components median} & \textbf{components min} & \textbf{components max} & \textbf{n training samples median} & \textbf{n training samples min} & \textbf{n training samples max} & \textbf{n outer folds} \\
+\midrule
+\endhead
+\midrule \multicolumn{10}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+K-L1 & DR-APP & posterior histograms (h) & 2.000 & 2 & 3 & 3,200 & 3,200 & 3,200 & 5 \\
+K-L1 & DR-APP & feature deciles (q) & 4.000 & 2 & 4 & 3,200 & 3,200 & 3,200 & 5 \\
+K-L1 & DR-natural & posterior histograms (h) & 2.000 & 1 & 12 & 152 & 150 & 156 & 5 \\
+K-L1 & DR-natural & feature deciles (q) & 6.000 & 6 & 8 & 152 & 150 & 156 & 5 \\
+K-L2 & DR-APP & posterior histograms (h) & 3.000 & 2 & 3 & 2,569 & 2,446 & 2,629 & 5 \\
+K-L2 & DR-APP & feature deciles (q) & 3.000 & 1 & 5 & 2,569 & 2,446 & 2,629 & 5 \\
+K-L2 & DR-natural & posterior histograms (h) & 5.000 & 4 & 10 & 152 & 151 & 156 & 5 \\
+K-L2 & DR-natural & feature deciles (q) & 9.000 & 9 & 13 & 152 & 151 & 156 & 5 \\
+S1 & DR-APP & posterior histograms (h) & 2.500 & 2 & 17 & 1,100 & 1,100 & 1,100 & 12 \\
+S1 & DR-APP & feature deciles (q) & 4.000 & 2 & 16 & 1,100 & 1,100 & 1,100 & 12 \\
+S1 & DR-natural & posterior histograms (h) & 3.000 & 2 & 9 & 1,046 & 1,035 & 1,113 & 12 \\
+S1 & DR-natural & feature deciles (q) & 14.500 & 13 & 17 & 1,046 & 1,035 & 1,113 & 12 \\
+S1-L2 (collar) & DR-APP & posterior histograms (h) & 2.000 & 1 & 5 & 1,037 & 1,037 & 1,100 & 12 \\
+S1-L2 (collar) & DR-APP & feature deciles (q) & 1.000 & 1 & 8 & 1,037 & 1,037 & 1,100 & 12 \\
+S1-L2 (collar) & DR-natural & posterior histograms (h) & 8.000 & 4 & 15 & 1,046 & 1,035 & 1,113 & 12 \\
+S1-L2 (collar) & DR-natural & feature deciles (q) & 20 & 19 & 20 & 1,046 & 1,035 & 1,113 & 12 \\
+S2 & DR-APP & posterior histograms (h) & 2.000 & 2 & 3 & 1,100 & 1,100 & 1,100 & 12 \\
+S2 & DR-APP & feature deciles (q) & 4.000 & 2 & 4 & 1,100 & 1,100 & 1,100 & 12 \\
+S2 & DR-natural & posterior histograms (h) & 5.000 & 3 & 19 & 1,046 & 1,035 & 1,113 & 12 \\
+S2 & DR-natural & feature deciles (q) & 14 & 12 & 20 & 1,046 & 1,035 & 1,113 & 12 \\
+S3 [exploratory] & DR-APP & posterior histograms (h) & 20 & 20 & 20 & 1,200 & 1,200 & 1,200 & 1 \\
+S3 [exploratory] & DR-APP & feature deciles (q) & 5.000 & 5 & 5 & 1,200 & 1,200 & 1,200 & 1 \\
+S3 [exploratory] & DR-natural & posterior histograms (h) & 15 & 15 & 15 & 1,151 & 1,151 & 1,151 & 1 \\
+S3 [exploratory] & DR-natural & feature deciles (q) & 15 & 15 & 15 & 1,151 & 1,151 & 1,151 & 1 \\
+S4-Dunford-closed [exploratory] & DR-APP & posterior histograms (h) & 4.000 & 4 & 4 & 4,000 & 4,000 & 4,000 & 1 \\
+S4-Dunford-closed [exploratory] & DR-APP & feature deciles (q) & 3.000 & 3 & 3 & 4,000 & 4,000 & 4,000 & 1 \\
+S4-Dunford-closed [exploratory] & DR-natural & posterior histograms (h) & 1.000 & 1 & 1 & 191 & 191 & 191 & 1 \\
+S4-Dunford-closed [exploratory] & DR-natural & feature deciles (q) & 6.000 & 6 & 6 & 191 & 191 & 191 & 1 \\
+S4-Smit-closed & DR-APP & posterior histograms (h) & 4.000 & 4 & 4 & 4,000 & 4,000 & 4,000 & 1 \\
+S4-Smit-closed & DR-APP & feature deciles (q) & 3.000 & 3 & 3 & 4,000 & 4,000 & 4,000 & 1 \\
+S4-Smit-closed & DR-natural & posterior histograms (h) & 1.000 & 1 & 1 & 191 & 191 & 191 & 1 \\
+S4-Smit-closed & DR-natural & feature deciles (q) & 6.000 & 6 & 6 & 191 & 191 & 191 & 1 \\
+\end{longtable}}
+\clearpage
+\subsection*{Table S7. Relative absolute error (RAE) of classify-and-count and each estimator, and signed bias of the rarest class.}
+{\footnotesize The first 133 rows are comparisons of group A of Table S3; RAE could be computed for 129 of them (window-level class proportions were not stored for the four S2-L2 (mapped) rows), and 21 have direction\_mismatch = TRUE. d\_RAE = RAE\_CC $-$ RAE\_arm (mean over individuals; 95\% individual-bootstrap interval). direction\_mismatch = TRUE when the RAE interval lies above zero but the AE decision is not 'better' (Table 4 of the paper). Rarest class = class with the smallest mean true proportion; its signed bias is in percentage points and is given for equivalent and inconclusive comparisons. The last rows are target-labelled arms (m = 1,800, random blocks), for which RAE was computed without an interval. 16 rows were computed in round R15 for cells added to Table 3 after the RAE round.\par}\smallskip
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}p{0.45cm}>{\raggedright\arraybackslash}p{0.95cm}>{\raggedright\arraybackslash}p{0.95cm}>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{0.8cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{0.8cm}>{\raggedright\arraybackslash}p{1.1cm}>{\raggedright\arraybackslash}p{1.1cm}>{\raggedright\arraybackslash}p{2.2cm}@{}}
+\toprule
+\textbf{Scenario} & \textbf{Samples} & \textbf{Arm} & \textbf{AE decision ($d$)} & \textbf{$n$} & \textbf{RAE CC} & \textbf{RAE arm} & \textbf{$d_{\mathrm{RAE}}$ [95\% CI]} & \textbf{Mis\-match} & \textbf{Rarest class} & \textbf{True \%} & \textbf{Bias CC (pp)} & \textbf{Bias arm (pp)} & \textbf{Note} \\
+\midrule
+\endhead
+\midrule \multicolumn{14}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+S0 (leaky) & Smit 30-min (68) & PCC & inconclusive ($-0.010$) & 12 & 1.566 & 2.643 & $-1.177$ [$-1.635$, $-0.812$] &  & locomotion & 3.1 & $-1.3$ & $-0.0$ &  \\
+S0 (leaky) & Smit 30-min (68) & ACC & equivalent ($-0.003$) & 12 & 1.566 & 0.636 & $+1.161$ [$+0.359$, $+2.056$] & yes & locomotion & 3.1 & $-1.3$ & $+0.7$ &  \\
+S0 (leaky) & Smit 30-min (68) & PACC & worse ($-0.012$) & 12 & 1.566 & 0.729 & $+1.058$ [$+0.206$, $+2.022$] & yes &  &  &  &  &  \\
+S0 (leaky) & Smit 30-min (68) & EMQ & worse ($-0.021$) & 12 & 1.566 & 0.844 & $+0.992$ [$+0.008$, $+2.092$] & yes &  &  &  &  &  \\
+S1 & Smit 30-min (68) & N-target & worse ($-0.083$) & 12 & 3.986 & 38.191 & $-38.958$ [$-73.285$, $-15.680$] &  &  &  &  &  &  \\
+S1 & Smit 30-min (68) & PCC & worse ($-0.015$) & 12 & 3.986 & 7.950 & $-4.144$ [$-6.180$, $-2.571$] &  &  &  &  &  &  \\
+S1 & Smit 30-min (68) & ACC & inconclusive ($-0.006$) & 12 & 3.986 & 0.954 & $+3.500$ [$+0.691$, $+7.383$] & yes & locomotion & 3.2 & $-0.9$ & $+0.9$ &  \\
+S1 & Smit 30-min (68) & PACC & worse ($-0.024$) & 12 & 3.986 & 2.003 & $+2.546$ [$-0.895$, $+7.081$] &  &  &  &  &  &  \\
+S1 & Smit 30-min (68) & EMQ & worse ($-0.044$) & 12 & 3.986 & 3.712 & $+1.233$ [$-4.129$, $+6.448$] &  &  &  &  &  &  \\
+S1 & Smit 30-min (68) & DM & worse ($-0.033$) & 12 & 3.986 & 2.485 & $+2.303$ [$-1.517$, $+6.251$] &  &  &  &  &  &  \\
+S1 & Smit 30-min (68) & DR-APP & worse ($-0.127$) & 12 & 3.986 & 61.950 & $-64.550$ [$-145.936$, $-18.177$] &  &  &  &  &  &  \\
+S1 & Smit 30-min (68) & DR-natural & worse ($-0.051$) & 12 & 3.986 & 2.566 & $+1.651$ [$-0.102$, $+4.049$] &  &  &  &  &  &  \\
+S2 & Smit 30-min (68) & N-target & worse ($-0.067$) & 12 & 10.023 & 38.191 & $-32.350$ [$-64.925$, $-10.379$] &  &  &  &  &  &  \\
+S2 & Smit 30-min (68) & PCC & worse ($-0.031$) & 12 & 10.023 & 18.493 & $-8.594$ [$-12.987$, $-4.829$] &  &  &  &  &  &  \\
+S2 & Smit 30-min (68) & ACC & worse ($-0.012$) & 12 & 10.023 & 5.044 & $+5.699$ [$+1.114$, $+11.663$] & yes &  &  &  &  &  \\
+S2 & Smit 30-min (68) & PACC & worse ($-0.069$) & 12 & 10.023 & 12.902 & $-1.441$ [$-13.235$, $+10.357$] &  &  &  &  &  &  \\
+S2 & Smit 30-min (68) & EMQ & worse ($-0.134$) & 12 & 10.023 & 26.889 & $-14.412$ [$-43.119$, $+7.845$] &  &  &  &  &  &  \\
+S2 & Smit 30-min (68) & DM & worse ($-0.098$) & 12 & 10.023 & 11.349 & $+0.101$ [$-10.899$, $+11.215$] &  &  &  &  &  &  \\
+S2 & Smit 30-min (68) & DR-APP & worse ($-0.186$) & 12 & 10.023 & 68.897 & $-66.431$ [$-130.883$, $-25.266$] &  &  &  &  &  &  \\
+S2 & Smit 30-min (68) & DR-natural & worse ($-0.041$) & 12 & 10.023 & 2.744 & $+8.040$ [$+3.772$, $+13.005$] & yes &  &  &  &  &  \\
+S3 [exploratory] & Dunford cat sample & N-target & inconclusive ($-0.083$) & 8 & 12.404 & 27.420 & $-15.016$ [$-49.136$, $+7.648$] &  & maintenance & 7.9 & $+12.0$ & $-1.0$ &  \\
+S3 [exploratory] & Dunford cat sample & PCC & inconclusive ($-0.032$) & 8 & 12.404 & 20.760 & $-8.356$ [$-16.378$, $-1.033$] &  & maintenance & 7.9 & $+12.0$ & $+16.1$ &  \\
+S3 [exploratory] & Dunford cat sample & ACC & inconclusive ($+0.039$) & 8 & 12.404 & 6.519 & $+5.884$ [$+1.586$, $+10.590$] & yes & maintenance & 7.9 & $+12.0$ & $+4.0$ &  \\
+S3 [exploratory] & Dunford cat sample & PACC & inconclusive ($+0.014$) & 8 & 12.404 & 14.526 & $-2.122$ [$-8.565$, $+5.028$] &  & maintenance & 7.9 & $+12.0$ & $+11.4$ &  \\
+S3 [exploratory] & Dunford cat sample & EMQ & inconclusive ($-0.048$) & 8 & 12.404 & 14.377 & $-1.973$ [$-13.207$, $+8.298$] &  & maintenance & 7.9 & $+12.0$ & $+24.7$ &  \\
+S4-Smit-open & Smit 30-min (68) & N-target & inconclusive ($-0.021$) & 12 & 4.716 & 38.191 & $-38.652$ [$-77.894$, $-12.558$] &  & locomotion & 3.2 & $+3.6$ & $+0.0$ &  \\
+S4-Smit-open & Smit 30-min (68) & PCC & equivalent ($-0.000$) & 12 & 4.716 & 5.552 & $-0.850$ [$-1.272$, $-0.480$] &  & locomotion & 3.2 & $+3.6$ & $+4.1$ &  \\
+S4-Smit-open & Smit 30-min (68) & ACC & equivalent ($-0.001$) & 12 & 4.716 & 2.398 & $+2.524$ [$+1.170$, $+4.045$] & yes & locomotion & 3.2 & $+3.6$ & $+2.2$ &  \\
+S4-Smit-open & Smit 30-min (68) & PACC & equivalent ($-0.001$) & 12 & 4.716 & 2.669 & $+2.268$ [$+1.025$, $+3.701$] & yes & locomotion & 3.2 & $+3.6$ & $+2.5$ &  \\
+S4-Smit-open & Smit 30-min (68) & EMQ & equivalent ($-0.006$) & 12 & 4.716 & 1.070 & $+3.818$ [$+1.746$, $+6.213$] & yes & locomotion & 3.2 & $+3.6$ & $-0.7$ &  \\
+S4-Smit-closed & Smit 30-min (68) & N-target & worse ($-0.033$) & 12 & 1.359 & 17.933 & $-17.720$ [$-26.611$, $-10.290$] &  &  &  &  &  &  \\
+S4-Smit-closed & Smit 30-min (68) & PCC & equivalent ($-0.001$) & 12 & 1.359 & 1.825 & $-0.502$ [$-0.760$, $-0.266$] &  & locomotion & 4.1 & $+0.7$ & $+0.9$ &  \\
+S4-Smit-closed & Smit 30-min (68) & ACC & equivalent ($-0.001$) & 12 & 1.359 & 0.180 & $+1.154$ [$+0.489$, $+1.898$] & yes & locomotion & 4.1 & $+0.7$ & $-0.5$ &  \\
+S4-Smit-closed & Smit 30-min (68) & PACC & equivalent ($-0.002$) & 12 & 1.359 & 0.187 & $+1.147$ [$+0.481$, $+1.892$] & yes & locomotion & 4.1 & $+0.7$ & $-0.5$ &  \\
+S4-Smit-closed & Smit 30-min (68) & EMQ & worse ($-0.010$) & 12 & 1.359 & 0.265 & $+1.077$ [$+0.409$, $+1.817$] & yes &  &  &  &  &  \\
+S4-Dunford-open [exploratory] & Dunford cat sample & N-target & inconclusive ($-0.123$) & 8 & 0.492 & 27.420 & $-26.928$ [$-62.990$, $-2.896$] &  & maintenance & 7.9 & $-7.9$ & $-1.0$ &  \\
+S4-Dunford-open [exploratory] & Dunford cat sample & PCC & equivalent ($-0.004$) & 8 & 0.492 & 0.620 & $-0.127$ [$-0.308$, $-0.015$] &  & maintenance & 7.9 & $-7.9$ & $-7.9$ &  \\
+S4-Dunford-open [exploratory] & Dunford cat sample & ACC & inconclusive ($-0.007$) & 8 & 0.492 & 0.535 & $-0.042$ [$-0.072$, $-0.018$] &  & maintenance & 7.9 & $-7.9$ & $-7.9$ &  \\
+S4-Dunford-open [exploratory] & Dunford cat sample & PACC & inconclusive ($-0.010$) & 8 & 0.492 & 0.552 & $-0.059$ [$-0.092$, $-0.030$] &  & maintenance & 7.9 & $-7.9$ & $-7.9$ &  \\
+S4-Dunford-open [exploratory] & Dunford cat sample & EMQ & inconclusive ($-0.026$) & 8 & 0.492 & 0.539 & $-0.046$ [$-0.135$, $+0.084$] &  & maintenance & 7.9 & $-7.9$ & $-7.9$ &  \\
+S4-Dunford-closed [exploratory] & Dunford cat sample & N-target & inconclusive ($-0.207$) & 7 & 0.440 & 31.804 & $-31.364$ [$-81.677$, $-0.710$] &  & locomotion & 30.9 & $-8.6$ & $+0.8$ &  \\
+S4-Dunford-closed [exploratory] & Dunford cat sample & PCC & inconclusive ($-0.007$) & 7 & 0.440 & 0.660 & $-0.220$ [$-0.515$, $-0.031$] &  & locomotion & 30.9 & $-8.6$ & $-9.2$ &  \\
+S4-Dunford-closed [exploratory] & Dunford cat sample & ACC & inconclusive ($-0.010$) & 7 & 0.440 & 0.500 & $-0.060$ [$-0.112$, $-0.020$] &  & locomotion & 30.9 & $-8.6$ & $-9.6$ &  \\
+S4-Dunford-closed [exploratory] & Dunford cat sample & PACC & inconclusive ($-0.015$) & 7 & 0.440 & 0.529 & $-0.089$ [$-0.141$, $-0.042$] &  & locomotion & 30.9 & $-8.6$ & $-10.2$ &  \\
+S4-Dunford-closed [exploratory] & Dunford cat sample & EMQ & inconclusive ($-0.036$) & 7 & 0.440 & 0.481 & $-0.042$ [$-0.200$, $+0.169$] &  & locomotion & 30.9 & $-8.6$ & $-12.3$ &  \\
+R-D [exploratory] & Dunford cat sample & N-target & inconclusive ($-0.158$) & 8 & 0.790 & 27.420 & $-26.630$ [$-62.174$, $-2.871$] &  & maintenance & 7.9 & $-7.8$ & $-1.0$ &  \\
+R-D [exploratory] & Dunford cat sample & PCC & inconclusive ($-0.007$) & 8 & 0.790 & 5.469 & $-4.679$ [$-8.813$, $-0.982$] &  & maintenance & 7.9 & $-7.8$ & $-4.6$ &  \\
+R-D [exploratory] & Dunford cat sample & ACC & inconclusive ($-0.112$) & 8 & 0.790 & 4.543 & $-3.753$ [$-11.441$, $+0.810$] &  & maintenance & 7.9 & $-7.8$ & $+11.3$ &  \\
+R-D [exploratory] & Dunford cat sample & PACC & inconclusive ($-0.071$) & 8 & 0.790 & 4.006 & $-3.216$ [$-10.443$, $+0.843$] &  & maintenance & 7.9 & $-7.8$ & $+3.8$ &  \\
+R-D [exploratory] & Dunford cat sample & EMQ & inconclusive ($-0.054$) & 8 & 0.790 & 7.355 & $-6.565$ [$-16.482$, $+0.570$] &  & maintenance & 7.9 & $-7.8$ & $+1.6$ &  \\
+S1-closed & Smit 30-min (68) & PCC & inconclusive ($-0.008$) & 12 & 0.557 & 3.756 & $-2.966$ [$-4.278$, $-1.683$] &  & locomotion & 4.1 & $-1.0$ & $+1.4$ &  \\
+S1-closed & Smit 30-min (68) & ACC & inconclusive ($-0.011$) & 12 & 0.557 & 0.210 & $+0.314$ [$+0.031$, $+0.611$] & yes & locomotion & 4.1 & $-1.0$ & $+1.5$ &  \\
+S1-closed & Smit 30-min (68) & PACC & inconclusive ($-0.041$) & 12 & 0.557 & 1.938 & $-1.091$ [$-3.956$, $+0.524$] &  & locomotion & 4.1 & $-1.0$ & $+4.0$ &  \\
+S1-closed & Smit 30-min (68) & EMQ & worse ($-0.080$) & 12 & 0.557 & 4.365 & $-3.051$ [$-9.780$, $+0.493$] &  &  &  &  &  &  \\
+S1-L2 (collar) & Smit 30-min (68) & PCC & equivalent ($-0.001$) & 12 & 52.409 & 57.793 & $-4.169$ [$-11.087$, $+2.829$] &  & Grooming & 0.3 & $-0.5$ & $-0.2$ &  \\
+S1-L2 (collar) & Smit 30-min (68) & ACC & worse ($-0.020$) & 12 & 52.409 & 52.981 & $-3.161$ [$-16.514$, $+9.360$] &  &  &  &  &  &  \\
+S1-L2 (collar) & Smit 30-min (68) & PACC & worse ($-0.024$) & 12 & 52.409 & 56.821 & $-7.149$ [$-21.649$, $+6.843$] &  &  &  &  &  &  \\
+S1-L2 (collar) & Smit 30-min (68) & EMQ & worse ($-0.020$) & 12 & 52.409 & 48.905 & $+2.673$ [$-9.422$, $+12.036$] &  &  &  &  &  &  \\
+S1-L2 (collar) & Smit 30-min (68) & DM & inconclusive ($-0.013$) & 12 & 52.410 & 53.398 & $-3.040$ [$-22.971$, $+14.609$] &  & Trotting & 0.3 & $-0.5$ & $+0.6$ &  \\
+S1-L2 (collar) & Smit 30-min (68) & DR-APP & inconclusive ($-0.029$) & 12 & 52.410 & 82.813 & $-21.381$ [$-61.482$, $+31.918$] &  & Trotting & 0.3 & $-0.5$ & $+0.8$ &  \\
+S1-L2 (collar) & Smit 30-min (68) & DR-natural & inconclusive ($-0.002$) & 12 & 52.410 & 45.158 & $+15.188$ [$-15.225$, $+56.128$] &  & Trotting & 0.3 & $-0.5$ & $+0.4$ &  \\
+S1-L2 (harness) & Smit 30-min (68) & PCC & worse ($-0.014$) & 12 & 8.208 & 18.794 & $-11.036$ [$-14.676$, $-7.701$] &  &  &  &  &  &  \\
+S1-L2 (harness) & Smit 30-min (68) & ACC & worse ($-0.015$) & 12 & 8.208 & 5.234 & $+3.263$ [$+1.001$, $+5.534$] & yes &  &  &  &  &  \\
+S1-L2 (harness) & Smit 30-min (68) & PACC & worse ($-0.022$) & 12 & 8.208 & 7.152 & $+1.680$ [$-1.536$, $+4.923$] &  &  &  &  &  &  \\
+S1-L2 (harness) & Smit 30-min (68) & EMQ & worse ($-0.022$) & 12 & 8.208 & 10.389 & $-1.532$ [$-9.489$, $+4.072$] &  &  &  &  &  &  \\
+S2-L2 (mapped) & Smit 30-min (68) & PCC & inconclusive ($-0.003$) &  &  &  &  &  &  &  &  &  & S2-L2 (mapped): window-level class proportions not stored (AE only) \\
+S2-L2 (mapped) & Smit 30-min (68) & ACC & worse ($-0.013$) &  &  &  &  &  &  &  &  &  & S2-L2 (mapped): window-level class proportions not stored (AE only) \\
+S2-L2 (mapped) & Smit 30-min (68) & PACC & worse ($-0.025$) &  &  &  &  &  &  &  &  &  & S2-L2 (mapped): window-level class proportions not stored (AE only) \\
+S2-L2 (mapped) & Smit 30-min (68) & EMQ & worse ($-0.058$) &  &  &  &  &  &  &  &  &  & S2-L2 (mapped): window-level class proportions not stored (AE only) \\
+S1 natural 2-min & Smit 2-min & ACC & equivalent ($-0.001$) & 12 & 2.129 & 1.194 & $+1.000$ [$+0.748$, $+1.284$] & yes &  &  &  &  &  \\
+S1 natural 2-min & Smit 2-min & PACC & inconclusive ($-0.018$) & 12 & 2.129 & 2.341 & $-0.095$ [$-1.692$, $+0.904$] &  &  &  &  &  &  \\
+S1 natural 2-min & Smit 2-min & EMQ & worse ($-0.050$) & 12 & 2.129 & 4.117 & $-1.760$ [$-6.300$, $+0.654$] &  &  &  &  &  &  \\
+S1 natural 2-min & Smit 2-min & DM & inconclusive ($-0.028$) & 12 & 2.129 & 2.496 & $-0.189$ [$-2.638$, $+1.253$] &  & locomotion & 3.5 & $-1.1$ & $+6.5$ &  \\
+S1 natural 2-min & Smit 2-min & DR-APP & worse ($-0.232$) & 12 & 2.129 & 25.368 & $-23.401$ [$-28.180$, $-20.064$] &  &  &  &  &  &  \\
+S1 natural 2-min & Smit 2-min & DR-natural & worse ($-0.021$) & 12 & 2.129 & 1.891 & $+0.078$ [$-0.697$, $+0.738$] &  &  &  &  &  &  \\
+S1 APP 120-s (bridge) & APP 120-s & ACC & better ($+0.061$) & 12 & 1.367 & 0.666 & $+0.700$ [$+0.511$, $+0.896$] &  &  &  &  &  &  \\
+S1 APP 120-s (bridge) & APP 120-s & PACC & better ($+0.060$) & 12 & 1.367 & 0.679 & $+0.688$ [$+0.517$, $+0.856$] &  &  &  &  &  &  \\
+S1 APP 120-s (bridge) & APP 120-s & EMQ & better ($+0.050$) & 12 & 1.367 & 0.751 & $+0.615$ [$+0.356$, $+0.837$] &  &  &  &  &  &  \\
+S1 APP 120-s (bridge) & APP 120-s & DM & better ($+0.048$) & 12 & 1.367 & 0.727 & $+0.639$ [$+0.469$, $+0.811$] &  &  &  &  &  &  \\
+S1 APP 120-s (bridge) & APP 120-s & DR-APP & better ($+0.034$) & 12 & 1.367 & 0.858 & $+0.509$ [$+0.276$, $+0.734$] &  &  &  &  &  &  \\
+S1 APP 120-s (bridge) & APP 120-s & DR-natural & worse ($-0.107$) & 12 & 1.367 & 1.321 & $+0.046$ [$-0.155$, $+0.263$] &  &  &  &  &  &  \\
+K-L1 within-dog & dog recordings & PCC & inconclusive ($-0.008$) & 44 & 0.045 & 0.091 & $-0.054$ [$-0.109$, $-0.015$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L1 within-dog & dog recordings & ACC & equivalent ($-0.003$) & 44 & 0.045 & 0.075 & $-0.031$ [$-0.048$, $-0.017$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L1 within-dog & dog recordings & PACC & worse ($-0.011$) & 44 & 0.045 & 0.128 & $-0.089$ [$-0.141$, $-0.049$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L1 within-dog & dog recordings & EMQ & equivalent ($-0.006$) & 44 & 0.045 & 0.073 & $-0.031$ [$-0.058$, $-0.005$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L1 within-dog & dog recordings & DM & equivalent ($-0.005$) & 44 & 0.045 & 0.063 & $-0.021$ [$-0.049$, $+0.007$] &  & inactive & 31.5 & $-0.5$ & $-0.7$ &  \\
+K-L1 within-dog & dog recordings & DR-APP & worse ($-0.066$) & 44 & 0.045 & 0.259 & $-0.212$ [$-0.269$, $-0.156$] &  &  &  &  &  &  \\
+K-L1 within-dog & dog recordings & DR-natural & worse ($-0.122$) & 44 & 0.045 & 0.558 & $-0.517$ [$-0.745$, $-0.327$] &  &  &  &  &  &  \\
+K-L1 within-dog & dog 2-min & PCC & worse ($-0.015$) & 35 & 0.568 & 1.329 & $-1.159$ [$-1.853$, $-0.592$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L1 within-dog & dog 2-min & ACC & equivalent ($-0.001$) & 35 & 0.568 & 0.526 & $+0.072$ [$+0.021$, $+0.131$] & yes &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L1 within-dog & dog 2-min & PACC & inconclusive ($-0.010$) & 35 & 0.568 & 0.930 & $-0.644$ [$-1.197$, $-0.203$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L1 within-dog & dog 2-min & EMQ & inconclusive ($+0.009$) & 35 & 0.568 & 0.082 & $+0.784$ [$+0.246$, $+1.454$] & yes &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L1 within-dog & dog 2-min & DM & inconclusive ($+0.009$) & 35 & 0.568 & 0.042 & $+0.879$ [$+0.235$, $+1.819$] & yes & inactive & 38.8 & $+0.5$ & $-0.0$ &  \\
+K-L1 within-dog & dog 2-min & DR-APP & worse ($-0.113$) & 35 & 0.568 & 7.512 & $-7.519$ [$-9.450$, $-5.805$] &  &  &  &  &  &  \\
+K-L1 within-dog & dog 2-min & DR-natural & worse ($-0.072$) & 35 & 0.568 & 3.633 & $-4.239$ [$-6.666$, $-2.415$] &  &  &  &  &  &  \\
+K-L1 within-dog & APP 120-s & PCC & inconclusive ($-0.007$) & 40 & 0.079 & 0.158 & $-0.079$ [$-0.140$, $-0.033$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L1 within-dog & APP 120-s & ACC & equivalent ($-0.003$) & 40 & 0.079 & 0.105 & $-0.026$ [$-0.040$, $-0.013$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L1 within-dog & APP 120-s & PACC & inconclusive ($-0.010$) & 40 & 0.079 & 0.153 & $-0.074$ [$-0.102$, $-0.049$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L1 within-dog & APP 120-s & EMQ & equivalent ($-0.003$) & 40 & 0.079 & 0.071 & $+0.007$ [$-0.030$, $+0.052$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L2 within-dog & dog recordings & PCC & equivalent ($-0.002$) & 44 & 3.354 & 3.563 & $-0.287$ [$-1.033$, $+0.541$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L2 within-dog & dog recordings & ACC & worse ($-0.031$) & 44 & 3.354 & 2.968 & $-0.155$ [$-1.834$, $+1.751$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L2 within-dog & dog recordings & PACC & worse ($-0.031$) & 44 & 3.354 & 3.351 & $-0.671$ [$-2.498$, $+1.454$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L2 within-dog & dog recordings & EMQ & worse ($-0.021$) & 44 & 3.354 & 4.456 & $-0.911$ [$-2.022$, $+0.016$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L2 within-dog & dog recordings & DM & worse ($-0.029$) & 44 & 3.354 & 1.907 & $+1.013$ [$-0.299$, $+2.801$] &  &  &  &  &  &  \\
+K-L2 within-dog & dog recordings & DR-APP & worse ($-0.045$) & 44 & 3.354 & 3.445 & $-0.088$ [$-1.662$, $+1.767$] &  &  &  &  &  &  \\
+K-L2 within-dog & dog recordings & DR-natural & worse ($-0.058$) & 44 & 3.354 & 2.096 & $+1.038$ [$-0.775$, $+3.327$] &  &  &  &  &  &  \\
+K-L2 within-dog & dog 2-min & PCC & inconclusive ($-0.011$) & 35 & 7.268 & 8.540 & $-0.836$ [$-1.539$, $-0.107$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L2 within-dog & dog 2-min & ACC & inconclusive ($-0.009$) & 35 & 7.268 & 7.539 & $-0.434$ [$-1.501$, $+0.697$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L2 within-dog & dog 2-min & PACC & inconclusive ($-0.010$) & 35 & 7.268 & 7.284 & $-0.508$ [$-1.588$, $+0.621$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L2 within-dog & dog 2-min & EMQ & equivalent ($-0.001$) & 35 & 7.268 & 7.359 & $-0.058$ [$-0.717$, $+0.594$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L2 within-dog & dog 2-min & DM & inconclusive ($+0.007$) & 35 & 7.268 & 6.045 & $+0.898$ [$-0.263$, $+2.235$] &  & Standing & 9.2 & $-2.8$ & $-2.4$ &  \\
+K-L2 within-dog & dog 2-min & DR-APP & worse ($-0.107$) & 35 & 7.268 & 15.792 & $-8.485$ [$-10.948$, $-5.939$] &  &  &  &  &  &  \\
+K-L2 within-dog & dog 2-min & DR-natural & worse ($-0.054$) & 35 & 7.268 & 10.802 & $-4.026$ [$-5.982$, $-2.004$] &  &  &  &  &  &  \\
+K-L2 within-dog & APP 120-s & PCC & equivalent ($-0.002$) & 38 & 2.142 & 2.267 & $-0.143$ [$-0.526$, $+0.387$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L2 within-dog & APP 120-s & ACC & worse ($-0.036$) & 38 & 2.142 & 2.438 & $-0.464$ [$-1.312$, $+0.459$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L2 within-dog & APP 120-s & PACC & worse ($-0.036$) & 38 & 2.142 & 2.344 & $-0.565$ [$-1.408$, $+0.336$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+K-L2 within-dog & APP 120-s & EMQ & worse ($-0.023$) & 38 & 2.142 & 2.704 & $-0.562$ [$-1.316$, $+0.025$] &  &  &  &  &  & computed from stored posteriors (round R11) \\
+S3 [exploratory] & Dunford cat sample & DM & inconclusive ($+0.012$) & 8 & 12.404 & 6.743 & $+5.661$ [$+0.680$, $+11.577$] & yes &  &  &  &  & computed in round R15 \\
+S3 [exploratory] & Dunford cat sample & DR-APP & inconclusive ($-0.142$) & 8 & 12.404 & 71.884 & $-59.480$ [$-119.856$, $-0.638$] &  &  &  &  &  & computed in round R15 \\
+S3 [exploratory] & Dunford cat sample & DR-natural & inconclusive ($-0.094$) & 8 & 12.404 & 34.700 & $-22.296$ [$-43.948$, $-4.757$] &  &  &  &  &  & computed in round R15 \\
+S4-Smit-closed & Smit 30-min (68) & DM & equivalent ($-0.007$) & 12 & 1.359 & 0.226 & $+1.111$ [$+0.447$, $+1.859$] & yes &  &  &  &  & computed in round R15 \\
+S4-Smit-closed & Smit 30-min (68) & DR-APP & worse ($-0.079$) & 12 & 1.359 & 59.038 & $-63.456$ [$-114.051$, $-31.015$] &  &  &  &  &  & computed in round R15 \\
+S4-Smit-closed & Smit 30-min (68) & DR-natural & worse ($-0.024$) & 12 & 1.359 & 2.521 & $-1.015$ [$-2.252$, $-0.224$] &  &  &  &  &  & computed in round R15 \\
+S4-Dunford-closed [exploratory] & Dunford cat sample & DM & inconclusive ($-0.023$) & 7 & 0.440 & 0.447 & $-0.008$ [$-0.175$, $+0.266$] &  &  &  &  &  & computed in round R15 \\
+S4-Dunford-closed [exploratory] & Dunford cat sample & DR-APP & inconclusive ($-0.112$) & 7 & 0.440 & 41.724 & $-41.284$ [$-109.178$, $+0.308$] &  &  &  &  &  & computed in round R15 \\
+S4-Dunford-closed [exploratory] & Dunford cat sample & DR-natural & inconclusive ($-0.140$) & 7 & 0.440 & 38.109 & $-37.669$ [$-100.809$, $+0.319$] &  &  &  &  &  & computed in round R15 \\
+S1-L2 (collar) & Smit 30-min (68) & N-target & worse ($-0.036$) & 12 & 52.409 & 86.879 & $-33.047$ [$-52.033$, $-13.721$] &  &  &  &  &  & computed in round R15 \\
+K-L1 within-dog & APP 120-s & N-target & worse ($-0.237$) & 40 & 0.079 & 2.297 & $-2.219$ [$-2.863$, $-1.676$] &  &  &  &  &  & computed in round R15 \\
+K-L1 within-dog & dog recordings & N-target & worse ($-0.200$) & 44 & 0.045 & 1.334 & $-1.321$ [$-1.857$, $-0.861$] &  &  &  &  &  & computed in round R15 \\
+K-L1 within-dog & dog 2-min & N-target & worse ($-0.407$) & 35 & 0.568 & 30.039 & $-29.308$ [$-33.543$, $-25.405$] &  &  &  &  &  & computed in round R15 \\
+K-L2 within-dog & APP 120-s & N-target & worse ($-0.079$) & 38 & 2.142 & 3.261 & $-1.323$ [$-2.452$, $+0.035$] &  &  &  &  &  & computed in round R15 \\
+K-L2 within-dog & dog recordings & N-target & worse ($-0.063$) & 44 & 3.354 & 5.085 & $-1.860$ [$-3.837$, $+0.373$] &  &  &  &  &  & computed in round R15 \\
+K-L2 within-dog & dog 2-min & N-target & worse ($-0.195$) & 35 & 7.268 & 23.216 & $-15.399$ [$-17.820$, $-12.445$] &  &  &  &  &  & computed in round R15 \\
+S1 &  & Retraining (m = 1800, random blocks) & equivalent ($+0.002$) & 12 & 4.135 & 4.014 &  &  & locomotion & 3.7 & $-1.1$ & $-1.1$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S1 &  & Weighted retraining (m = 1800, random blocks) & equivalent ($+0.002$) & 12 & 4.135 & 4.150 &  &  & locomotion & 3.7 & $-1.1$ & $-1.1$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S2 &  & Retraining (m = 1800, random blocks) & inconclusive ($+0.007$) & 12 & 9.251 & 7.428 &  &  & locomotion & 3.7 & $+1.9$ & $+0.9$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S2 &  & Weighted retraining (m = 1800, random blocks) & inconclusive ($+0.007$) & 12 & 9.251 & 7.309 &  &  & locomotion & 3.7 & $+1.9$ & $+0.8$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S3 [exploratory] &  & T-ACC (m = 1800, random blocks) & inconclusive ($+0.003$) & 8 & 12.404 & 6.649 &  &  & maintenance & 7.9 & $+12.0$ & $+10.1$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S3 [exploratory] &  & PACC-target (m = 1800, random blocks) & inconclusive ($+0.022$) & 8 & 12.404 & 7.360 &  &  & maintenance & 7.9 & $+12.0$ & $+8.6$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S3 [exploratory] &  & PACC-shrinkage (m = 1800, random blocks) & inconclusive ($+0.022$) & 8 & 12.404 & 7.742 &  &  & maintenance & 7.9 & $+12.0$ & $+7.9$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S3 [exploratory] &  & Retraining (m = 1800, random blocks) & inconclusive ($+0.004$) & 8 & 12.404 & 12.194 &  &  & maintenance & 7.9 & $+12.0$ & $+11.1$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S3 [exploratory] &  & Weighted retraining (m = 1800, random blocks) & inconclusive ($-0.002$) & 8 & 12.404 & 12.048 &  &  & maintenance & 7.9 & $+12.0$ & $+11.4$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S3 [exploratory] &  & Target-only, paired (m = 1800, random blocks) & inconclusive ($+0.076$) & 8 & 12.404 & 0.782 &  &  & maintenance & 7.9 & $+12.0$ & $-7.9$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Smit-closed &  & Retraining (m = 1800, random blocks) & equivalent ($+0.000$) & 12 & 1.330 & 1.303 &  &  & locomotion & 4.9 & $+0.9$ & $+0.8$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-open [exploratory] &  & T-ACC (m = 1800, random blocks) & inconclusive ($+0.011$) & 8 & 0.492 & 0.398 &  &  & maintenance & 7.9 & $-7.9$ & $-7.9$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-open [exploratory] &  & PACC-target (m = 1800, random blocks) & inconclusive ($+0.012$) & 8 & 0.492 & 0.396 &  &  & maintenance & 7.9 & $-7.9$ & $-7.9$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-open [exploratory] &  & PACC-shrinkage (m = 1800, random blocks) & inconclusive ($+0.016$) & 8 & 0.492 & 0.389 &  &  & maintenance & 7.9 & $-7.9$ & $-7.9$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-open [exploratory] &  & Retraining (m = 1800, random blocks) & inconclusive ($+0.021$) & 8 & 0.492 & 0.694 &  &  & maintenance & 7.9 & $-7.9$ & $-7.9$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-open [exploratory] &  & Weighted retraining (m = 1800, random blocks) & inconclusive ($+0.021$) & 8 & 0.492 & 0.655 &  &  & maintenance & 7.9 & $-7.9$ & $-7.9$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-open [exploratory] &  & Target-only, paired (m = 1800, random blocks) & inconclusive ($+0.036$) & 8 & 0.492 & 0.827 &  &  & maintenance & 7.9 & $-7.9$ & $-7.9$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-closed [exploratory] &  & T-ACC (m = 1800, random blocks) & inconclusive ($+0.005$) & 7 & 0.440 & 0.312 &  &  & locomotion & 30.9 & $-8.6$ & $+1.1$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-closed [exploratory] &  & PACC-target (m = 1800, random blocks) & inconclusive ($+0.008$) & 7 & 0.440 & 0.305 &  &  & locomotion & 30.9 & $-8.6$ & $+1.1$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-closed [exploratory] &  & PACC-shrinkage (m = 1800, random blocks) & inconclusive ($+0.015$) & 7 & 0.440 & 0.295 &  &  & locomotion & 30.9 & $-8.6$ & $-0.7$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-closed [exploratory] &  & Retraining (m = 1800, random blocks) & inconclusive ($+0.028$) & 7 & 0.440 & 0.820 &  &  & locomotion & 30.9 & $-8.6$ & $-5.6$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-closed [exploratory] &  & Weighted retraining (m = 1800, random blocks) & inconclusive ($+0.030$) & 7 & 0.440 & 0.695 &  &  & locomotion & 30.9 & $-8.6$ & $-5.4$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-closed [exploratory] &  & Target-only, paired (m = 1800, random blocks) & inconclusive ($+0.056$) & 7 & 0.440 & 0.924 &  &  & locomotion & 30.9 & $-8.6$ & $-2.6$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S2-L2 (mapped) &  & PCC & inconclusive ($-0.003$) & 12 &  &  &  &  &  &  &  &  & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Smit-closed 30-min &  & DM & equivalent ($-0.007$) & 12 & 1.359 & 0.226 &  &  & locomotion & 4.1 & $+0.7$ & $-1.3$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S3 [exploratory] cat sample &  & DM & inconclusive ($+0.012$) & 8 & 12.404 & 6.743 &  &  & maintenance & 7.9 & $+12.0$ & $+2.7$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S3 [exploratory] cat sample &  & DR-APP & inconclusive ($-0.142$) & 8 & 12.404 & 71.884 &  &  & maintenance & 7.9 & $+12.0$ & $+35.0$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S3 [exploratory] cat sample &  & DR-natural & inconclusive ($-0.094$) & 8 & 12.404 & 34.700 &  &  & maintenance & 7.9 & $+12.0$ & $+20.7$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-closed [exploratory] cat sample &  & DM & inconclusive ($-0.023$) & 7 & 0.440 & 0.447 &  &  & locomotion & 30.9 & $-8.6$ & $-11.0$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-closed [exploratory] cat sample &  & DR-APP & inconclusive ($-0.112$) & 7 & 0.440 & 41.724 &  &  & locomotion & 30.9 & $-8.6$ & $+18.1$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+S4-Dunford-closed [exploratory] cat sample &  & DR-natural & inconclusive ($-0.140$) & 7 & 0.440 & 38.109 &  &  & locomotion & 30.9 & $-8.6$ & $+22.6$ & target-labelled arm (m = 1,800, random blocks); interval not computed \\
+\end{longtable}}
+\clearpage
+\subsection*{Table S8. Dog-to-cat transfer with maintenance absent from the source (S4-Smit-open): signed bias of the maintenance share under classify-and-count, by averaging level.}
+{\footnotesize Percentage points; 95\% individual-bootstrap interval. The paper reports measure (i).\par}\smallskip
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{6.0cm}>{\raggedright\arraybackslash}p{0.88cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.81cm}>{\raggedright\arraybackslash}p{1.19cm}@{}}
+\toprule
+\textbf{measure} & \textbf{bias pp} & \textbf{ci low} & \textbf{ci high} & \textbf{n individuals} & \textbf{n windows} \\
+\midrule
+\endhead
+\midrule \multicolumn{6}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+cat level (all seconds of each cat) & $-15.1$ &  &  & 12 &  \\
+(i) individual mean (mean over each cat's 30-min windows, then over cats) & $-12.9$ & $-17.390$ & $-8.124$ & 12 & 68 \\
+(ii) window mean (68 windows) & $-14.7$ & $-18.467$ & $-10.079$ & 12 & 68 \\
+\end{longtable}}
+\clearpage
+\subsection*{Table S9. Prevalence shift and shift-dependent decision rules.}
+\smallskip{\small\textbf{(a)} Prevalence shift $\delta$ = $\tfrac{1}{2}$$\Vert$p $-$ $\pi$\_source$\Vert$$_{1}$ by sample set: median and 90th percentile.\par}
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.9cm}>{\raggedright\arraybackslash}p{0.88cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{0.88cm}@{}}
+\toprule
+\textbf{sample set} & \textbf{n} & \textbf{median delta} & \textbf{p90 delta} \\
+\midrule
+\endhead
+\midrule \multicolumn{4}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+S1 & 68 & 0.143 & 0.251 \\
+S1 natural 2-min & 1,083 & 0.187 & 0.621 \\
+S1 APP 120-s & 600 & 0.543 & 0.775 \\
+S2 & 68 & 0.143 & 0.251 \\
+S3 [exploratory] & 8 & 0.275 & 0.605 \\
+S4-Dunford-closed [exploratory] & 7 & 0.390 & 0.609 \\
+S4-Smit-closed & 68 & 0.594 & 0.611 \\
+K-L1 within-dog APP 120-s & 2,000 & 0.265 & 0.432 \\
+K-L1 within-dog natural 2-min & 130 & 0.402 & 0.617 \\
+K-L1 within-dog recording & 61 & 0.213 & 0.355 \\
+K-L2 within-dog APP 120-s & 1,596 & 0.343 & 0.525 \\
+K-L2 within-dog natural 2-min & 130 & 0.705 & 0.892 \\
+K-L2 within-dog recording & 61 & 0.292 & 0.404 \\
+\end{longtable}}
+\smallskip{\small\textbf{(b)} Rule 'apply the correction only when the shift visible in CC estimates exceeds $\tau$' ($\hat{\delta}$ rule) and the $\kappa$-PACC rule. $\tau$ was chosen on S1 windows and frozen; d = AE\_CC $-$ AE\_rule (positive: rule better); share\_corrected: share of samples in which the rule applied the correction.\par}
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.54cm}>{\raggedright\arraybackslash}p{1.65cm}>{\raggedright\arraybackslash}p{0.88cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.81cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.96cm}@{}}
+\toprule
+\textbf{sample set} & \textbf{rule} & \textbf{tau} & \textbf{AE rule} & \textbf{AE CC} & \textbf{AE always corrected} & \textbf{AE oracle} & \textbf{share corrected} & \textbf{d} & \textbf{ci low} & \textbf{ci high} & \textbf{p} & \textbf{n individuals} & \textbf{p holm} & \textbf{family size} & \textbf{category} \\
+\midrule
+\endhead
+\midrule \multicolumn{16}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+S1 & PACC & 0.255 & 0.0312 & 0.0260 & 0.0527 & 0.0213 & 0.103 & $-0.004$ & $-0.009$ & $+0.000$ & 0.125 & 12 & 0.125 & 1 & equivalent \\
+S1 & ACC & 0.005 & 0.0324 & 0.0260 & 0.0324 & 0.0204 & 1.000 & $-0.006$ & $-0.012$ & $-0.000$ & 0.064 & 12 & 0.064 & 1 & inconclusive \\
+S1 & kappa-PACC & 0.000 & 0.0527 & 0.0260 & 0.0527 & 0.0213 & 1.000 & $-0.024$ & $-0.049$ & $-0.007$ & 0.007 & 12 & 0.007 & 1 & worse \\
+S1 natural 2-min & PACC & 0.255 & 0.0451 & 0.0398 & 0.0574 & 0.0312 & 0.226 & $-0.007$ & $-0.014$ & $-0.001$ & 0.052 & 12 & 0.052 & 1 & inconclusive \\
+S1 natural 2-min & ACC & 0.005 & 0.0392 & 0.0398 & 0.0392 & 0.0295 & 0.999 & $-0.001$ & $-0.004$ & $+0.003$ & 0.763 & 12 & 0.763 & 1 & equivalent \\
+S1 natural 2-min & kappa-PACC & 0.000 & 0.0574 & 0.0398 & 0.0574 & 0.0312 & 0.595 & $-0.018$ & $-0.043$ & $-0.001$ & 0.066 & 12 & 0.066 & 1 & inconclusive \\
+S1 APP 120-s & PACC & 0.255 & 0.0985 & 0.1522 & 0.0921 & 0.0816 & 0.728 & $+0.054$ & $+0.036$ & $+0.069$ & 0.001 & 12 & 0.001 & 1 & better \\
+S1 APP 120-s & ACC & 0.005 & 0.0916 & 0.1522 & 0.0916 & 0.0832 & 0.998 & $+0.061$ & $+0.040$ & $+0.079$ & 0.001 & 12 & 0.001 & 1 & better \\
+S1 APP 120-s & kappa-PACC & 0.000 & 0.0921 & 0.1522 & 0.0921 & 0.0816 & 1.000 & $+0.060$ & $+0.041$ & $+0.077$ & $9.8\times10^{-4}$ & 12 & $9.8\times10^{-4}$ & 1 & better \\
+S2 & PACC & 0.255 & 0.0548 & 0.0405 & 0.1155 & 0.0366 & 0.118 & $-0.012$ & $-0.021$ & $-0.004$ & 0.031 & 12 & 0.031 & 1 & worse \\
+S2 & ACC & 0.005 & 0.0528 & 0.0405 & 0.0528 & 0.0348 & 1.000 & $-0.012$ & $-0.019$ & $-0.004$ & 0.017 & 12 & 0.017 & 1 & worse \\
+S2 & kappa-PACC & 0.000 & 0.1155 & 0.0405 & 0.1155 & 0.0366 & 1.000 & $-0.069$ & $-0.124$ & $-0.025$ & 0.004 & 12 & 0.004 & 1 & worse \\
+S3 [exploratory] & PACC & 0.255 & 0.1243 & 0.1442 & 0.1306 & 0.1132 & 0.375 & $+0.020$ & $-0.004$ & $+0.059$ & 0.500 & 8 & 0.500 & 1 & inconclusive \\
+S3 [exploratory] & ACC & 0.005 & 0.1056 & 0.1442 & 0.1056 & 0.1028 & 1.000 & $+0.039$ & $+0.003$ & $+0.081$ & 0.070 & 8 & 0.070 & 1 & inconclusive \\
+S3 [exploratory] & kappa-PACC & 0.000 & 0.1306 & 0.1442 & 0.1306 & 0.1132 & 1.000 & $+0.014$ & $-0.025$ & $+0.062$ & 0.641 & 8 & 0.641 & 1 & inconclusive \\
+S4-Smit-closed & PACC & 0.255 & 0.0111 & 0.0089 & 0.0111 & 0.0054 & 1.000 & $-0.002$ & $-0.005$ & $+0.002$ & 0.311 & 12 & 0.311 & 1 & equivalent \\
+S4-Smit-closed & ACC & 0.005 & 0.0105 & 0.0089 & 0.0105 & 0.0051 & 1.000 & $-0.001$ & $-0.004$ & $+0.002$ & 0.459 & 12 & 0.459 & 1 & equivalent \\
+S4-Smit-closed & kappa-PACC & 0.000 & 0.0111 & 0.0089 & 0.0111 & 0.0054 & 0.941 & $-0.002$ & $-0.005$ & $+0.002$ & 0.311 & 12 & 0.311 & 1 & equivalent \\
+S4-Dunford-closed [exploratory] & PACC & 0.255 & 0.0953 & 0.0869 & 0.1023 & 0.0869 & 0.714 & $-0.008$ & $-0.016$ & $-0.002$ & 0.125 & 7 & 0.125 & 1 & inconclusive \\
+S4-Dunford-closed [exploratory] & ACC & 0.005 & 0.0965 & 0.0869 & 0.0965 & 0.0869 & 1.000 & $-0.010$ & $-0.015$ & $-0.003$ & 0.031 & 7 & 0.031 & 1 & inconclusive \\
+S4-Dunford-closed [exploratory] & kappa-PACC & 0.000 & 0.1023 & 0.0869 & 0.1023 & 0.0869 & 0.857 & $-0.015$ & $-0.023$ & $-0.008$ & 0.031 & 7 & 0.031 & 1 & worse \\
+\end{longtable}}
+\clearpage
+\subsection*{Table S10. Dunford et al. (2024) data: repeated blocks and validation unit.}
+\smallskip{\small\textbf{(a)} Seconds per behaviour as reported in Table A2 of Dunford et al. (2024) and recomputed from the published file (rows / 40 Hz): all rows; without the repeated 38--42-row blocks (the version analysed in this study); and, for comparison only, without every exactly duplicated row.\par}
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.81cm}@{}}
+\toprule
+\textbf{behaviour} & \textbf{TableA2 s} & \textbf{all rows div40 s} & \textbf{block repeats removed s (used here)} & \textbf{every duplicate row removed s (comparison only)} \\
+\midrule
+\endhead
+\midrule \multicolumn{5}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+Groom & 13.08 & 13.07 & 13.07 & 12.82 \\
+Feed & 66.98 & 66.97 & 66.97 & 64.60 \\
+Rest & 2,491.8 & 2,491.8 & 2,110.2 & 1,864.8 \\
+Walk & 533.65 & 533.65 & 508.80 & 502.18 \\
+Trot & 86.85 & 86.85 & 82.88 & 81.75 \\
+Run & 50.80 & 50.80 & 49.80 & 48.30 \\
+Shake & 7.15 & 7.15 & 6.15 & 5.47 \\
+Total & 3,250.3 & 3,250.3 & 2,837.9 & 2,579.9 \\
+\end{longtable}}
+\smallskip{\small\textbf{(b)} Effect of the validation unit and of the repeated blocks on macro-F1 (our features and pipeline; not a reproduction of the original analysis).\par}
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{5.99cm}>{\raggedright\arraybackslash}p{6.0cm}>{\raggedright\arraybackslash}p{0.72cm}>{\raggedright\arraybackslash}p{1.34cm}>{\raggedright\arraybackslash}p{1.34cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.19cm}@{}}
+\toprule
+\textbf{validation} & \textbf{file version} & \textbf{n runs} & \textbf{accuracy} & \textbf{accuracy sd} & \textbf{macroF1} & \textbf{macroF1 sd} & \textbf{macroF1 min} & \textbf{macroF1 max} \\
+\midrule
+\endhead
+\midrule \multicolumn{9}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+leave-one-cat-out (pooled predictions) & v2 (repeated blocks removed; used in this study) & 1 & 0.850 &  & 0.308 &  & 0.308 & 0.308 \\
+leave-one-cat-out (per cat) & v2 (repeated blocks removed; used in this study) & 9 & 0.749 & 0.218 & 0.519 & 0.247 & 0.300 & 0.996 \\
+random 60/40 split of seconds & v1 (with repeated blocks) & 20 & 0.881 & 0.011 & 0.534 & 0.068 & 0.419 & 0.616 \\
+random 60/40 split of seconds & v2 (repeated blocks removed; used in this study) & 20 & 0.878 & 0.009 & 0.492 & 0.059 & 0.435 & 0.611 \\
+\end{longtable}}
+\clearpage
+\subsection*{Table S11. Seven-class Smit data: bias--variance decomposition of time-budget error by window length and estimator.}
+{\footnotesize ACC and PACC use the confusion matrix estimated on the other cats; ACC-xfit and PACC-xfit use a matrix cross-fitted within the held-out cat (blocks of the opposite type to the window), which is not available in practice. bias\_share = bias$^{2}$ / MSE.\par}\smallskip
+{\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.43cm}>{\raggedright\arraybackslash}p{2.27cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{0.72cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.19cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{1.03cm}>{\raggedright\arraybackslash}p{0.88cm}@{}}
+\toprule
+\textbf{scenario} & \textbf{window length min} & \textbf{estimator} & \textbf{n cats} & \textbf{n windows} & \textbf{mean minutes} & \textbf{bias2} & \textbf{bias2 lo} & \textbf{bias2 hi} & \textbf{var} & \textbf{var lo} & \textbf{var hi} & \textbf{mse} & \textbf{mse lo} & \textbf{mse hi} & \textbf{AE} & \textbf{AE lo} & \textbf{AE hi} & \textbf{bias share} \\
+\midrule
+\endhead
+\midrule \multicolumn{19}{r}{\textit{continued}} \\ \endfoot
+\bottomrule
+\endlastfoot
+S1-L2 (harness) & 5 & CC & 12 & 436 & 4.439 & 0.0091 & 0.0037 & 0.0165 & 0.0459 & 0.0267 & 0.0675 & 0.0550 & 0.0306 & 0.0834 & 0.0350 & 0.0268 & 0.0440 & 0.165 \\
+S1-L2 (harness) & 5 & PCC & 12 & 436 & 4.439 & 0.0104 & 0.0057 & 0.0155 & 0.0581 & 0.0425 & 0.0756 & 0.0685 & 0.0484 & 0.0904 & 0.0540 & 0.0458 & 0.0616 & 0.152 \\
+S1-L2 (harness) & 5 & ACC & 12 & 436 & 4.439 & 0.0136 & 0.0053 & 0.0242 & 0.0646 & 0.0397 & 0.0926 & 0.0782 & 0.0457 & 0.1171 & 0.0393 & 0.0295 & 0.0503 & 0.174 \\
+S1-L2 (harness) & 5 & PACC & 12 & 436 & 4.439 & 0.0153 & 0.0076 & 0.0248 & 0.0601 & 0.0360 & 0.0879 & 0.0754 & 0.0435 & 0.1127 & 0.0414 & 0.0312 & 0.0526 & 0.203 \\
+S1-L2 (harness) & 5 & EMQ & 12 & 436 & 4.439 & 0.0247 & 0.0130 & 0.0405 & 0.0768 & 0.0503 & 0.1017 & 0.1014 & 0.0647 & 0.1405 & 0.0442 & 0.0338 & 0.0547 & 0.243 \\
+S1-L2 (harness) & 5 & ACC-xfit & 12 & 436 & 4.439 & 0.0051 & 0.0015 & 0.0097 & 0.0606 & 0.0400 & 0.0858 & 0.0657 & 0.0428 & 0.0918 & 0.0363 & 0.0284 & 0.0452 & 0.078 \\
+S1-L2 (harness) & 5 & PACC-xfit & 12 & 436 & 4.439 & 0.0050 & 0.0021 & 0.0098 & 0.0585 & 0.0385 & 0.0836 & 0.0635 & 0.0411 & 0.0895 & 0.0386 & 0.0307 & 0.0477 & 0.079 \\
+S1-L2 (harness) & 10 & CC & 12 & 220 & 8.639 & 0.0094 & 0.0038 & 0.0169 & 0.0325 & 0.0179 & 0.0497 & 0.0420 & 0.0226 & 0.0657 & 0.0329 & 0.0250 & 0.0413 & 0.225 \\
+S1-L2 (harness) & 10 & PCC & 12 & 220 & 8.639 & 0.0120 & 0.0061 & 0.0188 & 0.0397 & 0.0270 & 0.0541 & 0.0517 & 0.0353 & 0.0691 & 0.0486 & 0.0409 & 0.0560 & 0.233 \\
+S1-L2 (harness) & 10 & ACC & 12 & 220 & 8.639 & 0.0156 & 0.0065 & 0.0267 & 0.0447 & 0.0256 & 0.0667 & 0.0603 & 0.0321 & 0.0931 & 0.0382 & 0.0283 & 0.0485 & 0.259 \\
+S1-L2 (harness) & 10 & PACC & 12 & 220 & 8.639 & 0.0184 & 0.0083 & 0.0306 & 0.0476 & 0.0294 & 0.0700 & 0.0660 & 0.0384 & 0.1007 & 0.0429 & 0.0325 & 0.0542 & 0.279 \\
+S1-L2 (harness) & 10 & EMQ & 12 & 220 & 8.639 & 0.0332 & 0.0149 & 0.0562 & 0.0610 & 0.0407 & 0.0823 & 0.0942 & 0.0586 & 0.1340 & 0.0473 & 0.0349 & 0.0590 & 0.352 \\
+S1-L2 (harness) & 10 & ACC-xfit & 12 & 220 & 8.639 & 0.0050 & 0.0019 & 0.0098 & 0.0441 & 0.0276 & 0.0635 & 0.0491 & 0.0306 & 0.0710 & 0.0355 & 0.0277 & 0.0439 & 0.102 \\
+S1-L2 (harness) & 10 & PACC-xfit & 12 & 220 & 8.639 & 0.0057 & 0.0021 & 0.0110 & 0.0497 & 0.0330 & 0.0703 & 0.0554 & 0.0364 & 0.0793 & 0.0404 & 0.0327 & 0.0495 & 0.103 \\
+S1-L2 (harness) & 30 & CC & 12 & 68 & 24.728 & 0.0086 & 0.0036 & 0.0153 & 0.0133 & 0.0053 & 0.0243 & 0.0219 & 0.0093 & 0.0392 & 0.0255 & 0.0194 & 0.0324 & 0.392 \\
+S1-L2 (harness) & 30 & PCC & 12 & 68 & 24.728 & 0.0121 & 0.0067 & 0.0177 & 0.0170 & 0.0108 & 0.0240 & 0.0292 & 0.0195 & 0.0396 & 0.0390 & 0.0324 & 0.0455 & 0.416 \\
+S1-L2 (harness) & 30 & ACC & 12 & 68 & 24.728 & 0.0262 & 0.0093 & 0.0531 & 0.0305 & 0.0113 & 0.0560 & 0.0567 & 0.0210 & 0.1076 & 0.0406 & 0.0286 & 0.0549 & 0.462 \\
+S1-L2 (harness) & 30 & PACC & 12 & 68 & 24.728 & 0.0291 & 0.0121 & 0.0552 & 0.0321 & 0.0173 & 0.0507 & 0.0612 & 0.0309 & 0.0997 & 0.0477 & 0.0350 & 0.0619 & 0.476 \\
+S1-L2 (harness) & 30 & EMQ & 12 & 68 & 24.728 & 0.0447 & 0.0140 & 0.0860 & 0.0291 & 0.0180 & 0.0423 & 0.0738 & 0.0338 & 0.1228 & 0.0475 & 0.0321 & 0.0659 & 0.606 \\
+S1-L2 (harness) & 30 & ACC-xfit & 12 & 68 & 24.728 & 0.0068 & 0.0021 & 0.0148 & 0.0224 & 0.0125 & 0.0338 & 0.0293 & 0.0155 & 0.0461 & 0.0330 & 0.0246 & 0.0412 & 0.233 \\
+S1-L2 (harness) & 30 & PACC-xfit & 12 & 68 & 24.728 & 0.0081 & 0.0027 & 0.0171 & 0.0254 & 0.0156 & 0.0374 & 0.0335 & 0.0196 & 0.0521 & 0.0365 & 0.0279 & 0.0466 & 0.241 \\
+S1-L2 (harness) & 60 & CC & 10 & 30 & 49.302 & 0.0117 & 0.0034 & 0.0233 & 0.0049 & 0.0019 & 0.0090 & 0.0166 & 0.0054 & 0.0320 & 0.0250 & 0.0169 & 0.0352 & 0.707 \\
+S1-L2 (harness) & 60 & PCC & 10 & 30 & 49.302 & 0.0126 & 0.0051 & 0.0214 & 0.0066 & 0.0047 & 0.0086 & 0.0192 & 0.0112 & 0.0288 & 0.0333 & 0.0266 & 0.0399 & 0.654 \\
+S1-L2 (harness) & 60 & ACC & 10 & 30 & 49.302 & 0.0407 & 0.0108 & 0.0855 & 0.0166 & 0.0057 & 0.0294 & 0.0572 & 0.0185 & 0.1136 & 0.0465 & 0.0293 & 0.0672 & 0.710 \\
+S1-L2 (harness) & 60 & PACC & 10 & 30 & 49.302 & 0.0406 & 0.0106 & 0.0880 & 0.0165 & 0.0087 & 0.0248 & 0.0571 & 0.0223 & 0.1100 & 0.0519 & 0.0347 & 0.0721 & 0.711 \\
+S1-L2 (harness) & 60 & EMQ & 10 & 30 & 49.302 & 0.0518 & 0.0157 & 0.1130 & 0.0151 & 0.0087 & 0.0211 & 0.0669 & 0.0253 & 0.1300 & 0.0523 & 0.0337 & 0.0743 & 0.774 \\
+S1-L2 (harness) & 60 & ACC-xfit & 10 & 30 & 49.302 & 0.0072 & 0.0015 & 0.0167 & 0.0178 & 0.0082 & 0.0303 & 0.0251 & 0.0099 & 0.0468 & 0.0327 & 0.0237 & 0.0427 & 0.288 \\
+S1-L2 (harness) & 60 & PACC-xfit & 10 & 30 & 49.302 & 0.0060 & 0.0025 & 0.0104 & 0.0260 & 0.0116 & 0.0450 & 0.0320 & 0.0147 & 0.0531 & 0.0376 & 0.0273 & 0.0483 & 0.188 \\
+S1-L2 (harness) & half recording & CC & 12 & 24 & 85.544 & 0.0093 & 0.0035 & 0.0175 & 0.0021 & 0.0009 & 0.0036 & 0.0115 & 0.0045 & 0.0207 & 0.0218 & 0.0148 & 0.0301 & 0.815 \\
+S1-L2 (harness) & half recording & PCC & 12 & 24 & 85.544 & 0.0117 & 0.0063 & 0.0175 & 0.0023 & 0.0012 & 0.0036 & 0.0139 & 0.0079 & 0.0208 & 0.0282 & 0.0211 & 0.0355 & 0.836 \\
+S1-L2 (harness) & half recording & ACC & 12 & 24 & 85.544 & 0.0358 & 0.0128 & 0.0751 & 0.0080 & 0.0014 & 0.0199 & 0.0438 & 0.0146 & 0.0943 & 0.0424 & 0.0296 & 0.0594 & 0.817 \\
+S1-L2 (harness) & half recording & PACC & 12 & 24 & 85.544 & 0.0440 & 0.0199 & 0.0815 & 0.0039 & 0.0017 & 0.0069 & 0.0479 & 0.0223 & 0.0878 & 0.0500 & 0.0375 & 0.0656 & 0.918 \\
+S1-L2 (harness) & half recording & EMQ & 12 & 24 & 85.544 & 0.0517 & 0.0200 & 0.0952 & 0.0046 & 0.0021 & 0.0073 & 0.0563 & 0.0237 & 0.1017 & 0.0506 & 0.0343 & 0.0690 & 0.919 \\
+S1-L2 (harness) & half recording & ACC-xfit & 12 & 24 & 85.544 & 0.0045 & 0.0021 & 0.0080 & 0.0119 & 0.0064 & 0.0180 & 0.0164 & 0.0092 & 0.0253 & 0.0303 & 0.0223 & 0.0389 & 0.272 \\
+S1-L2 (harness) & half recording & PACC-xfit & 12 & 24 & 85.544 & 0.0046 & 0.0027 & 0.0069 & 0.0166 & 0.0085 & 0.0251 & 0.0212 & 0.0120 & 0.0319 & 0.0342 & 0.0255 & 0.0436 & 0.218 \\
+S1-L2 (collar) & 5 & CC & 12 & 436 & 4.439 & 0.1357 & 0.0450 & 0.2468 & 0.2119 & 0.1538 & 0.2691 & 0.3476 & 0.2118 & 0.4980 & 0.1026 & 0.0805 & 0.1267 & 0.390 \\
+S1-L2 (collar) & 5 & PCC & 12 & 436 & 4.439 & 0.1095 & 0.0375 & 0.2011 & 0.1950 & 0.1577 & 0.2364 & 0.3045 & 0.2094 & 0.4089 & 0.1140 & 0.0968 & 0.1318 & 0.360 \\
+S1-L2 (collar) & 5 & ACC & 12 & 436 & 4.439 & 0.1636 & 0.0557 & 0.2939 & 0.2733 & 0.2043 & 0.3373 & 0.4369 & 0.2692 & 0.6235 & 0.1045 & 0.0786 & 0.1335 & 0.374 \\
+S1-L2 (collar) & 5 & PACC & 12 & 436 & 4.439 & 0.1571 & 0.0458 & 0.2975 & 0.2544 & 0.1858 & 0.3165 & 0.4115 & 0.2454 & 0.5990 & 0.1067 & 0.0802 & 0.1368 & 0.382 \\
+S1-L2 (collar) & 5 & EMQ & 12 & 436 & 4.439 & 0.1512 & 0.0521 & 0.2750 & 0.2870 & 0.1917 & 0.3859 & 0.4381 & 0.2598 & 0.6368 & 0.1107 & 0.0811 & 0.1413 & 0.345 \\
+S1-L2 (collar) & 5 & ACC-xfit & 12 & 436 & 4.439 & 0.0589 & 0.0194 & 0.1076 & 0.2927 & 0.2023 & 0.3827 & 0.3517 & 0.2412 & 0.4658 & 0.0978 & 0.0758 & 0.1199 & 0.168 \\
+S1-L2 (collar) & 5 & PACC-xfit & 12 & 436 & 4.439 & 0.0343 & 0.0154 & 0.0572 & 0.2328 & 0.1659 & 0.3011 & 0.2671 & 0.1948 & 0.3377 & 0.0883 & 0.0726 & 0.1046 & 0.128 \\
+S1-L2 (collar) & 10 & CC & 12 & 220 & 8.639 & 0.1373 & 0.0439 & 0.2548 & 0.1641 & 0.1161 & 0.2118 & 0.3015 & 0.1717 & 0.4519 & 0.0983 & 0.0755 & 0.1234 & 0.456 \\
+S1-L2 (collar) & 10 & PCC & 12 & 220 & 8.639 & 0.1120 & 0.0367 & 0.2059 & 0.1491 & 0.1144 & 0.1819 & 0.2610 & 0.1673 & 0.3719 & 0.1053 & 0.0873 & 0.1235 & 0.429 \\
+S1-L2 (collar) & 10 & ACC & 12 & 220 & 8.639 & 0.1664 & 0.0597 & 0.2954 & 0.2284 & 0.1643 & 0.2913 & 0.3948 & 0.2290 & 0.5840 & 0.1056 & 0.0805 & 0.1341 & 0.421 \\
+S1-L2 (collar) & 10 & PACC & 12 & 220 & 8.639 & 0.1637 & 0.0482 & 0.3064 & 0.2211 & 0.1586 & 0.2848 & 0.3848 & 0.2162 & 0.5833 & 0.1086 & 0.0819 & 0.1391 & 0.425 \\
+S1-L2 (collar) & 10 & EMQ & 12 & 220 & 8.639 & 0.1673 & 0.0581 & 0.3012 & 0.2414 & 0.1516 & 0.3313 & 0.4086 & 0.2187 & 0.6121 & 0.1102 & 0.0777 & 0.1425 & 0.409 \\
+S1-L2 (collar) & 10 & ACC-xfit & 12 & 220 & 8.639 & 0.0646 & 0.0192 & 0.1158 & 0.2465 & 0.1682 & 0.3243 & 0.3111 & 0.2026 & 0.4270 & 0.0973 & 0.0744 & 0.1206 & 0.208 \\
+S1-L2 (collar) & 10 & PACC-xfit & 12 & 220 & 8.639 & 0.0369 & 0.0170 & 0.0606 & 0.1920 & 0.1334 & 0.2576 & 0.2289 & 0.1596 & 0.3058 & 0.0868 & 0.0703 & 0.1036 & 0.161 \\
+S1-L2 (collar) & 30 & CC & 12 & 68 & 24.728 & 0.1574 & 0.0424 & 0.3070 & 0.0807 & 0.0463 & 0.1177 & 0.2382 & 0.1056 & 0.3941 & 0.0895 & 0.0630 & 0.1194 & 0.661 \\
+S1-L2 (collar) & 30 & PCC & 12 & 68 & 24.728 & 0.1328 & 0.0368 & 0.2595 & 0.0724 & 0.0479 & 0.1014 & 0.2052 & 0.1047 & 0.3290 & 0.0908 & 0.0703 & 0.1139 & 0.647 \\
+S1-L2 (collar) & 30 & ACC & 12 & 68 & 24.728 & 0.2257 & 0.0619 & 0.4399 & 0.1338 & 0.0758 & 0.1899 & 0.3595 & 0.1630 & 0.5908 & 0.1093 & 0.0785 & 0.1452 & 0.628 \\
+S1-L2 (collar) & 30 & PACC & 12 & 68 & 24.728 & 0.2353 & 0.0585 & 0.4739 & 0.1321 & 0.0746 & 0.1867 & 0.3674 & 0.1608 & 0.6340 & 0.1132 & 0.0803 & 0.1519 & 0.641 \\
+S1-L2 (collar) & 30 & EMQ & 12 & 68 & 24.728 & 0.2211 & 0.0678 & 0.4135 & 0.1425 & 0.0694 & 0.2204 & 0.3636 & 0.1647 & 0.5867 & 0.1094 & 0.0746 & 0.1452 & 0.608 \\
+S1-L2 (collar) & 30 & ACC-xfit & 12 & 68 & 24.728 & 0.0543 & 0.0221 & 0.0939 & 0.1675 & 0.0950 & 0.2439 & 0.2218 & 0.1257 & 0.3213 & 0.0856 & 0.0624 & 0.1114 & 0.245 \\
+S1-L2 (collar) & 30 & PACC-xfit & 12 & 68 & 24.728 & 0.0525 & 0.0293 & 0.0761 & 0.1439 & 0.0750 & 0.2144 & 0.1963 & 0.1139 & 0.2833 & 0.0820 & 0.0614 & 0.1044 & 0.267 \\
+S1-L2 (collar) & 60 & CC & 10 & 30 & 49.302 & 0.1081 & 0.0328 & 0.2104 & 0.0499 & 0.0191 & 0.0833 & 0.1580 & 0.0524 & 0.2935 & 0.0737 & 0.0489 & 0.0994 & 0.684 \\
+S1-L2 (collar) & 60 & PCC & 10 & 30 & 49.302 & 0.0902 & 0.0332 & 0.1836 & 0.0452 & 0.0242 & 0.0709 & 0.1354 & 0.0629 & 0.2434 & 0.0762 & 0.0568 & 0.0976 & 0.666 \\
+S1-L2 (collar) & 60 & ACC & 10 & 30 & 49.302 & 0.1664 & 0.0720 & 0.2957 & 0.1079 & 0.0591 & 0.1633 & 0.2743 & 0.1401 & 0.4430 & 0.1058 & 0.0846 & 0.1278 & 0.607 \\
+S1-L2 (collar) & 60 & PACC & 10 & 30 & 49.302 & 0.1545 & 0.0675 & 0.2971 & 0.0939 & 0.0468 & 0.1427 & 0.2484 & 0.1299 & 0.4220 & 0.1097 & 0.0872 & 0.1328 & 0.622 \\
+S1-L2 (collar) & 60 & EMQ & 10 & 30 & 49.302 & 0.1660 & 0.0605 & 0.3205 & 0.0986 & 0.0315 & 0.1857 & 0.2646 & 0.1002 & 0.4560 & 0.0995 & 0.0677 & 0.1294 & 0.627 \\
+S1-L2 (collar) & 60 & ACC-xfit & 10 & 30 & 49.302 & 0.0641 & 0.0133 & 0.1565 & 0.0867 & 0.0449 & 0.1381 & 0.1508 & 0.0651 & 0.2843 & 0.0760 & 0.0560 & 0.1006 & 0.425 \\
+S1-L2 (collar) & 60 & PACC-xfit & 10 & 30 & 49.302 & 0.0401 & 0.0085 & 0.0983 & 0.0848 & 0.0483 & 0.1218 & 0.1249 & 0.0644 & 0.2016 & 0.0747 & 0.0563 & 0.0938 & 0.321 \\
+S1-L2 (collar) & half recording & CC & 12 & 24 & 85.544 & 0.1368 & 0.0466 & 0.2459 & 0.0095 & 0.0044 & 0.0160 & 0.1463 & 0.0539 & 0.2526 & 0.0785 & 0.0528 & 0.1062 & 0.935 \\
+S1-L2 (collar) & half recording & PCC & 12 & 24 & 85.544 & 0.1118 & 0.0398 & 0.2034 & 0.0088 & 0.0042 & 0.0145 & 0.1206 & 0.0478 & 0.2101 & 0.0715 & 0.0522 & 0.0954 & 0.927 \\
+S1-L2 (collar) & half recording & ACC & 12 & 24 & 85.544 & 0.2874 & 0.1026 & 0.5264 & 0.0274 & 0.0093 & 0.0519 & 0.3148 & 0.1315 & 0.5462 & 0.1194 & 0.0851 & 0.1568 & 0.913 \\
+S1-L2 (collar) & half recording & PACC & 12 & 24 & 85.544 & 0.2810 & 0.0992 & 0.5324 & 0.0307 & 0.0088 & 0.0604 & 0.3117 & 0.1384 & 0.5522 & 0.1233 & 0.0935 & 0.1570 & 0.901 \\
+S1-L2 (collar) & half recording & EMQ & 12 & 24 & 85.544 & 0.2291 & 0.0817 & 0.4241 & 0.0386 & 0.0087 & 0.0826 & 0.2677 & 0.1066 & 0.4642 & 0.1067 & 0.0685 & 0.1455 & 0.856 \\
+S1-L2 (collar) & half recording & ACC-xfit & 12 & 24 & 85.544 & 0.0416 & 0.0111 & 0.0923 & 0.0859 & 0.0381 & 0.1540 & 0.1275 & 0.0611 & 0.2104 & 0.0793 & 0.0560 & 0.1038 & 0.326 \\
+S1-L2 (collar) & half recording & PACC-xfit & 12 & 24 & 85.544 & 0.0665 & 0.0147 & 0.1333 & 0.0794 & 0.0339 & 0.1426 & 0.1459 & 0.0705 & 0.2443 & 0.0806 & 0.0595 & 0.1059 & 0.456 \\
+S2-L2 (mapped) & 5 & CC & 12 & 436 & 4.439 & 0.3295 & 0.1522 & 0.5663 & 0.4827 & 0.3748 & 0.5748 & 0.8122 & 0.6113 & 1.0402 & 0.1691 & 0.1434 & 0.1949 & 0.406 \\
+S2-L2 (mapped) & 5 & PCC & 12 & 436 & 4.439 & 0.2530 & 0.1353 & 0.4061 & 0.4044 & 0.3207 & 0.4817 & 0.6573 & 0.5279 & 0.8079 & 0.1805 & 0.1650 & 0.1978 & 0.385 \\
+S2-L2 (mapped) & 5 & ACC & 12 & 436 & 4.439 & 0.3436 & 0.1626 & 0.5823 & 0.5343 & 0.4189 & 0.6294 & 0.8778 & 0.6686 & 1.1042 & 0.1746 & 0.1483 & 0.2004 & 0.391 \\
+S2-L2 (mapped) & 5 & PACC & 12 & 436 & 4.439 & 0.3309 & 0.1790 & 0.5375 & 0.5122 & 0.4030 & 0.6076 & 0.8430 & 0.6618 & 1.0466 & 0.1897 & 0.1697 & 0.2110 & 0.392 \\
+S2-L2 (mapped) & 5 & EMQ & 12 & 436 & 4.439 & 0.4275 & 0.2728 & 0.6435 & 0.7114 & 0.5765 & 0.8306 & 1.1389 & 0.9841 & 1.3037 & 0.2188 & 0.1979 & 0.2371 & 0.375 \\
+S2-L2 (mapped) & 5 & ACC-xfit & 12 & 436 & 4.439 & 0.0719 & 0.0441 & 0.1006 & 0.3558 & 0.2818 & 0.4239 & 0.4277 & 0.3336 & 0.5116 & 0.1149 & 0.0938 & 0.1327 & 0.168 \\
+S2-L2 (mapped) & 5 & PACC-xfit & 12 & 436 & 4.439 & 0.0267 & 0.0145 & 0.0416 & 0.2504 & 0.1964 & 0.3017 & 0.2772 & 0.2169 & 0.3321 & 0.0947 & 0.0799 & 0.1066 & 0.096 \\
+S2-L2 (mapped) & 10 & CC & 12 & 220 & 8.639 & 0.3312 & 0.1524 & 0.5624 & 0.3853 & 0.2972 & 0.4684 & 0.7165 & 0.5101 & 0.9523 & 0.1614 & 0.1363 & 0.1877 & 0.462 \\
+S2-L2 (mapped) & 10 & PCC & 12 & 220 & 8.639 & 0.2578 & 0.1416 & 0.4107 & 0.3227 & 0.2473 & 0.3933 & 0.5805 & 0.4453 & 0.7390 & 0.1689 & 0.1522 & 0.1885 & 0.444 \\
+S2-L2 (mapped) & 10 & ACC & 12 & 220 & 8.639 & 0.3539 & 0.1712 & 0.5894 & 0.4279 & 0.3386 & 0.5120 & 0.7819 & 0.5688 & 1.0167 & 0.1695 & 0.1448 & 0.1953 & 0.453 \\
+S2-L2 (mapped) & 10 & PACC & 12 & 220 & 8.639 & 0.3442 & 0.1914 & 0.5448 & 0.4217 & 0.3211 & 0.5079 & 0.7659 & 0.5888 & 0.9748 & 0.1843 & 0.1658 & 0.2054 & 0.449 \\
+S2-L2 (mapped) & 10 & EMQ & 12 & 220 & 8.639 & 0.4519 & 0.2979 & 0.6504 & 0.6018 & 0.4825 & 0.7060 & 1.0537 & 0.9081 & 1.2233 & 0.2151 & 0.1980 & 0.2326 & 0.429 \\
+S2-L2 (mapped) & 10 & ACC-xfit & 12 & 220 & 8.639 & 0.0680 & 0.0427 & 0.0926 & 0.3005 & 0.2261 & 0.3701 & 0.3685 & 0.2817 & 0.4457 & 0.1124 & 0.0913 & 0.1310 & 0.185 \\
+S2-L2 (mapped) & 10 & PACC-xfit & 12 & 220 & 8.639 & 0.0300 & 0.0143 & 0.0515 & 0.2048 & 0.1570 & 0.2508 & 0.2348 & 0.1796 & 0.2870 & 0.0936 & 0.0786 & 0.1076 & 0.128 \\
+S2-L2 (mapped) & 30 & CC & 12 & 68 & 24.728 & 0.3718 & 0.1643 & 0.6712 & 0.2291 & 0.1432 & 0.3229 & 0.6009 & 0.4048 & 0.8703 & 0.1500 & 0.1202 & 0.1825 & 0.619 \\
+S2-L2 (mapped) & 30 & PCC & 12 & 68 & 24.728 & 0.2948 & 0.1573 & 0.4893 & 0.1846 & 0.1104 & 0.2662 & 0.4794 & 0.3523 & 0.6509 & 0.1532 & 0.1341 & 0.1770 & 0.615 \\
+S2-L2 (mapped) & 30 & ACC & 12 & 68 & 24.728 & 0.4090 & 0.1922 & 0.7208 & 0.2644 & 0.1686 & 0.3627 & 0.6734 & 0.4642 & 0.9458 & 0.1627 & 0.1316 & 0.1941 & 0.607 \\
+S2-L2 (mapped) & 30 & PACC & 12 & 68 & 24.728 & 0.4089 & 0.2179 & 0.6793 & 0.2516 & 0.1587 & 0.3532 & 0.6606 & 0.4795 & 0.9021 & 0.1747 & 0.1516 & 0.2012 & 0.619 \\
+S2-L2 (mapped) & 30 & EMQ & 12 & 68 & 24.728 & 0.5356 & 0.3398 & 0.8027 & 0.3742 & 0.2539 & 0.4911 & 0.9098 & 0.7333 & 1.1307 & 0.2084 & 0.1841 & 0.2327 & 0.589 \\
+S2-L2 (mapped) & 30 & ACC-xfit & 12 & 68 & 24.728 & 0.0744 & 0.0413 & 0.1154 & 0.1584 & 0.1008 & 0.2239 & 0.2329 & 0.1480 & 0.3253 & 0.0964 & 0.0736 & 0.1199 & 0.320 \\
+S2-L2 (mapped) & 30 & PACC-xfit & 12 & 68 & 24.728 & 0.0439 & 0.0222 & 0.0703 & 0.1108 & 0.0730 & 0.1514 & 0.1546 & 0.1040 & 0.2061 & 0.0820 & 0.0649 & 0.0987 & 0.284 \\
+S2-L2 (mapped) & 60 & CC & 10 & 30 & 49.302 & 0.3856 & 0.1929 & 0.6505 & 0.1532 & 0.0791 & 0.2336 & 0.5388 & 0.3563 & 0.7915 & 0.1560 & 0.1297 & 0.1863 & 0.716 \\
+S2-L2 (mapped) & 60 & PCC & 10 & 30 & 49.302 & 0.2981 & 0.1771 & 0.4629 & 0.1198 & 0.0667 & 0.1717 & 0.4178 & 0.3051 & 0.5763 & 0.1477 & 0.1298 & 0.1704 & 0.713 \\
+S2-L2 (mapped) & 60 & ACC & 10 & 30 & 49.302 & 0.4422 & 0.2286 & 0.7305 & 0.1838 & 0.0990 & 0.2783 & 0.6261 & 0.4300 & 0.8872 & 0.1697 & 0.1449 & 0.1974 & 0.706 \\
+S2-L2 (mapped) & 60 & PACC & 10 & 30 & 49.302 & 0.4397 & 0.2717 & 0.6652 & 0.1619 & 0.0918 & 0.2321 & 0.6016 & 0.4458 & 0.8174 & 0.1765 & 0.1590 & 0.1980 & 0.731 \\
+S2-L2 (mapped) & 60 & EMQ & 10 & 30 & 49.302 & 0.6060 & 0.4264 & 0.8260 & 0.2173 & 0.1277 & 0.3107 & 0.8233 & 0.6369 & 1.0323 & 0.2133 & 0.1892 & 0.2361 & 0.736 \\
+S2-L2 (mapped) & 60 & ACC-xfit & 10 & 30 & 49.302 & 0.0613 & 0.0276 & 0.0988 & 0.0872 & 0.0540 & 0.1235 & 0.1485 & 0.0859 & 0.2207 & 0.0868 & 0.0663 & 0.1112 & 0.413 \\
+S2-L2 (mapped) & 60 & PACC-xfit & 10 & 30 & 49.302 & 0.0540 & 0.0276 & 0.0855 & 0.0718 & 0.0402 & 0.1067 & 0.1258 & 0.0674 & 0.1903 & 0.0808 & 0.0609 & 0.1014 & 0.429 \\
+S2-L2 (mapped) & half recording & CC & 12 & 24 & 85.544 & 0.3416 & 0.1595 & 0.5792 & 0.0208 & 0.0079 & 0.0381 & 0.3624 & 0.1834 & 0.5995 & 0.1282 & 0.0976 & 0.1626 & 0.943 \\
+S2-L2 (mapped) & half recording & PCC & 12 & 24 & 85.544 & 0.2650 & 0.1465 & 0.4226 & 0.0185 & 0.0073 & 0.0316 & 0.2835 & 0.1652 & 0.4371 & 0.1248 & 0.1027 & 0.1515 & 0.935 \\
+S2-L2 (mapped) & half recording & ACC & 12 & 24 & 85.544 & 0.4085 & 0.2010 & 0.6710 & 0.0260 & 0.0093 & 0.0503 & 0.4345 & 0.2340 & 0.6977 & 0.1445 & 0.1144 & 0.1783 & 0.940 \\
+S2-L2 (mapped) & half recording & PACC & 12 & 24 & 85.544 & 0.3910 & 0.2265 & 0.6129 & 0.0265 & 0.0091 & 0.0485 & 0.4174 & 0.2545 & 0.6243 & 0.1498 & 0.1265 & 0.1773 & 0.937 \\
+S2-L2 (mapped) & half recording & EMQ & 12 & 24 & 85.544 & 0.6005 & 0.4105 & 0.8238 & 0.0573 & 0.0243 & 0.1061 & 0.6579 & 0.4821 & 0.8641 & 0.1922 & 0.1656 & 0.2156 & 0.913 \\
+S2-L2 (mapped) & half recording & ACC-xfit & 12 & 24 & 85.544 & 0.1275 & 0.0630 & 0.2061 & 0.1166 & 0.0713 & 0.1690 & 0.2441 & 0.1637 & 0.3280 & 0.1167 & 0.0939 & 0.1400 & 0.522 \\
+S2-L2 (mapped) & half recording & PACC-xfit & 12 & 24 & 85.544 & 0.0315 & 0.0119 & 0.0641 & 0.0815 & 0.0431 & 0.1203 & 0.1129 & 0.0569 & 0.1781 & 0.0841 & 0.0617 & 0.1082 & 0.279 \\
+\end{longtable}}
+\end{document}
