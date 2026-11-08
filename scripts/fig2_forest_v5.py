@@ -36,7 +36,7 @@ CATS = [("S0 random seconds (leaky), n = 12", "S0 (sızıntılı)", None, None),
 DUN = [("S3 cross-study [expl.], n = 8", "S3 [keşifsel]", "S3", "kedi"),
        ("S4-Dunford open [expl.], n = 8", "S4-Dunford-açık [keşifsel]", None, None),
        ("S4-Dunford closed [expl.], n = 7", "S4-Dunford-kapalı [keşifsel]", "S4-Dunford-kapali", "kedi"),
-       ("Within Dunford (reference) [expl.], n = 8", "R-D [keşifsel]", None, None)]
+       ("R-D within Dunford [expl.], n = 8", "R-D [keşifsel]", None, None)]
 
 
 def cat_panel(sc, r8s, r8t):
